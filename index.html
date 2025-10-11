@@ -105,10 +105,21 @@
             opacity: 0;
             visibility: hidden;
         }
-        .preloader-logo {
-            animation: pulse-glow-strong 2.5s infinite ease-in-out;
+        .preloader-video {
+            /* --- Fullscreen Video Styling --- */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
+            width: auto; /* Maintain aspect ratio */
+            height: auto; /* Maintain aspect ratio */
+            object-fit: cover; /* Cover the entire screen without distortion */
+            z-index: -1; /* Place it behind any potential text/logo inside preloader */
         }
         @keyframes pulse-glow-strong {
+            /* This animation will now apply to the video */
             0%, 100% {
                 transform: scale(1);
                 filter: drop-shadow(0 0 8px var(--accent-aqua)) drop-shadow(0 0 16px var(--accent-aqua));
@@ -118,6 +129,34 @@
                 filter: drop-shadow(0 0 12px var(--accent-purple)) drop-shadow(0 0 24px var(--accent-purple));
             }
         }
+
+        /* --- Sound Toggle Button for Preloader --- */
+        #sound-toggle-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 10001; /* Above the preloader video */
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            transition: background 0.3s, transform 0.3s;
+            backdrop-filter: blur(5px);
+        }
+        #sound-toggle-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+        #sound-toggle-button svg { width: 24px; height: 24px; }
+        #sound-toggle-button .icon-sound-on { display: none; }
+        #sound-toggle-button.sound-active .icon-sound-on { display: block; }
+        #sound-toggle-button.sound-active .icon-sound-off { display: none; }
 
         .logo-container img {
             filter: drop-shadow(0 0 8px var(--accent-aqua));
@@ -460,8 +499,20 @@
     <div id="site-background"></div>
     <div id="cursor-glow"></div>
     <div id="preloader">
-        <!-- ١. شعار شاشة التحميل: استبدل your-logo.png باسم ملف شعارك -->
-        <img src="FINED LOGO.png" alt="Loading Logo" class="preloader-logo" style="height: 80px; width: auto;">
+        <!-- 
+            تم استبدال الصورة بفيديو.
+            - استبدل "your-animation.mp4" بمسار ملف الفيديو الخاص بك.
+            - playsinline: ضروري للتشغيل المباشر على أجهزة iPhone بدلاً من وضع ملء الشاشة.
+            - muted: ضروري للسماح بالتشغيل التلقائي في معظم المتصفحات.
+        -->
+        <video id="preloader-video" class="preloader-video" autoplay muted playsinline>
+            <source src="your-animation.mp4" type="video/mp4">
+        </video>
+        <!-- زر التحكم في الصوت -->
+        <button id="sound-toggle-button" aria-label="Toggle Sound">
+            <svg class="icon-sound-off" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 9.75L19.5 12m0 0l2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25M12.75 6.364V17.636a1.125 1.125 0 01-2.05.623l-1.002-2.003H6.375a1.125 1.125 0 01-1.125-1.125v-4.5a1.125 1.125 0 011.125-1.125h3.37a1.125 1.125 0 012.05.623z" /></svg>
+            <svg class="icon-sound-on" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" /></svg>
+        </button>
     </div>
     <div id="scroll-progress-bar"></div>
     <div id="page-transition-overlay"></div>
@@ -806,10 +857,6 @@
             }
         };
 
-        window.addEventListener('load', () => {
-            document.getElementById('preloader').classList.add('loaded');
-        });
-
     document.addEventListener('DOMContentLoaded', () => {
             if (DEBUG) console.log('[Lifecycle] DOMContentLoaded');
 
@@ -830,6 +877,40 @@
             const desktopNavLinks = document.querySelectorAll('nav.desktop-nav a:not(.nav-cta-button)');
             const pageTransitionOverlay = document.getElementById('page-transition-overlay');
             const isTouchDevice = 'ontouchstart' in window;
+
+            // --- Preloader Logic with Video ---
+            const preloader = document.getElementById('preloader');
+            const preloaderVideo = document.getElementById('preloader-video');
+            const soundToggleButton = document.getElementById('sound-toggle-button');
+
+            function hidePreloader() {
+                if (preloader) {
+                    preloader.classList.add('loaded');
+                    if (soundToggleButton) soundToggleButton.style.display = 'none'; // Hide button with preloader
+                }
+            }
+
+            window.addEventListener('load', () => {
+                if (preloaderVideo) {
+                    // Hide preloader when video ends
+                    preloaderVideo.addEventListener('ended', hidePreloader);
+                    
+                    // Fallback: if video fails to play, hide preloader after a delay
+                    preloaderVideo.addEventListener('error', hidePreloader);
+                    setTimeout(hidePreloader, 5000); // Safety net, hides after 5s max
+                } else {
+                    // If no video, hide immediately on load
+                    hidePreloader();
+                }
+            });
+
+            if (soundToggleButton && preloaderVideo) {
+                soundToggleButton.addEventListener('click', () => {
+                    preloaderVideo.muted = !preloaderVideo.muted;
+                    soundToggleButton.classList.toggle('sound-active', !preloaderVideo.muted);
+                    soundToggleButton.setAttribute('aria-label', preloaderVideo.muted ? 'Unmute' : 'Mute');
+                });
+            }
 
             // --- Global Cursor Glow ---
             const cursorGlow = document.getElementById('cursor-glow');
