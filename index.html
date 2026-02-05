@@ -1167,62 +1167,110 @@
 
             window.addEventListener('load', () => {
                 if (preloaderVideo) {
-                    // choose correct preloader source based on viewport
-                    function setPreloaderSource(){
-                        try {
-                            const desktopSrc = preloaderVideo.dataset.srcDesktop || preloaderVideo.getAttribute('data-src-desktop');
-                            const mobileSrc = preloaderVideo.dataset.srcMobile || preloaderVideo.getAttribute('data-src-mobile');
-                            const breakpoint = 768;
-                            const useMobile = window.innerWidth <= breakpoint;
+    // choose correct preloader source based on viewport
+    function setPreloaderSource(){
+        try {
+            const desktopSrc = preloaderVideo.dataset.srcDesktop || preloaderVideo.getAttribute('data-src-desktop');
+            const mobileSrc = preloaderVideo.dataset.srcMobile || preloaderVideo.getAttribute('data-src-mobile');
+            const breakpoint = 768;
+            const useMobile = window.innerWidth <= breakpoint;
 
-                            // Always prefer and assign a mobile-optimized preloader when on small viewports
-                            if (useMobile && mobileSrc) {
-                                if (preloaderVideo.getAttribute('src') !== mobileSrc) {
-                                    preloaderVideo.src = mobileSrc;
-                                    preloaderVideo.load();
-                                    preloaderVideo.play().catch((err) => {
-                                        try { preloaderVideo.muted = true; } catch(e) {}
-                                        if (soundToggleButton) soundToggleButton.classList.remove('sound-active');
-                                        preloaderVideo.play().catch(()=>{});
-                                    });
-                                }
-                                return;
-                            }
-
-                            // For desktop viewports, keep gating to high-performance devices to avoid heavy downloads
-                            if (performanceProfile !== 'high') {
-                                setTimeout(hidePreloader, 700);
-                                return;
-                            }
-
-                            if (desktopSrc && preloaderVideo.getAttribute('src') !== desktopSrc) {
-                                preloaderVideo.src = desktopSrc;
-                                preloaderVideo.load();
-                                preloaderVideo.play().catch((err) => {
-                                    try { preloaderVideo.muted = true; } catch(e) {}
-                                    if (soundToggleButton) soundToggleButton.classList.remove('sound-active');
-                                    preloaderVideo.play().catch(()=>{});
-                                });
-                            }
-                        } catch(e) { /* ignore */ }
-                    }
-                    setPreloaderSource();
-                    // switch on resize when crossing breakpoint
-                    let lastWasMobile = window.innerWidth <= 768;
-                    window.addEventListener('resize', () => {
-                        const nowMobile = window.innerWidth <= 768;
-                        if (nowMobile !== lastWasMobile) { lastWasMobile = nowMobile; setPreloaderSource(); }
-                    });
-                    // Hide preloader when video ends
-                    preloaderVideo.addEventListener('ended', hidePreloader);
-                    
-                    // Fallback: if video fails to play, hide preloader after a delay
-                    preloaderVideo.addEventListener('error', hidePreloader);
-                    setTimeout(hidePreloader, 8500); // Safety net, hides after 10s max
-                } else {
-                    // If no video, hide immediately on load
-                    hidePreloader();
+            // helper: resolve a URL to absolute string (safe)
+            function resolveUrl(url) {
+                try {
+                    return url ? new URL(String(url), location.href).href : '';
+                } catch(e) {
+                    return String(url || '');
                 }
+            }
+
+            // helper: get current effective src for the <video> (prefer currentSrc, then src, then first <source>)
+            function getCurrentVideoSrc() {
+                if (preloaderVideo.currentSrc) return preloaderVideo.currentSrc;
+                if (preloaderVideo.src) return preloaderVideo.src;
+                const firstSource = preloaderVideo.querySelector && preloaderVideo.querySelector('source');
+                if (firstSource && firstSource.src) return firstSource.src;
+                return preloaderVideo.getAttribute('src') || '';
+            }
+
+            // helper: set the video source (supports <source> children as well)
+            function assignVideoSrc(url) {
+                if (!url) return;
+                const sources = preloaderVideo.querySelectorAll ? preloaderVideo.querySelectorAll('source') : [];
+                if (sources && sources.length) {
+                    sources.forEach(s => {
+                        try { s.src = url; } catch(e) {}
+                    });
+                    // remove src attribute on video tag if present to avoid conflicts
+                    try { preloaderVideo.removeAttribute('src'); } catch(e) {}
+                } else {
+                    try { preloaderVideo.src = url; } catch(e) {}
+                }
+                // reload media element so browser picks up new sources
+                try { preloaderVideo.load(); } catch(e) {}
+            }
+
+            // Always prefer and assign a mobile-optimized preloader when on small viewports
+            if (useMobile && mobileSrc) {
+                const current = resolveUrl(getCurrentVideoSrc());
+                const target = resolveUrl(mobileSrc);
+                if (current !== target) {
+                    assignVideoSrc(mobileSrc);
+                    preloaderVideo.play().catch((err) => {
+                        try { preloaderVideo.muted = true; } catch(e) {}
+                        if (soundToggleButton) soundToggleButton.classList.remove('sound-active');
+                        preloaderVideo.play().catch(()=>{});
+                    });
+                }
+                return;
+            }
+
+            // For desktop viewports, keep gating to high-performance devices to avoid heavy downloads
+            if (!useMobile && performanceProfile !== 'high') {
+                setTimeout(hidePreloader, 700);
+                return;
+            }
+
+            // If we get here and desktopSrc exists, set desktop; if not available but mobile exists, fall back to mobile
+            const chosenSrc = desktopSrc || mobileSrc || '';
+            if (!chosenSrc) {
+                // nothing to play, hide gracefully
+                setTimeout(hidePreloader, 700);
+                return;
+            }
+
+            const current = resolveUrl(getCurrentVideoSrc());
+            const target = resolveUrl(chosenSrc);
+            if (current !== target) {
+                assignVideoSrc(chosenSrc);
+                preloaderVideo.play().catch((err) => {
+                    try { preloaderVideo.muted = true; } catch(e) {}
+                    if (soundToggleButton) soundToggleButton.classList.remove('sound-active');
+                    preloaderVideo.play().catch(()=>{});
+                });
+            }
+        } catch(e) { /* ignore */ }
+    }
+    setPreloaderSource();
+    // switch on resize when crossing breakpoint
+    let lastWasMobile = window.innerWidth <= 768;
+    window.addEventListener('resize', () => {
+        const nowMobile = window.innerWidth <= 768;
+        if (nowMobile !== lastWasMobile) { lastWasMobile = nowMobile; setPreloaderSource(); }
+    });
+    // Hide preloader when video ends
+    preloaderVideo.addEventListener('ended', hidePreloader);
+
+    // Fallback: if video fails to play, hide preloader after a delay
+    preloaderVideo.addEventListener('error', hidePreloader);
+    setTimeout(hidePreloader, 8500); // Safety net, hides after ~8.5s max
+} else {
+    // If no video, hide immediately on load
+    hidePreloader();
+}
+
+
+
             });
 
             if (soundToggleButton && preloaderVideo) {
