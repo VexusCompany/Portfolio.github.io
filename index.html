@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VEXUS: The Ultimate Digital Experience</title>
+    <title>NEXUS: The Ultimate Digital Experience</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,18 +15,27 @@
     <style>
         /* --- Language & Direction Styles --- */
         :root {
-            --bg-dark: #0a0a14;
-            --bg-card: rgba(26, 26, 56, 0.5);
-            --bg-header-scrolled: rgba(10, 10, 20, 0.85);
-            --text-light: #f0f0ff;
-            --text-muted: #b0b0ff;
-            --accent-aqua: #4dcfff;
-            --accent-purple: #8a4dff;
-            --border-glow: rgba(138, 77, 255, 0.2);
-            --border-glow-hover: rgba(77, 207, 255, 0.7);
+            --bg-dark: #070506; /* near-black base */
+            --bg-card: rgba(40, 8, 8, 0.6); /* dark red translucent */
+            --bg-header-scrolled: rgba(10, 4, 4, 0.88);
+            --text-light: #f5f5f5; /* near-white for readability */
+            --text-muted: #c9a3a3; /* muted rose tint */
+            --accent-aqua: #e53935; /* vivid primary red */
+            --accent-purple: #7f0000; /* deep burgundy */
+            --border-glow: rgba(229, 57, 53, 0.12);
+            --border-glow-hover: rgba(229, 57, 53, 0.5);
+            --glow-strong: rgba(229, 57, 53, 0.35);
+            --glow-weak: rgba(229, 57, 53, 0.08);
+            --glow-hover: rgba(229, 57, 53, 0.8);
             --font-primary: 'Poppins', 'Tajawal', sans-serif;
             --font-display: 'Orbitron', sans-serif;
         }
+            /* Respect user reduced-motion preference */
+            @media (prefers-reduced-motion: reduce) {
+                * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+                #cursor-glow { display: none !important; }
+                .interactive-card:hover, .interactive-card.active { transform: none !important; }
+            }
         html[lang="ar"] {
             --font-primary: 'Tajawal', 'Poppins', sans-serif;
         }
@@ -83,7 +92,7 @@
             top: 0;
             width: 600px;
             height: 600px;
-            background: radial-gradient(circle, rgba(77, 207, 255, 0.06) 0%, transparent 60%);
+            background: radial-gradient(circle, var(--glow-weak) 0%, transparent 60%);
             border-radius: 50%;
             transform: translate(-50%, -50%);
             pointer-events: none;
@@ -213,7 +222,7 @@
         nav.desktop-nav a { color: var(--text-muted); text-decoration: none; font-weight: 600; font-size: 1em; transition: color 0.3s, text-shadow 0.3s; cursor: pointer; }
         nav.desktop-nav a:not(.nav-cta-button):hover, nav.desktop-nav a.active { color: var(--accent-aqua); text-shadow: 0 0 5px var(--accent-aqua); }
         .nav-cta-button { padding: 10px 25px; font-weight: bold; background: transparent; border: 1px solid var(--accent-purple); border-radius: 5px; transition: background 0.3s, box-shadow 0.3s, color 0.3s; color: var(--text-light); }
-        .nav-cta-button:hover { background: var(--accent-purple); color: white; box-shadow: 0 0 15px rgba(138, 77, 255, 0.6); }
+        .nav-cta-button:hover { background: var(--accent-purple); color: white; box-shadow: 0 0 15px var(--glow-strong); }
         
         /* Language Switcher */
         .lang-switcher { display: flex; gap: 10px; margin-left: 20px; }
@@ -290,8 +299,8 @@
             opacity: 1;
             transform: translateY(0);
         }
-        .cta-button { padding: 18px 45px; font-size: 1.1em; text-transform: uppercase; text-decoration: none; font-weight: 700; background: linear-gradient(45deg, var(--accent-purple), var(--accent-aqua)); border: none; border-radius: 8px; transition: transform 0.3s, box-shadow 0.3s; color: #ffffff; box-shadow: 0 0 20px rgba(138, 77, 255, 0.6); cursor: pointer; animation: fadeInUp 1s ease-out 0.6s; animation-fill-mode: both; margin-top: 25vh; }
-        .cta-button:hover { transform: scale(1.05) translateY(-3px); box-shadow: 0 0 35px rgba(77, 207, 255, 0.8); }
+        .cta-button { padding: 18px 45px; font-size: 1.1em; text-transform: uppercase; text-decoration: none; font-weight: 700; background: linear-gradient(45deg, var(--accent-purple), var(--accent-aqua)); border: none; border-radius: 8px; transition: transform 0.3s, box-shadow 0.3s; color: #ffffff; box-shadow: 0 0 20px var(--glow-strong); cursor: pointer; animation: fadeInUp 1s ease-out 0.6s; animation-fill-mode: both; margin-top: 25vh; }
+        .cta-button:hover { transform: scale(1.05) translateY(-3px); box-shadow: 0 0 35px var(--glow-hover); }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } } 
@@ -343,6 +352,9 @@
 
         /* --- Services Grid & Magnetic/Spotlight Effect (ENHANCED) --- */
         .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; }
+        /* When a grid only has one item, center it and constrain its width */
+        .services-grid.single-item, .portfolio-grid.single-item { justify-items: center; grid-template-columns: 1fr; }
+        .services-grid.single-item .interactive-card, .portfolio-grid.single-item .portfolio-item { max-width: 900px; width: 100%; margin: 0 auto; }
         .interactive-card {
             background-color: var(--bg-card);
             border-radius: 10px;
@@ -352,7 +364,7 @@
             position: relative; -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
             overflow: hidden;
-            box-shadow: 0 0 40px 0 rgba(77,207,255,0.10), 0 1.5px 8px 0 rgba(138,77,255,0.10);
+            box-shadow: 0 0 40px 0 var(--glow-weak), 0 1.5px 8px 0 var(--glow-weak);
             will-change: transform;
             transform: translate3d(0,0,0);
             backface-visibility: hidden;
@@ -369,7 +381,7 @@
             width: 100%;
             height: 100%;
             border-radius: 10px;
-            background: radial-gradient(400px circle at var(--x, 50%) var(--y, 50%), rgba(138, 77, 255, 0.4), transparent 40%);
+            background: radial-gradient(400px circle at var(--x, 50%) var(--y, 50%), var(--glow-strong), transparent 40%);
             opacity: 0;
             transition: opacity 0.5s ease-out;
             pointer-events: none;
@@ -387,7 +399,7 @@
             width: 150%;
             padding-bottom: 150%;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(77, 207, 255, 0.2) 0%, rgba(77, 207, 255, 0) 70%);
+            background: radial-gradient(circle, var(--glow-weak) 0%, rgba(0,0,0,0) 70%);
             opacity: 0;
             transform: translate(-50%, -50%) scale(0.5);
             transition: opacity 0.4s ease-out, transform 0.4s ease-out;
@@ -398,7 +410,7 @@
             filter: blur(2px) brightness(1.2) drop-shadow(0 0 40px var(--accent-aqua));
         }
         .interactive-card:hover, .interactive-card.active {
-            box-shadow: 0 0 80px 0 rgba(77,207,255,0.25), 0 4px 32px 0 rgba(138,77,255,0.18);
+            box-shadow: 0 0 80px 0 var(--glow-strong), 0 4px 32px 0 var(--glow-strong);
             border-color: var(--accent-aqua);
         }
 
@@ -462,7 +474,7 @@
         .form-group { margin-bottom: 25px; }
         .form-group label { display: block; margin-bottom: 10px; font-weight: 600; color: var(--text-muted); }
         .form-group input, .form-group textarea { width: 100%; padding: 15px; border-radius: 5px; border: 1px solid var(--border-glow); background-color: var(--bg-dark); color: var(--text-light); font-family: var(--font-primary); font-size: 1em; transition: border-color 0.3s, box-shadow 0.3s; }
-        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--accent-aqua); box-shadow: 0 0 10px rgba(77, 207, 255, 0.5); }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--accent-aqua); box-shadow: 0 0 10px var(--glow-strong); }
         .form-group textarea { resize: vertical; min-height: 150px; }
 
         /* --- Footer --- */
@@ -525,11 +537,13 @@
     <div id="site-background"></div>
     <div id="cursor-glow"></div>
     <div id="preloader">
-        <!-- Preloader: Replace "your-animation.mp4" with your video file path. -->
-        <video id="preloader-video" class="preloader-video" autoplay muted playsinline>
-            <source src="your-animation.mp4" type="video/mp4">
+        <!-- Preloader: provide two video files (desktop/mobile). Replace the data-src values with your files. -->
+        <video id="preloader-video" class="preloader-video" autoplay playsinline
+               data-src-desktop="preloader-desktop.mp4"
+               data-src-mobile="preloader-mobile.mp4">
+            <!-- JS will assign the suitable src based on viewport. -->
         </video>
-        <button id="sound-toggle-button" aria-label="Toggle Sound">
+        <button id="sound-toggle-button" class="sound-active" aria-label="Toggle Sound">
             <svg class="icon-sound-off" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 9.75L19.5 12m0 0l2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25M12.75 6.364V17.636a1.125 1.125 0 01-2.05.623l-1.002-2.003H6.375a1.125 1.125 0 01-1.125-1.125v-4.5a1.125 1.125 0 011.125-1.125h3.37a1.125 1.125 0 012.05.623z" /></svg>
             <svg class="icon-sound-on" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" /></svg>
         </button>
@@ -538,13 +552,13 @@
     <div id="page-transition-overlay"></div>
 
     <header id="main-header">
-        <div class="logo-container" data-target="home-page">
+            <div class="logo-container" data-target="home-page">
             <img src="FINED LOGO.png" alt="Your Brand Logo" style="height: 40px; width: auto;">
-            <span>Vexus</span>
+            <span>NEXUS</span>
         </div>
         <nav class="desktop-nav" role="navigation" aria-label="Main Navigation">
             <a href="#" data-target="home-page" class="active" tabindex="0" role="link" aria-current="page" data-i18n="navHome">Home</a>
-            <a href="#" data-target="vexus-edge-page" tabindex="0" role="link" data-i18n="navEdge">The VEXUS Edge</a>
+            <a href="#" data-target="nexus-edge-page" tabindex="0" role="link" data-i18n="navEdge">The NEXUS Edge</a>
             <a href="#" data-target="about-page" tabindex="0" role="link" data-i18n="navAbout">About Us</a>
             <a href="#" data-target="contact-page" class="nav-cta-button" tabindex="0" role="link" data-i18n="navContact">Contact Us</a>
             <div class="lang-switcher">
@@ -557,7 +571,7 @@
 
     <nav class="mobile-nav">
         <a href="#" data-target="home-page" tabindex="0" role="link" data-i18n="navHome">Home</a>
-        <a href="#" data-target="vexus-edge-page" tabindex="0" role="link" data-i18n="navEdge">The VEXUS Edge</a>
+        <a href="#" data-target="nexus-edge-page" tabindex="0" role="link" data-i18n="navEdge">The NEXUS Edge</a>
         <a href="#" data-target="about-page" tabindex="0" role="link" data-i18n="navAbout">About Us</a>
         <a href="#" data-target="contact-page" tabindex="0" role="link" data-i18n="navContact">Contact Us</a>
         <div class="lang-switcher">
@@ -600,10 +614,16 @@
                 <h2 class="section-title animate-on-scroll reveal-text" data-i18n="portfolioTitle">Featured Projects</h2>
                 <div class="portfolio-filter animate-on-scroll">
                     <button class="filter-btn active" data-filter="all" data-i18n="filterAll">All</button>
-                    <button class="filter-btn" data-filter="ai" data-i18n="filterAI">AI</button>
-                    <button class="filter-btn" data-filter="3d">3D</button>
-                    <button class="filter-btn" data-filter="web" data-i18n="filterWeb">Web</button>
+                    <button class="filter-btn" data-filter="3d" data-i18n="filter3D">3D</button>
+                    <button class="filter-btn" data-filter="pdf" data-i18n="filterPDF">PDF</button>
                     <button class="filter-btn" data-filter="motion" data-i18n="filterMotion">Motion</button>
+                    <button class="filter-btn" data-filter="reel" data-i18n="filterReel">Reel</button>
+                    <button class="filter-btn" data-filter="voice" data-i18n="filterVoice">Voice</button>
+                    <button class="filter-btn" data-filter="branding" data-i18n="filterBranding">Branding</button>
+                    <button class="filter-btn" data-filter="packaging" data-i18n="filterPackaging">Packaging</button>
+                    <button class="filter-btn" data-filter="web" data-i18n="filterWeb">Web</button>
+                    <button class="filter-btn" data-filter="app" data-i18n="filterApp">App</button>
+                    <button class="filter-btn" data-filter="print" data-i18n="filterPrint">Print</button>
                 </div>
                 <!--
                 =============================
@@ -620,36 +640,66 @@
                 4. Save and reload the page.
                 -->
                 <div class="portfolio-grid">
-                    <!-- Example Project Card: Copy and edit as needed -->
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="web" data-type="image" data-src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070&auto=format&fit=crop" tabindex="0">
-                        <div class="card-glow"></div>
-                        <img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop" alt="Web Development Project" class="lazy" data-i18n-alt="altWebProject">
-                        <div class="portfolio-overlay"><h3 data-i18n="project1Title">E-Commerce Platform</h3><p data-i18n="project1Type">Web Development</p></div>
-                    </div>
-                    <!-- Add more project cards below this line -->
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="motion" data-type="video" data-video-id="6_pru8U2RmM" tabindex="0">
-                        <div class="card-glow"></div>
-                        <img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=800&auto=format&fit=crop" alt="Motion Graphics Reel" class="lazy" data-i18n-alt="altMotionProject">
-                        <div class="portfolio-overlay"><h3 data-i18n="project2Title">Brand Intro Animation</h3><p data-i18n="project2Type">Motion Graphics</p></div>
-                    </div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="ai" data-type="image" data-src="https://images.unsplash.com/photo-1522199755839-a2bacb67c546?q=80&w=2072&auto=format&fit=crop" tabindex="0">
-                        <div class="card-glow"></div>
-                        <img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1522199755839-a2bacb67c546?q=80&w=800&auto=format&fit=crop" alt="AI Analytics Dashboard" class="lazy" data-i18n-alt="altAIProject">
-                        <div class="portfolio-overlay"><h3 data-i18n="project3Title">AI Analytics Dashboard</h3><p data-i18n="project3Type">Intelligent Systems</p></div>
-                    </div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="3d" data-type="image" data-src="https://images.unsplash.com/photo-1628519788321-115d743b4b57?q=80&w=2070&auto=format&fit=crop" tabindex="0">
-                        <div class="card-glow"></div>
-                        <img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1628519788321-115d743b4b57?q=80&w=800&auto=format&fit=crop" alt="3D Model" class="lazy" data-i18n-alt="alt3DProject">
-                        <div class="portfolio-overlay"><h3 data-i18n="project4Title">Cybernetic Arm</h3><p data-i18n="project4Type">3D Modeling</p></div>
-                    </div>
-                    <!-- End of project cards -->
+                    <!-- PDFs / 3D packages -->
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="3d" data-type="pdf" data-src="3D Both.pdf" tabindex="0"><div class="card-glow"></div><img src="2D PLAN.png" data-src="2D PLAN.png" alt="3D Both" class="lazy"><div class="portfolio-overlay"><h3>3D Both</h3><p>3D Package (PDF)</p></div></div>
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="3d" data-type="pdf" data-src="3D Cafe.pdf" tabindex="0"><div class="card-glow"></div><img src="2D PLAN (2).png" data-src="2D PLAN (2).png" alt="3D Cafe" class="lazy"><div class="portfolio-overlay"><h3>3D Cafe</h3><p>Interior Visualization (PDF)</p></div></div>
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="3d" data-type="pdf" data-src="3D Car Wash Shop Design.pdf" tabindex="0"><div class="card-glow"></div><img src="2D PALN ELECTRIC.png" data-src="2D PALN ELECTRIC.png" alt="Car Wash" class="lazy"><div class="portfolio-overlay"><h3>Car Wash Shop Design</h3><p>Architectural Package (PDF)</p></div></div>
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="3d" data-type="pdf" data-src="3D Design Samsung Both.pdf" tabindex="0"><div class="card-glow"></div><img src="2D PLAN.png" data-src="2D PLAN.png" alt="Samsung Design" class="lazy"><div class="portfolio-overlay"><h3>Samsung 3D Design</h3><p>3D Assets (PDF)</p></div></div>
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="3d" data-type="pdf" data-src="3d Project.pdf" tabindex="0"><div class="card-glow"></div><img src="2D PLAN.png" data-src="2D PLAN.png" alt="3D Project" class="lazy"><div class="portfolio-overlay"><h3>3D Project</h3><p>Project Pack (PDF)</p></div></div>
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="3d" data-type="pdf" data-src="3d21.pdf" tabindex="0"><div class="card-glow"></div><img src="2D PLAN.png" data-src="2D PLAN.png" alt="3D 21" class="lazy"><div class="portfolio-overlay"><h3>3D Project 21</h3><p>Arch. Documentation (PDF)</p></div></div>
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="3d" data-type="pdf" data-src="3d26.pdf" tabindex="0"><div class="card-glow"></div><img src="2D PLAN.png" data-src="2D PLAN.png" alt="3D 26" class="lazy"><div class="portfolio-overlay"><h3>3D Project 26</h3><p>Arch. Documentation (PDF)</p></div></div>
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="3d" data-type="pdf" data-src="3d44.pdf" tabindex="0"><div class="card-glow"></div><img src="2D PLAN.png" data-src="2D PLAN.png" alt="3D 44" class="lazy"><div class="portfolio-overlay"><h3>3D Project 44</h3><p>Arch. Documentation (PDF)</p></div></div>
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="3d" data-type="pdf" data-src="3d58.pdf" tabindex="0"><div class="card-glow"></div><img src="2D PLAN.png" data-src="2D PLAN.png" alt="3D 58" class="lazy"><div class="portfolio-overlay"><h3>3D Project 58</h3><p>Arch. Documentation (PDF)</p></div></div>
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="3d" data-type="pdf" data-src="Morocco Villa.pdf" tabindex="0"><div class="card-glow"></div><img src="2D PLAN (2).png" data-src="2D PLAN (2).png" alt="Morocco Villa" class="lazy"><div class="portfolio-overlay"><h3>Morocco Villa</h3><p>Villa Design (PDF)</p></div></div>
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="3d" data-type="pdf" data-src="Qatif Villa.pdf" tabindex="0"><div class="card-glow"></div><img src="2D PLAN.png" data-src="2D PLAN.png" alt="Qatif Villa" class="lazy"><div class="portfolio-overlay"><h3>Qatif Villa</h3><p>Villa Design (PDF)</p></div></div>
+
+                    <!-- Images / Screenshots -->
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="branding" data-type="image" data-src="FINED LOGO.png" tabindex="0"><div class="card-glow"></div><img src="FINED LOGO.png" data-src="FINED LOGO.png" alt="Brand Logo" class="lazy"><div class="portfolio-overlay"><h3>Brand Identity</h3><p>Logo & Identity</p></div></div>
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="branding" data-type="image" data-src="LOGO.png" tabindex="0"><div class="card-glow"></div><img src="LOGO.png" data-src="LOGO.png" alt="Logo" class="lazy"><div class="portfolio-overlay"><h3>Logotype</h3><p>Brand Mark</p></div></div>
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="web" data-type="image" data-src="EDU SITE.png" tabindex="0"><div class="card-glow"></div><img src="EDU SITE.png" data-src="EDU SITE.png" alt="Educational Site" class="lazy"><div class="portfolio-overlay"><h3>Educational Site</h3><p>Website Screenshot</p></div></div>
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="web" data-type="image" data-src="EDU SITE (2).png" tabindex="0"><div class="card-glow"></div><img src="EDU SITE (2).png" data-src="EDU SITE (2).png" alt="Educational Site 2" class="lazy"><div class="portfolio-overlay"><h3>Educational Site (Alt)</h3><p>Website Screenshot</p></div></div>
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="app" data-type="image" data-src="APP.png" tabindex="0"><div class="card-glow"></div><img src="APP.png" data-src="APP.png" alt="App" class="lazy"><div class="portfolio-overlay"><h3>App UI</h3><p>Mobile App Screens</p></div></div>
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="app" data-type="image" data-src="APP (2).png" tabindex="0"><div class="card-glow"></div><img src="APP (2).png" data-src="APP (2).png" alt="App 2" class="lazy"><div class="portfolio-overlay"><h3>App UI (Alt)</h3><p>Mobile App Screens</p></div></div>
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="packaging" data-type="image" data-src="PACKIGING.png" tabindex="0"><div class="card-glow"></div><img src="PACKIGING.png" data-src="PACKIGING.png" alt="Packaging" class="lazy"><div class="portfolio-overlay"><h3>Packaging</h3><p>Product Packaging Design</p></div></div>
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="print" data-type="image" data-src="SOCHIAL POSTER.png" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER.png" data-src="SOCHIAL POSTER.png" alt="Social Poster" class="lazy"><div class="portfolio-overlay"><h3>Social Poster</h3><p>Campaign Poster</p></div></div>
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="print" data-type="image" data-src="SOCHIAL POSTER (2).png" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER (2).png" data-src="SOCHIAL POSTER (2).png" alt="Social Poster 2" class="lazy"><div class="portfolio-overlay"><h3>Social Poster (Alt)</h3><p>Campaign Poster</p></div></div>
+
+                    <!-- Motion & Video (local MP4s) -->
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="motion" data-type="video" data-src="MOTION GRAPHICS 1.mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER.png" data-src="SOCHIAL POSTER.png" alt="Motion 1" class="lazy"><div class="portfolio-overlay"><h3>Motion Graphics 1</h3><p>Motion Reel (MP4)</p></div></div>
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="motion" data-type="video" data-src="MOTION GRAPHICS 2.mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER (2).png" data-src="SOCHIAL POSTER (2).png" alt="Motion 2" class="lazy"><div class="portfolio-overlay"><h3>Motion Graphics 2</h3><p>Motion Reel (MP4)</p></div></div>
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="motion" data-type="video" data-src="MOTION GRAPHICS 3.mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER.png" data-src="SOCHIAL POSTER.png" alt="Motion 3" class="lazy"><div class="portfolio-overlay"><h3>Motion Graphics 3</h3><p>Motion Reel (MP4)</p></div></div>
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="motion" data-type="video" data-src="MOTION GRAPHICS 4.mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER (2).png" data-src="SOCHIAL POSTER (2).png" alt="Motion 4" class="lazy"><div class="portfolio-overlay"><h3>Motion Graphics 4</h3><p>Motion Reel (MP4)</p></div></div>
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="motion" data-type="video" data-src="MOTION GRAPHICS 5.mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER.png" data-src="SOCHIAL POSTER.png" alt="Motion 5" class="lazy"><div class="portfolio-overlay"><h3>Motion Graphics 5</h3><p>Motion Reel (MP4)</p></div></div>
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="motion" data-type="video" data-src="MOTION GRAPHICS 6.mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER (2).png" data-src="SOCHIAL POSTER (2).png" alt="Motion 6" class="lazy"><div class="portfolio-overlay"><h3>Motion Graphics 6</h3><p>Motion Reel (MP4)</p></div></div>
+
+                    <!-- Reels & Client Videos -->
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="reel" data-type="video" data-src="Reel aboels.mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER.png" data-src="SOCHIAL POSTER.png" alt="Reel Aboels" class="lazy"><div class="portfolio-overlay"><h3>Reel Aboels</h3><p>Client Reel (MP4)</p></div></div>
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="reel" data-type="video" data-src="Reel bay.mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER (2).png" data-src="SOCHIAL POSTER (2).png" alt="Reel Bay" class="lazy"><div class="portfolio-overlay"><h3>Reel Bay</h3><p>Client Reel (MP4)</p></div></div>
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="reel" data-type="video" data-src="Reel14.mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER.png" data-src="SOCHIAL POSTER.png" alt="Reel 14" class="lazy"><div class="portfolio-overlay"><h3>Reel 14</h3><p>Client Reel (MP4)</p></div></div>
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="reel" data-type="video" data-src="Reel16.mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER (2).png" data-src="SOCHIAL POSTER (2).png" alt="Reel 16" class="lazy"><div class="portfolio-overlay"><h3>Reel 16</h3><p>Client Reel (MP4)</p></div></div>
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="motion" data-type="video" data-src="3rd-Project (2).mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER.png" data-src="SOCHIAL POSTER.png" alt="3rd Project" class="lazy"><div class="portfolio-overlay"><h3>Third Project Video</h3><p>Project Video (MP4)</p></div></div>
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="motion" data-type="video" data-src="WaelFinal (1).mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER (2).png" data-src="SOCHIAL POSTER (2).png" alt="Wael Final" class="lazy"><div class="portfolio-overlay"><h3>Wael Final</h3><p>Client Video (MP4)</p></div></div>
+
+                    <!-- Preloader and misc video assets -->
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="motion" data-type="video" data-src="preloader-desktop.mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER.png" data-src="SOCHIAL POSTER.png" alt="Preloader Desktop" class="lazy"><div class="portfolio-overlay"><h3>Preloader (Desktop)</h3><p>Video (MP4)</p></div></div>
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="motion" data-type="video" data-src="preloader-mobile.mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER (2).png" data-src="SOCHIAL POSTER (2).png" alt="Preloader Mobile" class="lazy"><div class="portfolio-overlay"><h3>Preloader (Mobile)</h3><p>Video (MP4)</p></div></div>
+
+                    <!-- Voice over assets (audio/video) -->
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="voice" data-type="audio" data-src="Voice over/انجليزي/Brandatomy  wihtout Music.mp3" tabindex="0"><div class="card-glow"></div><img src="LOGO.png" data-src="LOGO.png" alt="Brandatomy Voice" class="lazy"><div class="portfolio-overlay"><h3>Brandatomy (EN)</h3><p>Voice Over (MP3)</p></div></div>
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="voice" data-type="audio" data-src="Voice over/خليجي/2.mp3" tabindex="0"><div class="card-glow"></div><img src="LOGO.png" data-src="LOGO.png" alt="Khaleeji 2" class="lazy"><div class="portfolio-overlay"><h3>Khaleeji Voice 2</h3><p>Voice Over (MP3)</p></div></div>
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="voice" data-type="audio" data-src="Voice over/خليجي/3.mp3" tabindex="0"><div class="card-glow"></div><img src="LOGO.png" data-src="LOGO.png" alt="Khaleeji 3" class="lazy"><div class="portfolio-overlay"><h3>Khaleeji Voice 3</h3><p>Voice Over (MP3)</p></div></div>
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="voice" data-type="video" data-src="Voice over/خليجي/4.mp4" tabindex="0"><div class="card-glow"></div><img src="LOGO.png" data-src="LOGO.png" alt="Khaleeji 4 Video" class="lazy"><div class="portfolio-overlay"><h3>Khaleeji Voice Video</h3><p>Voice/Video (MP4)</p></div></div>
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="voice" data-type="audio" data-src="Voice over/خليجي/5.mp3" tabindex="0"><div class="card-glow"></div><img src="LOGO.png" data-src="LOGO.png" alt="Khaleeji 5" class="lazy"><div class="portfolio-overlay"><h3>Khaleeji Voice 5</h3><p>Voice Over (MP3)</p></div></div>
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="voice" data-type="audio" data-src="Voice over/خليجي/6.mp3" tabindex="0"><div class="card-glow"></div><img src="LOGO.png" data-src="LOGO.png" alt="Khaleeji 6" class="lazy"><div class="portfolio-overlay"><h3>Khaleeji Voice 6</h3><p>Voice Over (MP3)</p></div></div>
+                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="voice" data-type="audio" data-src="Voice over/مصري/1.mp3" tabindex="0"><div class="card-glow"></div><img src="LOGO.png" data-src="LOGO.png" alt="Masri Voice 1" class="lazy"><div class="portfolio-overlay"><h3>Masri Voice 1</h3><p>Voice Over (MP3)</p></div></div>
+
                 </div>
             </section>
             <section class="content-section">
                  <h2 class="section-title animate-on-scroll reveal-text" data-i18n="testimonialsTitle">What Our Clients Say</h2>
                  <div class="testimonial-carousel animate-on-scroll">
                      <div class="testimonial-slide active">
-                         <p class="testimonial-text" data-i18n="testimonial1Text">"VEXUS transformed our vision into a digital masterpiece. Their attention to detail is unmatched."</p>
+                         <p class="testimonial-text" data-i18n="testimonial1Text">"NEXUS transformed our vision into a digital masterpiece. Their attention to detail is unmatched."</p>
                          <p class="testimonial-author" data-i18n="testimonial1Author">- John Doe, CEO of InnovateCorp</p>
                      </div>
                      <div class="testimonial-slide">
@@ -664,11 +714,11 @@
             </section>
         </div>
 
-        <!-- The VEXUS Edge Page -->
-        <div id="vexus-edge-page" class="page">
+        <!-- The NEXUS Edge Page -->
+        <div id="nexus-edge-page" class="page">
             <div class="page-header">
                 <div class="aurora-background"></div>
-                <h1 class="animate-on-scroll reveal-text" data-i18n="edgeTitle">The VEXUS Edge</h1>
+                <h1 class="animate-on-scroll reveal-text" data-i18n="edgeTitle">The NEXUS Edge</h1>
                 <div id="rotating-subtext-container" class="animate-on-scroll">
                     <span class="rotating-subtext active" data-i18n="edgeSubtext1">We are more than a digital agency; we are architects of the future.</span>
                     <span class="rotating-subtext" data-i18n="edgeSubtext2">Our integrated approach provides a distinct advantage for our partners.</span>
@@ -710,7 +760,7 @@
             <div class="page-header">
                 <div class="aurora-background"></div>
                 <h1 class="animate-on-scroll reveal-text" data-i18n="aboutTitle">The Apex of Digital Transformation</h1>
-                <p class="animate-on-scroll" data-i18n="aboutDesc">At VEXUS, we don't just build digital solutions; we forge future-forward legends. We are a collective of innovators, artists, and engineers, united by a single purpose: to fuse the boundless potential of human creativity with the precision of advanced technology.</p>
+                <p class="animate-on-scroll" data-i18n="aboutDesc">At NEXUS, we don't just build digital solutions; we forge future-forward legends. We are a collective of innovators, artists, and engineers, united by a single purpose: to fuse the boundless potential of human creativity with the precision of advanced technology.</p>
             </div>
             <section class="content-section">
                 <h2 class="section-title animate-on-scroll reveal-text" data-i18n="journeyTitle">Our Journey</h2>
@@ -718,7 +768,7 @@
                     <div class="timeline-item left animate-on-scroll">
                         <div class="timeline-content">
                             <h3 data-i18n="timeline1Title">2015 - The Genesis</h3>
-                            <p data-i18n="timeline1Desc">VEXUS was founded with a mission to merge technology and art.</p>
+                            <p data-i18n="timeline1Desc">NEXUS was founded with a mission to merge technology and art.</p>
                         </div>
                     </div>
                     <div class="timeline-item right animate-on-scroll">
@@ -739,7 +789,7 @@
                  <h2 class="section-title animate-on-scroll reveal-text" data-i18n="testimonialsTitle">What Our Clients Say</h2>
                  <div class="testimonial-carousel animate-on-scroll">
                      <div class="testimonial-slide active">
-                         <p class="testimonial-text" data-i18n="testimonial1Text">"VEXUS transformed our vision into a digital masterpiece. Their attention to detail is unmatched."</p>
+                         <p class="testimonial-text" data-i18n="testimonial1Text">"NEXUS transformed our vision into a digital masterpiece. Their attention to detail is unmatched."</p>
                          <p class="testimonial-author" data-i18n="testimonial1Author">- John Doe, CEO of InnovateCorp</p>
                      </div>
                      <div class="testimonial-slide">
@@ -757,16 +807,56 @@
         <div id="contact-page" class="page"><div class="page-header"><div class="aurora-background"></div><h1 class="animate-on-scroll reveal-text" data-i18n="contactTitle">Contact Us</h1><p class="animate-on-scroll" data-i18n="contactDesc">Let's build the future together. Reach out to us to discuss your next project or to learn more about our services.</p></div><section class="content-section"><div class="contact-form animate-on-scroll"><form><div class="form-group"><label for="name" data-i18n="formName">Full Name</label><input type="text" id="name" name="name" required></div><div class="form-group"><label for="email" data-i18n="formEmail">Email Address</label><input type="email" id="email" name="email" required></div><div class="form-group"><label for="message" data-i18n="formMessage">Message</label><textarea id="message" name="message" required></textarea></div><button type="submit" class="cta-button" style="width: 100%;" data-i18n="formSubmit">Send Message</button></form></div></section></div>
 
         <!-- Service Detail Pages -->
-        <div id="service-ai-page" class="page"><div class="page-header"><div class="aurora-background"></div><h1 class="animate-on-scroll reveal-text" data-i18n="serviceAITitle">Intelligent Systems</h1><p class="animate-on-scroll" data-i18n="serviceAIDesc">Harnessing machine learning and computer vision to build AI that doesn't just compute—it innovates.</p></div><section class="content-section"><h2 class="section-title animate-on-scroll reveal-text" data-i18n="serviceAIWork">Our Work in AI</h2><div class="portfolio-grid"><div class="interactive-card portfolio-item animate-on-scroll" data-type="image" data-src="https://images.unsplash.com/photo-1593349480503-685d3a5a457f?q=80&w=2070&auto=format&fit=crop" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1593349480503-685d3a5a457f?q=80&w=800&auto=format&fit=crop" alt="AI Project 1" class="lazy"><div class="portfolio-overlay"><h3>Project Vision</h3><p>Computer Vision</p></div></div></div></section></div>
-        <div id="service-3d-page" class="page"><div class="page-header"><div class="aurora-background"></div><h1 class="animate-on-scroll reveal-text" data-i18n="service3DTitle">3D & Visualization</h1><p class="animate-on-scroll" data-i18n="service3DDesc">Crafting hyper-realistic models and breathtaking visualizations that bring concepts to life.</p></div><section class="content-section"><h2 class="section-title animate-on-scroll reveal-text" data-i18n="service3DWork">Our Work in 3D</h2><div class="portfolio-grid"><div class="interactive-card portfolio-item animate-on-scroll" data-type="video" data-video-id="iB6goa1af4I" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1628102490520-73305373a61f?q=80&w=800&auto=format&fit=crop" alt="3D Project 1" class="lazy"><div class="portfolio-overlay"><h3>Architectural Fly-through</h3><p>3D Animation</p></div></div></div></section></div>
-        <div id="service-books-page" class="page"><div class="page-header"><div class="aurora-background"></div><h1 class="animate-on-scroll reveal-text" data-i18n="serviceBooksTitle">Book Design</h1><p class="animate-on-scroll" data-i18n="serviceBooksDesc">Designing striking covers and elegant layouts that give your words a powerful identity.</p></div><section class="content-section"><h2 class="section-title animate-on-scroll reveal-text" data-i18n="serviceBooksWork">Our Book Designs</h2><div class="portfolio-grid"><div class="interactive-card portfolio-item animate-on-scroll" data-type="image" data-src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=1887&auto=format&fit=crop" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=800&auto=format&fit=crop" alt="Book Cover 1" class="lazy"><div class="portfolio-overlay"><h3>The Last Argonaut</h3><p>Cover Design</p></div></div></div></section></div>
-        <div id="service-graphics-page" class="page"><div class="page-header"><div class="aurora-background"></div><h1 class="animate-on-scroll reveal-text" data-i18n="serviceGraphicsTitle">Graphic Design</h1><p class="animate-on-scroll" data-i18n="serviceGraphicsDesc">Creating visual systems for social media and print that are strategic and unforgettable.</p></div><section class="content-section"><h2 class="section-title animate-on-scroll reveal-text" data-i18n="serviceGraphicsWork">Our Graphic Designs</h2><div class="portfolio-grid"><div class="interactive-card portfolio-item animate-on-scroll" data-type="image" data-src="https://images.unsplash.com/photo-1611162616805-6a406a4a4a4b?q=80&w=1974&auto=format&fit=crop" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1611162616805-6a406a4a4a4b?q=80&w=800&auto=format&fit=crop" alt="Graphic Design 1" class="lazy"><div class="portfolio-overlay"><h3>Social Media Campaign</h3><p>Digital Graphics</p></div></div></div></section></div>
-        <div id="service-logos-page" class="page"><div class="page-header"><div class="aurora-background"></div><h1 class="animate-on-scroll reveal-text" data-i18n="serviceLogosTitle">Logo & Identity</h1><p class="animate-on-scroll" data-i18n="serviceLogosDesc">Developing comprehensive visual identity systems that tell your brand's unique story.</p></div><section class="content-section"><h2 class="section-title animate-on-scroll reveal-text" data-i18n="serviceLogosWork">Our Logo Designs</h2><div class="portfolio-grid"><div class="interactive-card portfolio-item animate-on-scroll" data-type="image" data-src="https://images.unsplash.com/photo-1543287714-6c38b29c0d38?q=80&w=2070&auto=format&fit=crop" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1543287714-6c38b29c0d38?q=80&w=800&auto=format&fit=crop" alt="Logo Design 1" class="lazy"><div class="portfolio-overlay"><h3>Nova Industries</h3><p>Brand Identity</p></div></div></div></section></div>
-        <div id="service-motion-page" class="page"><div class="page-header"><div class="aurora-background"></div><h1 class="animate-on-scroll reveal-text" data-i18n="serviceMotionTitle">Motion Graphics</h1><p class="animate-on-scroll" data-i18n="serviceMotionDesc">From sleek explainer videos to cinematic intros that capture and hold attention.</p></div><section class="content-section"><h2 class="section-title animate-on-scroll reveal-text" data-i18n="serviceMotionWork">Our Motion Graphics Work</h2><div class="portfolio-grid"><div class="interactive-card portfolio-item animate-on-scroll" data-type="video" data-video-id="2Soe2iicv4A" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1516245834210-c4c1427873ab?q=80&w=800&auto=format&fit=crop" alt="Motion Graphics 1" class="lazy"><div class="portfolio-overlay"><h3>Product Explainer</h3><p>Animated Video</p></div></div></div></section></div>
-        <div id="service-pack-page" class="page"><div class="page-header"><div class="aurora-background"></div><h1 class="animate-on-scroll reveal-text" data-i18n="servicePackTitle">Packaging Design</h1><p class="animate-on-scroll" data-i18n="servicePackDesc">Designing packaging that captivates on the shelf and creates a memorable unboxing experience.</p></div><section class="content-section"><h2 class="section-title animate-on-scroll reveal-text" data-i18n="servicePackWork">Our Packaging Designs</h2><div class="portfolio-grid"><div class="interactive-card portfolio-item animate-on-scroll" data-type="image" data-src="https://images.unsplash.com/photo-1596701923610-c553037c729c?q=80&w=1887&auto=format&fit=crop" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1596701923610-c553037c729c?q=80&w=800&auto=format&fit=crop" alt="Packaging 1" class="lazy"><div class="portfolio-overlay"><h3>Aura Cosmetics</h3><p>Product Packaging</p></div></div></div></section></div>
-        <div id="service-reels-page" class="page"><div class="page-header"><div class="aurora-background"></div><h1 class="animate-on-scroll reveal-text" data-i18n="serviceReelsTitle">Short-Form Video</h1><p class="animate-on-scroll" data-i18n="serviceReelsDesc">Engaging your audience with dynamic, trend-setting videos for Instagram Reels and TikTok.</p></div><section class="content-section"><h2 class="section-title animate-on-scroll reveal-text" data-i18n="serviceReelsWork">Our Reels</h2><div class="portfolio-grid"><div class="interactive-card portfolio-item animate-on-scroll" data-type="video" data-video-id="9y73P4QVglI" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1611605698335-8b1569810432?q=80&w=800&auto=format&fit=crop" alt="Reel 1" class="lazy"><div class="portfolio-overlay"><h3>Fashion Week</h3><p>Instagram Reel</p></div></div></div></section></div>
-        <div id="service-voice-page" class="page"><div class="page-header"><div class="aurora-background"></div><h1 class="animate-on-scroll reveal-text" data-i18n="serviceVoiceTitle">Voiceover Services</h1><p class="animate-on-scroll" data-i18n="serviceVoiceDesc">Lending a professional voice to your project with our versatile voiceover and narration services.</p></div><section class="content-section"><h2 class="section-title animate-on-scroll reveal-text" data-i18n="serviceVoiceWork">Our Voice Work</h2><div class="portfolio-grid"><div class="interactive-card portfolio-item animate-on-scroll" data-type="image" data-src="https://images.unsplash.com/photo-1589903362484-2503998b3017?q=80&w=1887&auto=format&fit=crop" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1589903362484-2503998b3017?q=80&w=800&auto=format&fit=crop" alt="Voice Over 1" class="lazy"><div class="portfolio-overlay"><h3>Documentary Narration</h3><p>Voice Over</p></div></div></div></section></div>
-        <div id="service-web-page" class="page"><div class="page-header"><div class="aurora-background"></div><h1 class="animate-on-scroll reveal-text" data-i18n="serviceWebTitle">Web & UX/UI</h1><p class="animate-on-scroll" data-i18n="serviceWebDesc">Building immersive websites with a focus on intuitive user experience and flawless design.</p></div><section class="content-section"><h2 class="section-title animate-on-scroll reveal-text" data-i18n="serviceWebWork">Our Web Projects</h2><div class="portfolio-grid"><div class="interactive-card portfolio-item animate-on-scroll" data-type="image" data-src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=2070&auto=format&fit=crop" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=800&auto=format&fit=crop" alt="Web Project 1" class="lazy"><div class="portfolio-overlay"><h3>Corporate Website</h3><p>UX/UI Design</p></div></div></div></section></div>
+        <div id="service-ai-page" class="page"><div class="page-header"><div class="aurora-background"></div><h1 class="animate-on-scroll reveal-text" data-i18n="serviceAITitle">Intelligent Systems</h1><p class="animate-on-scroll" data-i18n="serviceAIDesc">Harnessing machine learning and computer vision to build AI that doesn't just compute—it innovates.</p></div><section class="content-section"><h2 class="section-title animate-on-scroll reveal-text" data-i18n="serviceAIWork">Our Work in AI</h2><div class="portfolio-grid">
+                <div class="interactive-card portfolio-item animate-on-scroll" data-type="image" data-src="https://images.unsplash.com/photo-1593349480503-685d3a5a457f?q=80&w=2070&auto=format&fit=crop" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1593349480503-685d3a5a457f?q=80&w=800&auto=format&fit=crop" alt="AI Project 1" class="lazy"><div class="portfolio-overlay"><h3>Project Vision</h3><p>Computer Vision</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-type="image" data-src="https://images.unsplash.com/photo-1581092795368-6c7b0d6b3c9c?q=80&w=2070&auto=format&fit=crop" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1581092795368-6c7b0d6b3c9c?q=80&w=800&auto=format&fit=crop" alt="AI Project 2" class="lazy"><div class="portfolio-overlay"><h3>Recommendation Engine</h3><p>Personalization</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-type="video" data-video-id="dQw4w9WgXcQ" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=800&auto=format&fit=crop" alt="AI Project 3" class="lazy"><div class="portfolio-overlay"><h3>Speech Model Demo</h3><p>Audio / ML</p></div></div>
+            </div></section></div>
+        <div id="service-3d-page" class="page"><div class="page-header"><div class="aurora-background"></div><h1 class="animate-on-scroll reveal-text" data-i18n="service3DTitle">3D & Visualization</h1><p class="animate-on-scroll" data-i18n="service3DDesc">Crafting hyper-realistic models and breathtaking visualizations that bring concepts to life.</p></div><section class="content-section"><h2 class="section-title animate-on-scroll reveal-text" data-i18n="service3DWork">Our Work in 3D</h2><div class="portfolio-grid">
+                <div class="interactive-card portfolio-item animate-on-scroll" data-type="video" data-video-id="iB6goa1af4I" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1628102490520-73305373a61f?q=80&w=800&auto=format&fit=crop" alt="3D Project 1" class="lazy"><div class="portfolio-overlay"><h3>Architectural Fly-through</h3><p>3D Animation</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-type="image" data-src="https://images.unsplash.com/photo-1526481280698-448f3d6f0f1e?q=80&w=2070&auto=format&fit=crop" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1526481280698-448f3d6f0f1e?q=80&w=800&auto=format&fit=crop" alt="3D Project 2" class="lazy"><div class="portfolio-overlay"><h3>Product Mockup</h3><p>High-Res Render</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-type="image" data-src="https://images.unsplash.com/photo-1503602642458-232111445657?q=80&w=2070&auto=format&fit=crop" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1503602642458-232111445657?q=80&w=800&auto=format&fit=crop" alt="3D Project 3" class="lazy"><div class="portfolio-overlay"><h3>Character Model</h3><p>Rigging & Textures</p></div></div>
+            </div></section></div>
+        <div id="service-books-page" class="page"><div class="page-header"><div class="aurora-background"></div><h1 class="animate-on-scroll reveal-text" data-i18n="serviceBooksTitle">Book Design</h1><p class="animate-on-scroll" data-i18n="serviceBooksDesc">Designing striking covers and elegant layouts that give your words a powerful identity.</p></div><section class="content-section"><h2 class="section-title animate-on-scroll reveal-text" data-i18n="serviceBooksWork">Our Book Designs</h2><div class="portfolio-grid">
+                <div class="interactive-card portfolio-item animate-on-scroll" data-type="image" data-src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=1887&auto=format&fit=crop" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=800&auto=format&fit=crop" alt="Book Cover 1" class="lazy"><div class="portfolio-overlay"><h3>The Last Argonaut</h3><p>Cover Design</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-type="image" data-src="https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=1887&auto=format&fit=crop" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=800&auto=format&fit=crop" alt="Book Interior" class="lazy"><div class="portfolio-overlay"><h3>Interior Layout</h3><p>Typography & Grids</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-type="image" data-src="https://images.unsplash.com/photo-1473186578172-c141e6798cf4?q=80&w=1887&auto=format&fit=crop" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1473186578172-c141e6798cf4?q=80&w=800&auto=format&fit=crop" alt="Series Branding" class="lazy"><div class="portfolio-overlay"><h3>Series Branding</h3><p>Cover System</p></div></div>
+            </div></section></div>
+        <div id="service-graphics-page" class="page"><div class="page-header"><div class="aurora-background"></div><h1 class="animate-on-scroll reveal-text" data-i18n="serviceGraphicsTitle">Graphic Design</h1><p class="animate-on-scroll" data-i18n="serviceGraphicsDesc">Creating visual systems for social media and print that are strategic and unforgettable.</p></div><section class="content-section"><h2 class="section-title animate-on-scroll reveal-text" data-i18n="serviceGraphicsWork">Our Graphic Designs</h2><div class="portfolio-grid">
+                <div class="interactive-card portfolio-item animate-on-scroll" data-type="image" data-src="https://images.unsplash.com/photo-1611162616805-6a406a4a4a4b?q=80&w=1974&auto=format&fit=crop" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1611162616805-6a406a4a4a4b?q=80&w=800&auto=format&fit=crop" alt="Graphic Design 1" class="lazy"><div class="portfolio-overlay"><h3>Social Media Campaign</h3><p>Digital Graphics</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-type="image" data-src="https://images.unsplash.com/photo-1503602642458-232111445657?q=80&w=1974&auto=format&fit=crop" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1503602642458-232111445657?q=80&w=800&auto=format&fit=crop" alt="Brand Kit" class="lazy"><div class="portfolio-overlay"><h3>Brand Kit</h3><p>Identity & Guidelines</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-type="image" data-src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1974&auto=format&fit=crop" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800&auto=format&fit=crop" alt="Poster Series" class="lazy"><div class="portfolio-overlay"><h3>Poster Series</h3><p>Print Design</p></div></div>
+            </div></section></div>
+        <div id="service-logos-page" class="page"><div class="page-header"><div class="aurora-background"></div><h1 class="animate-on-scroll reveal-text" data-i18n="serviceLogosTitle">Logo & Identity</h1><p class="animate-on-scroll" data-i18n="serviceLogosDesc">Developing comprehensive visual identity systems that tell your brand's unique story.</p></div><section class="content-section"><h2 class="section-title animate-on-scroll reveal-text" data-i18n="serviceLogosWork">Our Logo Designs</h2><div class="portfolio-grid">
+                <div class="interactive-card portfolio-item animate-on-scroll" data-type="image" data-src="https://images.unsplash.com/photo-1543287714-6c38b29c0d38?q=80&w=2070&auto=format&fit=crop" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1543287714-6c38b29c0d38?q=80&w=800&auto=format&fit=crop" alt="Logo Design 1" class="lazy"><div class="portfolio-overlay"><h3>Nova Industries</h3><p>Brand Identity</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-type="image" data-src="https://images.unsplash.com/photo-1503602642458-232111445657?q=80&w=2070&auto=format&fit=crop" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1503602642458-232111445657?q=80&w=800&auto=format&fit=crop" alt="Logo System" class="lazy"><div class="portfolio-overlay"><h3>Logo System</h3><p>Flexible Marks</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-type="image" data-src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=2070&auto=format&fit=crop" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=800&auto=format&fit=crop" alt="Monogram" class="lazy"><div class="portfolio-overlay"><h3>Monogram</h3><p>Logotype</p></div></div>
+            </div></section></div>
+        <div id="service-motion-page" class="page"><div class="page-header"><div class="aurora-background"></div><h1 class="animate-on-scroll reveal-text" data-i18n="serviceMotionTitle">Motion Graphics</h1><p class="animate-on-scroll" data-i18n="serviceMotionDesc">From sleek explainer videos to cinematic intros that capture and hold attention.</p></div><section class="content-section"><h2 class="section-title animate-on-scroll reveal-text" data-i18n="serviceMotionWork">Our Motion Graphics Work</h2><div class="portfolio-grid">
+                <div class="interactive-card portfolio-item animate-on-scroll" data-type="video" data-video-id="2Soe2iicv4A" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1516245834210-c4c1427873ab?q=80&w=800&auto=format&fit=crop" alt="Motion Graphics 1" class="lazy"><div class="portfolio-overlay"><h3>Product Explainer</h3><p>Animated Video</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-type="video" data-video-id="9y73P4QVglI" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800&auto=format&fit=crop" alt="Motion Graphics 2" class="lazy"><div class="portfolio-overlay"><h3>Brand Intro</h3><p>Title Sequence</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-type="image" data-src="https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?q=80&w=800&auto=format&fit=crop" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?q=80&w=800&auto=format&fit=crop" alt="Motion Stills" class="lazy"><div class="portfolio-overlay"><h3>Motion Stills</h3><p>Frame Exports</p></div></div>
+            </div></section></div>
+        <div id="service-pack-page" class="page"><div class="page-header"><div class="aurora-background"></div><h1 class="animate-on-scroll reveal-text" data-i18n="servicePackTitle">Packaging Design</h1><p class="animate-on-scroll" data-i18n="servicePackDesc">Designing packaging that captivates on the shelf and creates a memorable unboxing experience.</p></div><section class="content-section"><h2 class="section-title animate-on-scroll reveal-text" data-i18n="servicePackWork">Our Packaging Designs</h2><div class="portfolio-grid">
+                <div class="interactive-card portfolio-item animate-on-scroll" data-type="image" data-src="https://images.unsplash.com/photo-1596701923610-c553037c729c?q=80&w=1887&auto=format&fit=crop" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1596701923610-c553037c729c?q=80&w=800&auto=format&fit=crop" alt="Packaging 1" class="lazy"><div class="portfolio-overlay"><h3>Aura Cosmetics</h3><p>Product Packaging</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-type="image" data-src="https://images.unsplash.com/photo-1556745753-b2904692b3cd?q=80&w=1887&auto=format&fit=crop" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1556745753-b2904692b3cd?q=80&w=800&auto=format&fit=crop" alt="Box Set" class="lazy"><div class="portfolio-overlay"><h3>Box Set</h3><p>Structural Design</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-type="image" data-src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1887&auto=format&fit=crop" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=800&auto=format&fit=crop" alt="Label Design" class="lazy"><div class="portfolio-overlay"><h3>Label Design</h3><p>Retail Ready</p></div></div>
+            </div></section></div>
+        <div id="service-reels-page" class="page"><div class="page-header"><div class="aurora-background"></div><h1 class="animate-on-scroll reveal-text" data-i18n="serviceReelsTitle">Short-Form Video</h1><p class="animate-on-scroll" data-i18n="serviceReelsDesc">Engaging your audience with dynamic, trend-setting videos for Instagram Reels and TikTok.</p></div><section class="content-section"><h2 class="section-title animate-on-scroll reveal-text" data-i18n="serviceReelsWork">Our Reels</h2><div class="portfolio-grid">
+                <div class="interactive-card portfolio-item animate-on-scroll" data-type="video" data-video-id="9y73P4QVglI" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1611605698335-8b1569810432?q=80&w=800&auto=format&fit=crop" alt="Reel 1" class="lazy"><div class="portfolio-overlay"><h3>Fashion Week</h3><p>Instagram Reel</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-type="video" data-video-id="dQw4w9WgXcQ" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800&auto=format&fit=crop" alt="Reel 2" class="lazy"><div class="portfolio-overlay"><h3>Product Teaser</h3><p>Short Promo</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-type="image" data-src="https://images.unsplash.com/photo-1503602642458-232111445657?q=80&w=800&auto=format&fit=crop" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1503602642458-232111445657?q=80&w=800&auto=format&fit=crop" alt="Reel Stills" class="lazy"><div class="portfolio-overlay"><h3>Reel Stills</h3><p>Key Frames</p></div></div>
+            </div></section></div>
+        <div id="service-voice-page" class="page"><div class="page-header"><div class="aurora-background"></div><h1 class="animate-on-scroll reveal-text" data-i18n="serviceVoiceTitle">Voiceover Services</h1><p class="animate-on-scroll" data-i18n="serviceVoiceDesc">Lending a professional voice to your project with our versatile voiceover and narration services.</p></div><section class="content-section"><h2 class="section-title animate-on-scroll reveal-text" data-i18n="serviceVoiceWork">Our Voice Work</h2><div class="portfolio-grid">
+                <div class="interactive-card portfolio-item animate-on-scroll" data-type="image" data-src="https://images.unsplash.com/photo-1589903362484-2503998b3017?q=80&w=1887&auto=format&fit=crop" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1589903362484-2503998b3017?q=80&w=800&auto=format&fit=crop" alt="Voice Over 1" class="lazy"><div class="portfolio-overlay"><h3>Documentary Narration</h3><p>Voice Over</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-type="audio" data-src="" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Audio" data-src="" alt="Voice Demo" class="lazy"><div class="portfolio-overlay"><h3>Demo Reel</h3><p>Multi-Character</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-type="image" data-src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1887&auto=format&fit=crop" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=800&auto=format&fit=crop" alt="Studio Session" class="lazy"><div class="portfolio-overlay"><h3>Studio Session</h3><p>Recording</p></div></div>
+            </div></section></div>
+        <div id="service-web-page" class="page"><div class="page-header"><div class="aurora-background"></div><h1 class="animate-on-scroll reveal-text" data-i18n="serviceWebTitle">Web & UX/UI</h1><p class="animate-on-scroll" data-i18n="serviceWebDesc">Building immersive websites with a focus on intuitive user experience and flawless design.</p></div><section class="content-section"><h2 class="section-title animate-on-scroll reveal-text" data-i18n="serviceWebWork">Our Web Projects</h2><div class="portfolio-grid">
+                <div class="interactive-card portfolio-item animate-on-scroll" data-type="image" data-src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=2070&auto=format&fit=crop" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=800&auto=format&fit=crop" alt="Web Project 1" class="lazy"><div class="portfolio-overlay"><h3>Corporate Website</h3><p>UX/UI Design</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-type="image" data-src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2070&auto=format&fit=crop" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop" alt="Mobile App" class="lazy"><div class="portfolio-overlay"><h3>Mobile App</h3><p>Interaction Design</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-type="image" data-src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2070&auto=format&fit=crop" tabindex="0"><div class="card-glow"></div><img src="https://placehold.co/800x533/0a0a14/1a1a38?text=Loading..." data-src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=800&auto=format&fit=crop" alt="Design System" class="lazy"><div class="portfolio-overlay"><h3>Design System</h3><p>Component Library</p></div></div>
+            </div></section></div>
     </main>
     
         <footer>
@@ -774,7 +864,7 @@
                 <div class="footer-column">
                     <div class="logo-container" data-target="home-page" style="cursor: pointer;">
                         <img src="FINED LOGO.png" alt="Your Brand Logo" style="height: 40px; width: auto;">
-                        <span>Vexus</span>
+                        <span>NEXUS</span>
                     </div>
                     <p data-i18n="footerDesc">A high-tech creative studio where visionary ideas are transformed into reality through AI, 3D, Web, and beyond.</p>
                 </div>
@@ -782,7 +872,7 @@
                     <h4 data-i18n="footerLinks">Quick Links</h4>
                     <ul>
                         <li><a href="#" data-target="home-page" data-i18n="navHome">Home</a></li>
-                        <li><a href="#" data-target="vexus-edge-page" data-i18n="navEdge">The VEXUS Edge</a></li>
+                        <li><a href="#" data-target="nexus-edge-page" data-i18n="navEdge">The NEXUS Edge</a></li>
                         <li><a href="#" data-target="about-page" data-i18n="navAbout">About Us</a></li>
                         <li><a href="#" data-target="contact-page" data-i18n="navContact">Contact Us</a></li>
                     </ul>
@@ -806,7 +896,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>© 2025 VEXUS for Digital Solutions. All Rights Reserved.</p>
+                <p>© 2026 NEXUS for Digital Solutions. All Rights Reserved.</p>
             </div>
         </footer>
 
@@ -825,7 +915,7 @@
     <script>
         // --- Global Settings & Utilities ---
         const DEBUG = false;
-        if (DEBUG) console.log(`[VEXUS] Debug mode enabled. Timestamp: ${new Date().toISOString()}`);
+        if (DEBUG) console.log(`[NEXUS] Debug mode enabled. Timestamp: ${new Date().toISOString()}`);
 
         // --- WebGL/Three.js Fallback ---
         function isWebGLAvailable() {
@@ -886,7 +976,7 @@
         // --- Internationalization (i18n) ---
         const translations = {
             en: {
-                navHome: "Home", navEdge: "The VEXUS Edge", navAbout: "About Us", navContact: "Contact Us",
+                navHome: "Home", navEdge: "The NEXUS Edge", navAbout: "About Us", navContact: "Contact Us",
                 heroTitle: "Crafting Digital Legends.",
                 heroSubtext1: "A high-tech creative studio where visionary ideas are transformed into reality through AI, 3D, Web, and beyond.",
                 heroSubtext2: "We merge artistry with cutting-edge technology to build unforgettable digital experiences.",
@@ -904,19 +994,20 @@
                 serviceVoiceTitle: "Voiceover Services", serviceVoiceDesc: "Lending a professional voice to your project with our versatile voiceover and narration services.",
                 serviceWebTitle: "Web & UX/UI", serviceWebDesc: "Building immersive websites with a focus on intuitive user experience and flawless design.",
                 portfolioTitle: "Featured Projects",
-                filterAll: "All", filterAI: "AI", filterWeb: "Web", filterMotion: "Motion",
+                filterAll: "All", filter3D: "3D", filterPDF: "PDF", filterMotion: "Motion", filterReel: "Reel", filterVoice: "Voice", filterBranding: "Branding", filterPackaging: "Packaging", filterWeb: "Web", filterApp: "App", filterPrint: "Print",
                 altWebProject: "Web Development Project", altMotionProject: "Motion Graphics Reel", altAIProject: "AI Analytics Dashboard", alt3DProject: "3D Model",
                 project1Title: "E-Commerce Platform", project1Type: "Web Development",
                 project2Title: "Brand Intro Animation", project2Type: "Motion Graphics",
                 project3Title: "AI Analytics Dashboard", project3Type: "Intelligent Systems",
                 project4Title: "Cybernetic Arm", project4Type: "3D Modeling",
                 testimonialsTitle: "What Our Clients Say",
-                testimonial1Text: "\"VEXUS transformed our vision into a digital masterpiece. Their attention to detail is unmatched.\"",
-                testimonial1Author: "- John Doe, CEO of InnovateCorp",
-                testimonial2Text: "\"The most professional and creative team I've ever worked with. Truly legendary results.\"",
-                testimonial2Author: "- Jane Smith, Founder of Artify",
+                testimonial1Text: "\"NEXUS transformed our vision into a digital masterpiece. Their attention to detail is unmatched.\"",
+                testimonial1Text: "\"Working with NEXUS was transformative — they turned a concept into a publishable book and a full educational website in Saudi Arabia. Abdelrahman led the project end-to-end.\"",
+                testimonial1Author: "- Educational Partner, Saudi Arabia",
+                testimonial2Text: "\"Their blend of 3D, video, and development brought our architectural vision to life in Morocco. Highly recommended.\"",
+                testimonial2Author: "- Architectural Client, Morocco",
                 prevTestimonial: "Previous testimonial", nextTestimonial: "Next testimonial",
-                edgeTitle: "The VEXUS Edge",
+                edgeTitle: "The NEXUS Edge",
                 edgeSubtext1: "We are more than a digital agency; we are architects of the future.",
                 edgeSubtext2: "Our integrated approach provides a distinct advantage for our partners.",
                 edgeSubtext3: "We fuse creativity with the precision of advanced technology.",
@@ -927,21 +1018,21 @@
                 statsTitle: "Our Numbers Speak",
                 stat1: "Projects Completed", stat2: "Happy Clients", stat3: "Years of Experience", stat4: "Lines of Code",
                 aboutTitle: "The Apex of Digital Transformation",
-                aboutDesc: "At VEXUS, we don't just build digital solutions; we forge future-forward legends. We are a collective of innovators, artists, and engineers, united by a single purpose: to fuse the boundless potential of human creativity with the precision of advanced technology.",
+                aboutDesc: "NEXUS was founded on 4 February 2025. We began as a 3D studio, then expanded into video and photography, and later added programming. To date we've completed around 25 projects valued at over $7,000 — including a book and an educational website in Saudi Arabia, architectural work in Saudi Arabia and Morocco, video productions in Palestine, and voice-over work in Jordan. We've produced books, educational content, and full visual identities; we're currently creating thumbnails and media content for recurring clients. Founder & CEO: Abdelrahman Yahya — Abdelrahman personally leads projects from concept to delivery.",
                 journeyTitle: "Our Journey",
-                timeline1Title: "2015 - The Genesis", timeline1Desc: "VEXUS was founded with a mission to merge technology and art.",
-                timeline2Title: "2018 - First 100 Projects", timeline2Desc: "Celebrated the completion of our 100th project, spanning across 5 continents.",
-                timeline3Title: "2022 - AI Integration", timeline3Desc: "Launched our dedicated AI division, pushing the boundaries of intelligent solutions.",
+                timeline1Title: "Feb 2025 - Foundation", timeline1Desc: "NEXUS was founded on 4 February 2025 and launched with a focus on 3D and visualization.",
+                timeline2Title: "2025 - Expanded to Video & Photo", timeline2Desc: "Later in 2025 we expanded services to include video production and photography, broadening our creative offering.",
+                timeline3Title: "2026 - Programming & Growth", timeline3Desc: "We then added programming services and grew our portfolio — completing ~25 projects across Saudi Arabia, Morocco, Palestine, and Jordan.",
                 contactTitle: "Contact Us", contactDesc: "Let's build the future together. Reach out to us to discuss your next project or to learn more about our services.",
                 formName: "Full Name", formEmail: "Email Address", formMessage: "Message", formSubmit: "Send Message",
                 footerDesc: "A high-tech creative studio where visionary ideas are transformed into reality through AI, 3D, Web, and beyond.",
                 footerLinks: "Quick Links", footerServices: "Services", footerConnect: "Connect With Us",
-                copyright: "© 2025 VEXUS for Digital Solutions. All Rights Reserved.",
+                copyright: "© 2026 NEXUS for Digital Solutions. All Rights Reserved.",
                 // Service Pages
                 serviceAIWork: "Our Work in AI", service3DWork: "Our Work in 3D", serviceBooksWork: "Our Book Designs", serviceGraphicsWork: "Our Graphic Designs", serviceLogosWork: "Our Logo Designs", serviceMotionWork: "Our Motion Graphics Work", servicePackWork: "Our Packaging Designs", serviceReelsWork: "Our Reels", serviceVoiceWork: "Our Voice Work", serviceWebWork: "Our Web Projects",
             },
             ar: {
-                navHome: "الرئيسية", navEdge: "ميزة VEXUS", navAbout: "من نحن", navContact: "اتصل بنا",
+                navHome: "الرئيسية", navEdge: "ميزة NEXUS", navAbout: "من نحن", navContact: "اتصل بنا",
                 heroTitle: "نصنع الأساطير الرقمية.",
                 heroSubtext1: "استوديو إبداعي عالي التقنية، حيث تتحول الأفكار الملهمة إلى واقع ملموس عبر الذكاء الاصطناعي، والـ 3D، والويب، وما هو أبعد.",
                 heroSubtext2: "ندمج البراعة الفنية مع أحدث التقنيات لبناء تجارب رقمية لا تُنسى.",
@@ -959,19 +1050,19 @@
                 serviceVoiceTitle: "خدمات التعليق الصوتي", serviceVoiceDesc: "نضفي صوتًا احترافيًا على مشروعك من خلال خدمات التعليق الصوتي والسرد المتنوعة.",
                 serviceWebTitle: "الويب وتجربة المستخدم", serviceWebDesc: "نبني مواقع ويب غامرة مع التركيز على تجربة مستخدم بديهية وتصميم لا تشوبه شائبة.",
                 portfolioTitle: "مشاريع مميزة",
-                filterAll: "الكل", filterAI: "ذكاء اصطناعي", filterWeb: "ويب", filterMotion: "موشن",
+                filterAll: "الكل", filter3D: "3D", filterPDF: "PDF", filterMotion: "موشن", filterReel: "ريل", filterVoice: "صوت", filterBranding: "الهوية", filterPackaging: "التغليف", filterWeb: "ويب", filterApp: "تطبيق", filterPrint: "مطبوعة",
                 altWebProject: "مشروع تطوير ويب", altMotionProject: "مقطع رسوم متحركة", altAIProject: "لوحة تحكم تحليلية", alt3DProject: "نموذج ثلاثي الأبعاد",
                 project1Title: "منصة تجارة إلكترونية", project1Type: "تطوير ويب",
                 project2Title: "مقدمة متحركة لعلامة تجارية", project2Type: "رسوم متحركة",
                 project3Title: "لوحة تحكم تحليلية بالذكاء الاصطناعي", project3Type: "أنظمة ذكية",
                 project4Title: "ذراع سيبرانية", project4Type: "تصميم ثلاثي الأبعاد",
                 testimonialsTitle: "ماذا يقول عملاؤنا",
-                testimonial1Text: "\"VEXUS حولت رؤيتنا إلى تحفة رقمية. اهتمامهم بالتفاصيل لا مثيل له.\"",
-                testimonial1Author: "- جون دو، الرئيس التنفيذي لـ InnovateCorp",
-                testimonial2Text: "\"الفريق الأكثر احترافية وإبداعًا الذي عملت معه على الإطلاق. نتائج أسطورية حقًا.\"",
-                testimonial2Author: "- جين سميث، مؤسسة Artify",
+                testimonial1Text: "\"العمل مع NEXUS كان تحولًا حقيقيًا — حولوا الفكرة إلى كتاب منشور وموقع تعليمي في السعودية. قاد المشروع عبد الرحمن يحيى من البداية للنهاية.\"",
+                testimonial1Author: "- شريك تعليمي، المملكة العربية السعودية",
+                testimonial2Text: "\"مزيجهم من الـ3D والفيديو والبرمجة أحيا رؤيتنا المعمارية في المغرب. ننصح بهم بشدة.\"",
+                testimonial2Author: "- مكتب معماري، المغرب",
                 prevTestimonial: "الشهادة السابقة", nextTestimonial: "الشهادة التالية",
-                edgeTitle: "ميزة VEXUS",
+                edgeTitle: "ميزة NEXUS",
                 edgeSubtext1: "نحن أكثر من مجرد وكالة رقمية؛ نحن مهندسو المستقبل.",
                 edgeSubtext2: "نهجنا المتكامل يوفر ميزة فريدة لشركائنا.",
                 edgeSubtext3: "ندمج الإبداع مع دقة التكنولوجيا المتقدمة.",
@@ -982,16 +1073,16 @@
                 statsTitle: "أرقامنا تتحدث",
                 stat1: "مشروعًا مكتملًا", stat2: "عميلًا سعيدًا", stat3: "سنوات من الخبرة", stat4: "ألف سطر من الكود",
                 aboutTitle: "قمة التحول الرقمي",
-                aboutDesc: "في VEXUS، نحن لا نبني حلولًا رقمية فحسب، بل نصوغ أساطير مستقبلية. نحن مجموعة من المبتكرين والفنانين والمهندسين، توحدنا غاية واحدة: دمج الإمكانات اللامحدودة للإبداع البشري مع دقة التكنولوجيا المتقدمة.",
+                aboutDesc: "تأسست NEXUS في 4 فبراير 2025. بدأنا كمكتب متخصص في الـ3D ثم توسعنا إلى الفيديو والتصوير، ولاحقًا أضفنا خدمات البرمجة. حتى الآن أنجزنا حوالي 25 مشروعًا بقيمة تتجاوز 7000 دولار، منها كتاب وموقع تعليمي في السعودية، أعمال معمارية في السعودية والمغرب، إنتاج فيديوهات في فلسطين، وخدمات تعليق صوتي في الأردن. نفذنا كتبًا ومحتوى تعليميًا وهوية بصرية كاملة؛ ونقوم حاليًا بإعداد الثامبنيلز ومحتوى ميديا عام لعميل متكرر. المؤسس والمدير التنفيذي: عبد الرحمن يحيى — عبد الرحمن يقود المشاريع شخصيًا من الفكرة حتى التسليم.",
                 journeyTitle: "رحلتنا",
-                timeline1Title: "2015 - التكوين", timeline1Desc: "تأسست VEXUS بمهمة دمج التكنولوجيا والفن.",
-                timeline2Title: "2018 - أول 100 مشروع", timeline2Desc: "احتفلنا بإنجاز مشروعنا المئة، والذي امتد عبر 5 قارات.",
-                timeline3Title: "2022 - تكامل الذكاء الاصطناعي", timeline3Desc: "أطلقنا قسمنا المخصص للذكاء الاصطناعي، ودفعنا حدود الحلول الذكية.",
+                timeline1Title: "فبراير 2025 - التأسيس", timeline1Desc: "تأسست NEXUS في 4 فبراير 2025 وبدأت بالتركيز على الـ3D والتجسيم.",
+                timeline2Title: "2025 - التوسع إلى الفيديو والتصوير", timeline2Desc: "خلال 2025 توسعنا لتشمل خدمات إنتاج الفيديو والتصوير الفوتوغرافي، ما وسع عروضنا الإبداعية.",
+                timeline3Title: "2026 - البرمجة والنمو", timeline3Desc: "أضفنا خدمات البرمجة ونمّينا محفظتنا — حيث أنجزنا حوالي 25 مشروعًا في السعودية والمغرب وفلسطين والأردن.",
                 contactTitle: "اتصل بنا", contactDesc: "لنبدأ بناء المستقبل معًا. تواصل معنا لمناقشة مشروعك القادم أو لمعرفة المزيد عن خدماتنا.",
                 formName: "الاسم الكامل", formEmail: "البريد الإلكتروني", formMessage: "الرسالة", formSubmit: "إرسال الرسالة",
                 footerDesc: "استوديو إبداعي عالي التقنية، حيث تتحول الأفكار الملهمة إلى واقع ملموس عبر الذكاء الاصطناعي، والـ 3D، والويب، وما هو أبعد.",
                 footerLinks: "روابط سريعة", footerServices: "الخدمات", footerConnect: "تواصل معنا",
-                copyright: "© 2025 VEXUS للحلول الرقمية. جميع الحقوق محفوظة.",
+                copyright: "© 2026 NEXUS للحلول الرقمية. جميع الحقوق محفوظة.",
                 serviceAIWork: "أعمالنا في الذكاء الاصطناعي", service3DWork: "أعمالنا في الـ 3D", serviceBooksWork: "تصاميم كتبنا", serviceGraphicsWork: "تصاميمنا الجرافيكية", serviceLogosWork: "تصاميم شعاراتنا", serviceMotionWork: "أعمالنا في الرسوم المتحركة", servicePackWork: "تصاميم تغليفنا", serviceReelsWork: "مقاطع الفيديو القصيرة لدينا", serviceVoiceWork: "أعمالنا الصوتية", serviceWebWork: "مشاريع الويب لدينا",
             }
         };
@@ -1046,7 +1137,7 @@
                     btn.classList.toggle('active', btn.dataset.lang === lang);
                 });
 
-                localStorage.setItem('vexus-lang', lang);
+                localStorage.setItem('nexus-lang', lang);
                 setupRevealText(); // Re-initialize text splitting after language change
             };
 
@@ -1057,7 +1148,7 @@
             });
 
             // Initial language setup
-            const savedLang = localStorage.getItem('vexus-lang');
+            const savedLang = localStorage.getItem('nexus-lang');
             const browserLang = navigator.language.split('-')[0];
             setLanguage(savedLang || (browserLang === 'ar' ? 'ar' : 'en'));
 
@@ -1070,11 +1161,60 @@
                 if (preloader) {
                     preloader.classList.add('loaded');
                     if (soundToggleButton) soundToggleButton.style.display = 'none'; // Hide button with preloader
+                    // Show support button after preloader hidden
+                    const supportBtn = document.getElementById('whatsapp-support');
+                    if (supportBtn) supportBtn.style.display = '';
                 }
             }
 
             window.addEventListener('load', () => {
                 if (preloaderVideo) {
+                    // choose correct preloader source based on viewport
+                    function setPreloaderSource(){
+                        try {
+                            const desktopSrc = preloaderVideo.dataset.srcDesktop || preloaderVideo.getAttribute('data-src-desktop');
+                            const mobileSrc = preloaderVideo.dataset.srcMobile || preloaderVideo.getAttribute('data-src-mobile');
+                            const breakpoint = 768;
+                            const useMobile = window.innerWidth <= breakpoint;
+
+                            // Always prefer and assign a mobile-optimized preloader when on small viewports
+                            if (useMobile && mobileSrc) {
+                                if (preloaderVideo.getAttribute('src') !== mobileSrc) {
+                                    preloaderVideo.src = mobileSrc;
+                                    preloaderVideo.load();
+                                    preloaderVideo.play().catch((err) => {
+                                        try { preloaderVideo.muted = true; } catch(e) {}
+                                        if (soundToggleButton) soundToggleButton.classList.remove('sound-active');
+                                        preloaderVideo.play().catch(()=>{});
+                                    });
+                                }
+                                return;
+                            }
+
+                            // For desktop viewports, keep gating to high-performance devices to avoid heavy downloads
+                            if (performanceProfile !== 'high') {
+                                setTimeout(hidePreloader, 700);
+                                return;
+                            }
+
+                            if (desktopSrc && preloaderVideo.getAttribute('src') !== desktopSrc) {
+                                preloaderVideo.src = desktopSrc;
+                                preloaderVideo.load();
+                                preloaderVideo.play().catch((err) => {
+                                    try { preloaderVideo.muted = true; } catch(e) {}
+                                    if (soundToggleButton) soundToggleButton.classList.remove('sound-active');
+                                    preloaderVideo.play().catch(()=>{});
+                                });
+                            }
+                        } catch(e) { /* ignore */ }
+                    }
+                    setPreloaderSource();
+                    // switch on resize when crossing breakpoint
+                    let lastWasMobile = window.innerWidth <= 768;
+                    window.addEventListener('resize', () => {
+                        const nowMobile = window.innerWidth <= 768;
+                        if (nowMobile !== lastWasMobile) { lastWasMobile = nowMobile; setPreloaderSource(); }
+                    });
                     // Hide preloader when video ends
                     preloaderVideo.addEventListener('ended', hidePreloader);
                     
@@ -1137,6 +1277,10 @@
                         window.scrollTo(0, 0);
                         observeElements(targetPage.querySelectorAll('.animate-on-scroll'));
                         observeLazyImages(targetPage.querySelectorAll('img.lazy'));
+                            // If this is a service page, convert its portfolio into a structured library view
+                            if (pageId && pageId.indexOf('service-') === 0) buildLibrary(targetPage);
+                            // Normalize single-item grids after page is shown
+                            transformSingleItemGrids(targetPage);
                     }
                     desktopNavLinks.forEach(link => link.classList.toggle('active', link.dataset.target === pageId));
                     setTimeout(() => pageTransitionOverlay.classList.remove('active'), 50);
@@ -1151,7 +1295,7 @@
             const scrollLinks = document.querySelectorAll('[data-scroll-to]'); scrollLinks.forEach(link => { link.addEventListener('click', e => { e.preventDefault(); const targetSelector = link.dataset.scrollTo; const targetElement = document.querySelector(targetSelector); if (targetElement) { if (document.getElementById('home-page').classList.contains('active')) { targetElement.scrollIntoView({ behavior: 'smooth' }); } else { showPage('home-page'); setTimeout(() => { targetElement.scrollIntoView({ behavior: 'smooth' }); }, 600); } } }); });
             
             // --- Header Scroll Effect ---
-            const header = document.getElementById('main-header'); window.addEventListener('scroll', () => { header.classList.toggle('scrolled', window.scrollY > 50); });
+            const header = document.getElementById('main-header'); window.addEventListener('scroll', () => { header.classList.toggle('scrolled', window.scrollY > 50); }, { passive: true });
             
             // --- Modal (Lightbox) & Focus Trap ---
             const modal = document.getElementById('portfolio-modal');
@@ -1165,7 +1309,19 @@
                 if (type === 'image') {
                     modalContentHost.innerHTML = `<img src="${item.dataset.src}" alt="">`;
                 } else if (type === 'video') {
-                    modalContentHost.innerHTML = `<iframe src="https://www.youtube.com/embed/${item.dataset.videoId}?autoplay=1&rel=0&modestbranding=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+                    // Support YouTube embeds (videoId) or local MP4 files (data-src)
+                    if (item.dataset.videoId) {
+                        modalContentHost.innerHTML = `<iframe src="https://www.youtube.com/embed/${item.dataset.videoId}?autoplay=1&rel=0&modestbranding=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+                    } else if (item.dataset.src) {
+                        modalContentHost.innerHTML = `<video controls autoplay style="width:100%;height:100%;max-height:80vh;object-fit:contain"><source src="${item.dataset.src}" type="video/mp4">Your browser does not support the video tag.</video>`;
+                    }
+                } else if (type === 'pdf') {
+                    // Embed PDFs directly
+                    modalContentHost.innerHTML = `<iframe src="${item.dataset.src}" style="width:100%;height:100%;border:none"></iframe>`;
+                } else if (type === 'audio') {
+                    modalContentHost.innerHTML = `<audio controls autoplay style="width:100%"><source src="${item.dataset.src}" type="audio/mpeg">Your browser does not support the audio element.</audio>`;
+                } else {
+                    modalContentHost.innerHTML = `<div style="color:white;padding:20px">Unsupported preview type.</div>`;
                 }
                 modal.classList.add('visible');
                 document.body.classList.add('no-scroll');
@@ -1175,8 +1331,13 @@
             function closeModal() {
                 modal.classList.remove('visible');
                 document.body.classList.remove('no-scroll');
+                // Stop any media playback and clear content
                 const iframe = modalContentHost.querySelector('iframe');
                 if (iframe) iframe.src = '';
+                const video = modalContentHost.querySelector('video');
+                if (video) { try { video.pause(); video.src = ''; } catch(e) {} }
+                const audio = modalContentHost.querySelector('audio');
+                if (audio) { try { audio.pause(); audio.src = ''; } catch(e) {} }
                 document.removeEventListener('keydown', trapFocus);
             }
             
@@ -1209,6 +1370,86 @@
                     } else { openModal(item); }
                 });
             });
+
+            // --- Helpers: transform single-item grids and build organized library for service pages ---
+            function transformSingleItemGrids(root=document){
+                (root.querySelectorAll ? Array.from(root.querySelectorAll('.services-grid, .portfolio-grid')) : []).forEach(grid => {
+                    const items = grid.querySelectorAll('.interactive-card, .portfolio-item');
+                    if (items.length <= 1) grid.classList.add('single-item'); else grid.classList.remove('single-item');
+                });
+            }
+
+            function buildLibrary(pageEl){
+                if (!pageEl) return;
+                const grid = pageEl.querySelector('.portfolio-grid');
+                if (!grid || grid.dataset.libInitialized) return;
+                const items = Array.from(grid.querySelectorAll('.portfolio-item'));
+                if (items.length === 0) return;
+
+                const typeMap = { image: 'صور', video: 'فيديو', link: 'روابط', other: 'أعمال' };
+                const types = Array.from(new Set(items.map(i => i.dataset.type || 'other')));
+
+                // Create library wrapper
+                const library = document.createElement('div');
+                library.className = 'library';
+
+                // Filter bar
+                const filterBar = document.createElement('div');
+                filterBar.className = 'portfolio-filter';
+                const allBtn = document.createElement('button'); allBtn.className = 'filter-btn active'; allBtn.textContent = 'الكل';
+                filterBar.appendChild(allBtn);
+                types.forEach(t => { const btn = document.createElement('button'); btn.className = 'filter-btn'; btn.textContent = typeMap[t] || t; btn.dataset.filter = t; filterBar.appendChild(btn); });
+                library.appendChild(filterBar);
+
+                // Sections per type
+                const content = document.createElement('div'); content.className = 'library-content';
+                types.forEach(t => {
+                    const section = document.createElement('section'); section.className = 'library-section';
+                    const h = document.createElement('h3'); h.textContent = typeMap[t] || t; section.appendChild(h);
+                    const secGrid = document.createElement('div'); secGrid.className = 'portfolio-grid';
+                    items.filter(i => (i.dataset.type || 'other') === t).forEach(i => secGrid.appendChild(i));
+                    section.appendChild(secGrid);
+                    content.appendChild(section);
+                });
+                library.appendChild(content);
+
+                grid.parentElement.replaceChild(library, grid);
+                grid.dataset.libInitialized = '1';
+
+                // Filter behavior
+                filterBar.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        filterBar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        const filter = btn.dataset.filter;
+                        content.querySelectorAll('.library-section').forEach(sec => {
+                            if (!filter || filter === undefined) { sec.style.display = ''; return; }
+                            const secType = sec.querySelector('.portfolio-item') ? sec.querySelector('.portfolio-item').dataset.type || 'other' : '';
+                            sec.style.display = (filter === 'all' || secType === filter) ? '' : 'none';
+                        });
+                    });
+                });
+
+                // observe and normalize
+                observeElements(pageEl.querySelectorAll('.animate-on-scroll'));
+                observeLazyImages(pageEl.querySelectorAll('img.lazy'));
+                transformSingleItemGrids(pageEl);
+            }
+
+            // Run initial normalization on DOM ready
+            document.addEventListener('DOMContentLoaded', () => { transformSingleItemGrids(); });
+            // Ensure images with class 'lazy' use native lazy-loading and async decoding for better performance
+            if ('requestIdleCallback' in window) {
+                requestIdleCallback(() => {
+                    document.querySelectorAll('img.lazy').forEach(img => {
+                        try { img.loading = 'lazy'; img.decoding = 'async'; } catch(e) {}
+                    });
+                }, {timeout: 200});
+            } else {
+                window.addEventListener('load', () => {
+                    document.querySelectorAll('img.lazy').forEach(img => { try { img.loading = 'lazy'; img.decoding = 'async'; } catch(e){} });
+                });
+            }
             closeButton.addEventListener('click', closeModal);
             modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
             
@@ -1243,10 +1484,25 @@
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         const img = entry.target;
-                        img.src = img.dataset.src;
-                        img.onload = () => img.classList.add('loaded');
-                        lazyImageObserver.unobserve(img);
-                        perfLog('Image lazy-loaded: ' + (img.alt || img.dataset.src));
+                        // If this image was generated as an SVG thumbnail, skip native lazy-loading
+                        if (img.dataset.generated === '1') {
+                            // ensure it's considered loaded and stop observing
+                            img.classList.add('loaded');
+                            lazyImageObserver.unobserve(img);
+                            return;
+                        }
+                        // Only load if a data-src exists
+                        const ds = img.dataset.src;
+                        if (ds) {
+                            img.src = ds;
+                            img.onload = () => img.classList.add('loaded');
+                            lazyImageObserver.unobserve(img);
+                            perfLog('Image lazy-loaded: ' + (img.alt || ds));
+                        } else {
+                            // No data-src: mark loaded and stop observing to avoid future work
+                            img.classList.add('loaded');
+                            lazyImageObserver.unobserve(img);
+                        }
                     }
                 });
             }, { rootMargin: "0px 0px 300px 0px", threshold: 0.05 }); // Load images earlier for smoother UX
@@ -1386,7 +1642,7 @@
                     });
                     isTicking = true;
                 }
-            });
+            }, { passive: true });
 
             // --- Portfolio Filter ---
             const filterBtns = document.querySelectorAll('.filter-btn');
@@ -1550,7 +1806,7 @@
                         const fontLoader = new THREE.FontLoader();
                         const font = await fontLoader.loadAsync('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json');
                         
-                        const textGeometry = new THREE.TextGeometry('V', {
+                        const textGeometry = new THREE.TextGeometry('N', {
                             font: font,
                             size: 2.5,
                             height: 0.4,
@@ -1567,8 +1823,8 @@
                         const material = new THREE.ShaderMaterial({
                             uniforms: {
                                 time: { value: 0 },
-                                color1: { value: new THREE.Color(0x8a4dff) }, // Site Accent Purple
-                                color2: { value: new THREE.Color(0x4dcfff) }, // Site Accent Aqua
+                                color1: { value: new THREE.Color(0xb30000) }, // deep red (accent-purple replacement)
+                                color2: { value: new THREE.Color(0xff3b30) }, // vibrant red (accent-aqua replacement)
                                 envMap: { value: envMap },
                                 spotLightPos: { value: spotLight.position },
                             },
@@ -1621,9 +1877,9 @@
                         particleTextureCanvas.height = 64;
                         const context = particleTextureCanvas.getContext('2d');
                         const gradient = context.createRadialGradient(32, 32, 0, 32, 32, 32);
-                        gradient.addColorStop(0, 'rgba(77, 207, 255, 1)');
-                        gradient.addColorStop(0.2, 'rgba(77, 207, 255, 0.8)');
-                        gradient.addColorStop(1, 'rgba(77, 207, 255, 0)');
+                        gradient.addColorStop(0, 'rgba(255, 59, 48, 1)');
+                        gradient.addColorStop(0.2, 'rgba(255, 59, 48, 0.8)');
+                        gradient.addColorStop(1, 'rgba(255, 59, 48, 0)');
                         context.fillStyle = gradient;
                         context.fillRect(0, 0, 64, 64);
                         const particleTexture = new THREE.CanvasTexture(particleTextureCanvas);
@@ -1749,8 +2005,20 @@
                             console.log('[3D] Frame rendered at', new Date().toLocaleTimeString(), 'PixelRatio:', window.devicePixelRatio, 'Profile:', performanceProfile);
                         }
                     }
+                    // Decide whether to initialize the heavy 3D hero
+                    const shouldInit3D = (function(){
+                        try {
+                            if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
+                            // Allow touch devices to initialize a mobile-optimized hero when device capabilities permit.
+                            // Prevent initialization only on extremely constrained devices.
+                            if (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 1) return false;
+                            if (navigator.deviceMemory && navigator.deviceMemory <= 0.5) return false;
+                            return true;
+                        } catch(e){ return false; }
+                    })();
                     try {
-                        init();
+                        if (shouldInit3D) init();
+                        else show3DFallback();
                     } catch (err) {
                         show3DFallback();
                         if (DEBUG) console.error('[3D] Error initializing Three.js:', err);
@@ -1765,10 +2033,127 @@
                 observeLazyImages(initialPage.querySelectorAll('img.lazy'));
                 // Initialize animations specific to the active page
                 if (initialPage.id === 'home-page') initHeroRotatingText();
-                if (initialPage.id === 'vexus-edge-page') initRotatingSubtext();
+                if (initialPage.id === 'nexus-edge-page') initRotatingSubtext();
             }
             // setupRevealText(); // This is now called within setLanguage
+            // --- Generate unique SVG thumbnails for each portfolio item ---
+            function generateThumbnailSVG(title, subtitle, color, idx, category) {
+                const w = 1200, h = 800;
+                const safeTitle = String(title).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+                const safeSubtitle = String(subtitle).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+                // vary hue slightly per index for uniqueness
+                const hueShift = (idx * 37) % 360;
+                const bgColor = color || `hsl(${hueShift} 70% 38%)`;
+                const accent = `hsl(${(hueShift + 40) % 360} 85% 55%)`;
+
+                // simple category glyphs
+                const glyph = (function(cat){
+                    switch(cat){
+                        case '3d': return '<rect x="56" y="56" width="160" height="160" rx="14" fill="rgba(255,255,255,0.08)"/>';
+                        case 'motion': return '<circle cx="136" cy="136" r="70" fill="rgba(255,255,255,0.06)"/>';
+                        case 'reel': return '<polygon points="60,60 200,130 60,200" fill="rgba(255,255,255,0.05)"/>';
+                        case 'voice': return '<ellipse cx="136" cy="136" rx="80" ry="50" fill="rgba(255,255,255,0.04)"/>';
+                        default: return '<rect x="56" y="56" width="160" height="160" rx="18" fill="rgba(255,255,255,0.06)"/>';
+                    }
+                })(category || 'other');
+
+                const pattern = [];
+                for(let i=0;i<6;i++){
+                    const opacity = 0.03 + (i%2)*0.02;
+                    const cx = 200 + ((idx * (i+3)) % 800);
+                    const cy = 100 + ((idx * (i+5)) % 600);
+                    pattern.push(`<circle cx="${cx}" cy="${cy}" r="${40 + (i*6)}" fill="${accent}" opacity="${opacity}" />`);
+                }
+
+                const svg = `<?xml version="1.0" encoding="utf-8"?><svg xmlns='http://www.w3.org/2000/svg' width='${w}' height='${h}' viewBox='0 0 ${w} ${h}' xmlns:xlink='http://www.w3.org/1999/xlink'>
+                    <defs>
+                        <linearGradient id='g${idx}' x1='0' x2='1' y1='0' y2='1'>
+                            <stop offset='0' stop-color='${bgColor}' stop-opacity='0.98'/>
+                            <stop offset='1' stop-color='#06060e' stop-opacity='0.96'/>
+                        </linearGradient>
+                    </defs>
+                    <rect width='100%' height='100%' fill='url(#g${idx})' />
+                    ${glyph}
+                    <g opacity='0.12'>${pattern.join('')}</g>
+                    <g transform='translate(320,200)'>
+                        <text x='0' y='0' font-family='Poppins, Arial, sans-serif' font-size='56' fill='rgba(255,255,255,0.98)' font-weight='700'>${safeTitle}</text>
+                        <text x='0' y='72' font-family='Poppins, Arial, sans-serif' font-size='30' fill='rgba(255,255,255,0.78)'>${safeSubtitle}</text>
+                    </g>
+                    <text x='40' y='760' font-family='Poppins, Arial, sans-serif' font-size='20' fill='rgba(255,255,255,0.5)'>NEXUS — ${new Date().getFullYear()}</text>
+                </svg>`;
+                return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+            }
+
+            function applyGeneratedThumbnails() {
+                const baseColors = ['#7f0000','#e53935','#ff8a65','#4dcfff','#26a69a','#8e24aa','#ffb74d','#6d4c41','#42a5f5','#ad1457'];
+                document.querySelectorAll('.portfolio-item').forEach((item, idx) => {
+                    try {
+                        const overlay = item.querySelector('.portfolio-overlay');
+                        const title = overlay ? overlay.querySelector('h3')?.textContent.trim() || ('Project ' + (idx+1)) : ('Project ' + (idx+1));
+                        const subtitle = overlay ? overlay.querySelector('p')?.textContent.trim() || '' : '';
+                        const category = (item.dataset.category || 'other').toLowerCase();
+                        const color = baseColors[idx % baseColors.length];
+                        const img = item.querySelector('img');
+                        if (img) {
+                            const svgData = generateThumbnailSVG(title, subtitle, color, idx, category);
+                            img.src = svgData;
+                            img.dataset.generated = '1';
+                            img.alt = title + ' — ' + subtitle;
+                            // prevent any later lazy loader from overwriting the generated thumbnail
+                            try { img.removeAttribute('data-src'); delete img.dataset.src; } catch(e) {}
+                            // ensure the browser treats it as loaded and decodes async
+                            img.decoding = 'async';
+                            img.loading = img.loading || 'lazy';
+                            img.classList.add('loaded');
+                        }
+                    } catch (e) { console.warn('thumbnail gen error', e); }
+                });
+            }
+
+            function removeResidualDataSrc() {
+                // Remove data-src attributes from portfolio images to avoid accidental re-fetches
+                document.querySelectorAll('.portfolio-grid img').forEach(img => {
+                    try { img.removeAttribute('data-src'); delete img.dataset.src; } catch(e) {}
+                });
+            }
+
+            // Run thumbnail generator after initial DOM processing and after library builds
+            document.addEventListener('DOMContentLoaded', () => { applyGeneratedThumbnails(); removeResidualDataSrc(); });
+            document.addEventListener('DOMContentLoaded', () => { setTimeout(() => { applyGeneratedThumbnails(); removeResidualDataSrc(); }, 300); });
         });
     </script>
+        <!-- Support Button (floating bottom-left) - Support with premium look -->
+        <!-- استبدل PHONE_NUMBER برقمك بصيغة الدولة بدون علامة + (مثال: 201234567890) -->
+        <style>
+                #whatsapp-support{position:fixed;left:20px;bottom:20px;z-index:10001}
+                #whatsapp-support a{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;background:#e53935;color:#fff;border-radius:30px;box-shadow:0 8px 22px rgba(229,57,53,.18);text-decoration:none;font-size:15px;font-weight:700}
+                #whatsapp-support a:hover{transform:translateY(-3px)}
+                #whatsapp-support .icon-crown{font-size:12px;opacity:0.95}
+                #whatsapp-support .icon-headset{font-size:18px}
+                .premium-label{display:inline-block}
+                @media (max-width:480px){#whatsapp-support .premium-label{display:none}}
+        </style>
+        <div id="whatsapp-support" aria-hidden="false">
+                <!-- استبدل PHONE_NUMBER برقمك (مثال: 201234567890) -->
+                <a id="whatsapp-link" href="https://wa.me/201044170457" target="_blank" rel="noopener noreferrer" aria-label="واتساب دعم فني">
+                        
+                        <i class="fa-solid fa-headset icon-headset" aria-hidden="true"></i>
+                        <span class="premium-label">دعم فني</span>
+                </a>
+        </div>
+        <script>
+        (function(){
+            var phone = '201044170457'; // <-- استبدل هنا برقمك بدون + (مثال: 201234567890)
+            var link = document.getElementById('whatsapp-link');
+            if(!link) return;
+            link.addEventListener('click', function(e){
+                e.preventDefault();
+                var appUrl = 'whatsapp://send?phone=' + phone;
+                var webUrl = 'https://wa.me/' + phone;
+                window.location = appUrl;
+                setTimeout(function(){ window.open(webUrl, '_blank'); }, 700);
+            });
+        })();
+        </script>
 </body>
 </html>
