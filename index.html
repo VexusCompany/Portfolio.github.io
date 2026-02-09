@@ -137,6 +137,19 @@
         }
         html[dir="rtl"] .logo-container span { margin-right: 10px; margin-left: 0; }
         html[dir="rtl"] .footer-column h4::after { left: auto; right: 0; }
+        html[dir="rtl"] .page-header p,
+        html[dir="rtl"] .timeline-content,
+        html[dir="rtl"] .hero-subtext,
+        html[dir="rtl"] .testimonial-text {
+            unicode-bidi: plaintext;
+        }
+        html[dir="rtl"] [data-i18n] { unicode-bidi: plaintext; }
+        html[dir="rtl"] .footer-column ul a:hover { padding-left: 0; padding-right: 5px; }
+        html[dir="rtl"] .form-group input,
+        html[dir="rtl"] .form-group textarea { text-align: right; }
+        html[dir="rtl"] .form-group input[type="email"],
+        html[dir="rtl"] .form-group input[type="url"],
+        html[dir="rtl"] .form-group input[type="tel"] { text-align: left; }
 
         * { box-sizing: border-box; }
         
@@ -624,6 +637,10 @@
         .timeline-item::after { content: ''; position: absolute; width: 20px; height: 20px; right: -10px; background-color: var(--accent-purple); border: 4px solid var(--accent-aqua); top: 15px; border-radius: 50%; z-index: 1; }
         .timeline-item.right::after { left: -10px; }
         .timeline-content { padding: 20px 30px; background-color: var(--bg-card); border-radius: 6px; position: relative; }
+        html[dir="rtl"] .timeline-item.left { left: auto; right: 0; text-align: left; }
+        html[dir="rtl"] .timeline-item.right { left: auto; right: 50%; text-align: right; }
+        html[dir="rtl"] .timeline-item::after { left: -10px; right: auto; }
+        html[dir="rtl"] .timeline-item.right::after { right: -10px; left: auto; }
         
         /* --- Contact Page Specifics --- */
         .contact-form { max-width: 800px; margin: 0 auto; background-color: rgba(26, 26, 56, 0.7); backdrop-filter: blur(10px); padding: 50px; border-radius: 10px; border: 1px solid var(--border-glow); }
@@ -1068,6 +1085,7 @@
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/FontLoader.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/geometries/TextGeometry.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
     <script>
         // --- Global Settings & Utilities ---
@@ -1475,19 +1493,28 @@
 
             // --- Text Animation Setup ---
             function setupRevealText() {
+                const isArabic = document.documentElement.lang === 'ar';
                 document.querySelectorAll('.reveal-text').forEach(textElement => {
-                    // Don't re-split if already done.
-                    if(textElement.classList.contains('is-split')) return;
+                    const hasChars = textElement.querySelector('.char');
                     const text = textElement.textContent;
+
+                    if (isArabic) {
+                        if (hasChars) {
+                            textElement.textContent = text;
+                        }
+                        return;
+                    }
+
+                    if (hasChars) return;
+
                     textElement.innerHTML = '';
                     text.split('').forEach((char, index) => {
                         const charSpan = document.createElement('span');
                         charSpan.className = 'char';
-                        charSpan.textContent = char === ' ' ? '\u00A0' : char;
+                        charSpan.textContent = char === ' ' ? ' ' : char;
                         charSpan.style.transitionDelay = `${index * 25}ms`;
                         textElement.appendChild(charSpan);
                     });
-                    textElement.classList.add('is-split');
                 });
             }
 
@@ -1715,10 +1742,17 @@
             }
             closeButton.addEventListener('click', closeModal);
             modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
-
-            // --- Contact Form (mailto fallback for quick deployment) ---
+            // --- Contact Form (EmailJS) ---
             const contactForm = document.getElementById('contact-form');
             const formStatus = document.getElementById('form-status');
+            const emailjsConfig = {
+                serviceId: 'service_1mcqmk7',
+                templateId: 'template_7i4gx8i',
+                publicKey: 'fehTKlL8_MnXzJmET'
+            };
+            if (window.emailjs && emailjs.init) {
+                try { emailjs.init(emailjsConfig.publicKey); } catch(e) {}
+            }
             if (contactForm) {
                 contactForm.addEventListener('submit', (e) => {
                     e.preventDefault();
@@ -1726,6 +1760,8 @@
                     const email = (document.getElementById('email') || {}).value || '';
                     const message = (document.getElementById('message') || {}).value || '';
                     const isArabic = document.documentElement.lang === 'ar';
+                    const submitBtn = contactForm.querySelector('button[type="submit"]');
+                    const showDebug = DEBUG || window.location.search.includes('debug=1');
 
                     function setStatus(text, isError=false) {
                         if (!formStatus) return;
@@ -1738,23 +1774,61 @@
                         setStatus(isArabic ? 'من فضلك املأ كل الحقول المطلوبة.' : 'Please fill in all required fields.', true);
                         return;
                     }
-                    const emailOk = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email);
+                    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
                     if (!emailOk) {
                         setStatus(isArabic ? 'يرجى إدخال بريد إلكتروني صحيح.' : 'Please enter a valid email address.', true);
                         return;
                     }
 
-                    const recipient = 'vexuss.agency@gmail.com';
-                    const subject = encodeURIComponent(`New message from ${name}`);
-                    const body = encodeURIComponent(`Name: ${name}\\nEmail: ${email}\\n\\nMessage:\\n${message}`);
-                    const mailtoUrl = `mailto:${recipient}?subject=${subject}&body=${body}`;
-                    window.location.href = mailtoUrl;
-                    setStatus(isArabic ? 'سيتم فتح تطبيق البريد لإرسال الرسالة.' : 'Your email app should open to send the message.', false);
-                    contactForm.reset();
+                    if (window.location.protocol === 'file:') {
+                        setStatus(isArabic ? 'لن يعمل الإرسال من ملف محلي. افتح الصفحة عبر سيرفر محلي أو الدومين.' : 'Email won’t send from a local file. Use a local server or the live domain.', true);
+                        return;
+                    }
+
+                    if (!window.emailjs || !emailjs.send) {
+                        setStatus(isArabic ? 'خدمة البريد غير متاحة حالياً.' : 'Email service is unavailable right now.', true);
+                        return;
+                    }
+                    if (submitBtn) {
+                        submitBtn.disabled = true;
+                        submitBtn.setAttribute('aria-busy', 'true');
+                    }
+                    setStatus(isArabic ? 'جاري إرسال الرسالة...' : 'Sending your message...', false);
+
+                    const templateParams = {
+                        from_name: name,
+                        from_email: email,
+                        reply_to: email,
+                        message: message,
+                        to_email: 'vexuss.agency@gmail.com'
+                    };
+
+                    emailjs.send(emailjsConfig.serviceId, emailjsConfig.templateId, templateParams)
+                        .then(() => {
+                            setStatus(isArabic ? 'تم إرسال الرسالة بنجاح.' : 'Message sent successfully.', false);
+                            contactForm.reset();
+                        })
+                        .catch((err) => {
+                            if (DEBUG) console.error('[EmailJS] Send failed', err);
+                            const errText = (err && (err.text || err.message)) ? String(err.text || err.message) : '';
+                            if (showDebug && errText) {
+                                setStatus(isArabic ? `تعذر الإرسال: ${errText}` : `Unable to send: ${errText}`, true);
+                            } else {
+                                setStatus(isArabic ? 'تعذر إرسال الرسالة الآن، حاول مرة أخرى.' : 'Unable to send right now. Please try again.', true);
+                            }
+                        })
+                        .finally(() => {
+                            if (submitBtn) {
+                                submitBtn.disabled = false;
+                                submitBtn.removeAttribute('aria-busy');
+                            }
+                        });
                 });
             }
-            
+
             // --- Scroll & Lazy Loading Animation Observer ---
+
+
             // --- Performance Logging ---
             function perfLog(msg) { if (DEBUG) console.log('[Perf]', msg, performance.now().toFixed(1) + 'ms'); }
 
