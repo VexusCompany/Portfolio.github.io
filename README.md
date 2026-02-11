@@ -1,4 +1,4 @@
-# NEXUS — Project Overview & Local Dev
+# vEXUS — Project Overview & Local Dev
 
 This repository is a single-page website that has been split into modular files for easier editing and maintenance.
 
@@ -32,3 +32,4 @@ Quick notes
 - `js/translations.js` contains `window.translations` used by `main.js`.
 - `pages/` templates are partials; `index (8).html` currently includes all page markup but you can switch to fetching these templates later.
 - Next recommended steps: run browser QA, verify chat via proxy, and finalize accessibility audits.
+
