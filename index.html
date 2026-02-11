@@ -1634,6 +1634,7 @@
             }
             const performanceProfile = detectPerformanceProfile();
             if (DEBUG) console.log(`[Performance] Detected profile: ${performanceProfile}`);
+            const ENABLE_GENERATED_THUMBNAILS = true;
 
             // --- Core Variables ---
             const allPages = document.querySelectorAll('.page');
@@ -2993,6 +2994,7 @@
             }
 
             function refreshPortfolioThumbnails() {
+                if (!ENABLE_GENERATED_THUMBNAILS) return;
                 applyGeneratedThumbnails();
                 removeResidualDataSrc();
             }
