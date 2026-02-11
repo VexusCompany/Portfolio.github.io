@@ -164,6 +164,8 @@
             overflow-x: hidden;
         }
         body.no-scroll { overflow: hidden; }
+        a, button { font-family: inherit; }
+        a:focus-visible, button:focus-visible { outline: 2px solid var(--accent-aqua); outline-offset: 3px; }
 
         /* Background: soft gradients for a calm professional feel */
         #site-background {
@@ -224,7 +226,7 @@
         }
 
 
-        /* Preloader */
+        /* Preloader (simple logo-only loading screen) */
         #preloader {
             position: fixed;
             top: 0;
@@ -236,84 +238,27 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
-            transition-delay: 1s;
+            transition: opacity 0.4s ease-out, visibility 0.4s ease-out;
         }
-        #preloader.loaded {
-            opacity: 0;
-            visibility: hidden;
-        }
-        #preloader-skip {
-            position: fixed;
-            top: 24px;
-            right: 24px;
-            z-index: 10002;
-            background: rgba(0, 0, 0, 0.35);
-            color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 999px;
-            padding: 10px 16px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            letter-spacing: 0.02em;
-            transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
-            backdrop-filter: blur(6px);
-        }
-        #preloader-skip:hover { transform: translateY(-2px); background: rgba(255, 255, 255, 0.15); border-color: rgba(255, 255, 255, 0.35); }
-        #preloader.loaded #preloader-skip { display: none; }
-        .preloader-video {
-            /* --- Fullscreen Video Styling --- */
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            min-width: 100%;
-            min-height: 100%;
-            width: auto; /* Maintain aspect ratio */
-            height: auto; /* Maintain aspect ratio */
-            object-fit: cover; /* Cover the entire screen without distortion */
-            z-index: -1; /* Place it behind any potential text/logo inside preloader */
-        }
-        @keyframes pulse-glow-strong {
-            /* This animation will now apply to the video */
-            0%, 100% {
-                transform: scale(1);
-                filter: drop-shadow(0 0 8px var(--accent-aqua)) drop-shadow(0 0 16px var(--accent-aqua));
-            }
-            50% {
-                transform: scale(1.1);
-                filter: drop-shadow(0 0 12px var(--accent-purple)) drop-shadow(0 0 24px var(--accent-purple));
-            }
-        }
-
-        /* --- Sound Toggle Button for Preloader --- */
-        #sound-toggle-button {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 10001; /* Above the preloader video */
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            cursor: pointer;
+        #preloader.loaded { opacity: 0; visibility: hidden; }
+        .preloader-logo {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            color: white;
-            transition: background 0.3s, transform 0.3s;
-            backdrop-filter: blur(5px);
+            gap: 14px;
+            text-align: center;
         }
-        #sound-toggle-button:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: scale(1.1);
+        .preloader-logo img {
+            width: 90px;
+            height: auto;
+            filter: drop-shadow(0 0 10px var(--accent-aqua));
         }
-        #sound-toggle-button svg { width: 24px; height: 24px; }
-        #sound-toggle-button .icon-sound-on { display: none; }
-        #sound-toggle-button.sound-active .icon-sound-on { display: block; }
-        #sound-toggle-button.sound-active .icon-sound-off { display: none; }
+        .preloader-logo span {
+            font-family: var(--font-display);
+            letter-spacing: 0.28em;
+            font-size: 1.1rem;
+            color: var(--accent-aqua);
+        }
 
         .logo-container img {
             filter: drop-shadow(0 0 8px var(--accent-aqua));
@@ -473,12 +418,34 @@
         }
 
         /* --- General Section & Page Styling --- */
-        .content-section { padding: 120px 8%; position: relative; }
+        .content-section { padding: clamp(90px, 10vw, 120px) 8%; position: relative; }
         .page-header { padding: 180px 8% 100px; text-align: center; position: relative; overflow: hidden; border-bottom: 1px solid var(--border-glow); }
         .page-header h1, .page-header p { position: relative; z-index: 2; }
         .page-header h1 { font-family: var(--font-display); font-size: clamp(2.5rem, 6vw, 4rem); color: var(--text-light); margin-bottom: 10px; line-height: 1.2; }
         .page-header p { font-size: 1.2rem; color: var(--text-muted); max-width: 800px; margin: 20px auto 0; line-height: 1.7; }
-        .section-title { text-align: center; font-family: var(--font-display); font-size: clamp(2rem, 5vw, 2.8rem); margin-bottom: 70px; color: var(--text-light); line-height: 1.2; }
+        .page-back-button {
+            position: absolute;
+            top: 110px;
+            left: 8%;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: 999px;
+            border: 1px solid var(--border-glow);
+            background: rgba(4, 10, 18, 0.65);
+            color: var(--text-light);
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            cursor: pointer;
+            z-index: 3;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+        }
+        .page-back-button:hover { transform: translateY(-2px); border-color: var(--accent-aqua); box-shadow: 0 8px 22px rgba(0, 240, 212, 0.18); }
+        .page-back-button .back-icon { font-size: 1.05rem; }
+        html[dir="rtl"] .page-back-button { left: auto; right: 8%; flex-direction: row-reverse; }
+        html[dir="rtl"] .page-back-button .back-icon { transform: rotate(180deg); }
+        .section-title { text-align: center; font-family: var(--font-display); font-size: clamp(2rem, 5vw, 2.8rem); margin-bottom: 48px; color: var(--text-light); line-height: 1.2; }
 
         .aurora-background { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; overflow: hidden; }
         .aurora-background::before, .aurora-background::after { content: ''; position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, var(--accent-purple), transparent 60%); border-radius: 50%; opacity: 0.15; animation: aurora-move 20s infinite; }
@@ -598,14 +565,9 @@
         .interactive-card p { color: var(--text-muted); line-height: 1.8; font-weight: 300; }
         
         /* --- Portfolio Section --- */
-        .portfolio-filter { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 50px; }
-        .filter-btn { background: transparent; border: 1px solid var(--border-glow); color: var(--text-muted); padding: 10px 20px; border-radius: 5px; cursor: pointer; transition: all 0.3s ease; }
-        .filter-btn:hover { background-color: var(--accent-purple); color: white; border-color: var(--accent-purple); }
-        .filter-btn.active { background-color: var(--accent-aqua); color: var(--bg-dark); border-color: var(--accent-aqua); font-weight: bold; }
         
         .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
         .portfolio-item { padding: 0; text-align: left; transition: transform 0.4s ease, opacity 0.4s ease; }
-        .portfolio-item.hide { display: none; }
         .portfolio-item:hover { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
         .portfolio-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease, opacity 0.5s ease-in-out; border-radius: 10px; opacity: 0; }
         .portfolio-item img.loaded { opacity: 1; }
@@ -614,6 +576,137 @@
         .portfolio-overlay h3, .portfolio-overlay p { margin: 0; padding: 0; }
         .portfolio-overlay p { font-size: 0.9em; }
         .interactive-card:hover img.loaded { transform: scale(1.1); }
+
+        /* --- Work Library CTA --- */
+        .cta-button.compact { margin-top: 0; padding: 14px 34px; font-size: 1rem; }
+        .work-library-card {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 32px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 14px;
+            text-align: center;
+            box-shadow: 0 0 40px 0 var(--glow-weak);
+        }
+        .section-subtitle {
+            text-align: center;
+            max-width: 780px;
+            margin: -20px auto 40px;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        /* --- About Page Structure --- */
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+        }
+        .about-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 14px;
+            padding: 28px 30px;
+            box-shadow: 0 0 32px rgba(0, 240, 212, 0.08);
+            text-align: left;
+        }
+        .about-card h3 {
+            margin: 0 0 12px;
+            font-size: 1.2rem;
+            color: var(--accent-aqua);
+            letter-spacing: 0.02em;
+        }
+        .about-card p { margin: 0; color: var(--text-muted); line-height: 1.75; }
+        .services-summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+        .service-pill {
+            border: 1px solid var(--border-glow);
+            border-radius: 999px;
+            padding: 12px 18px;
+            text-align: center;
+            font-weight: 600;
+            color: var(--text-light);
+            background: rgba(4, 10, 18, 0.65);
+            letter-spacing: 0.02em;
+        }
+        .about-edge #rotating-subtext-container { margin-bottom: 28px; }
+
+        /* --- Company Info --- */
+        .company-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 40px;
+            align-items: start;
+        }
+        .company-info-text p { color: var(--text-muted); line-height: 1.85; }
+        .company-info-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 14px;
+            padding: 28px;
+            box-shadow: 0 0 30px 0 var(--glow-weak);
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-glow);
+        }
+        .info-row:last-child { border-bottom: none; }
+        .info-label { color: var(--text-muted); font-weight: 600; letter-spacing: 0.02em; }
+        .info-value { color: var(--text-light); text-align: right; }
+        html[dir="rtl"] .info-row { flex-direction: row-reverse; }
+        html[dir="rtl"] .info-value { text-align: left; }
+        html[dir="rtl"] .about-card { text-align: right; }
+
+        /* --- Company Structure / Hierarchy --- */
+        .org-chart { display: flex; flex-direction: column; align-items: center; gap: 28px; }
+        .org-level { display: flex; gap: 22px; flex-wrap: wrap; justify-content: center; }
+        .org-node {
+            background: rgba(4, 10, 18, 0.7);
+            border: 1px solid var(--border-glow);
+            padding: 16px 26px;
+            border-radius: 14px;
+            text-align: center;
+            min-width: 180px;
+            animation: node-glow 4s ease-in-out infinite;
+        }
+        .org-connector {
+            width: 2px;
+            height: 40px;
+            background: linear-gradient(180deg, transparent, var(--accent-aqua), transparent);
+            animation: pulse-line 2.6s ease-in-out infinite;
+        }
+        .org-stats {
+            width: 100%;
+            max-width: 900px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 18px;
+        }
+        .org-stat {
+            text-align: center;
+            padding: 16px;
+            background: rgba(4, 10, 18, 0.6);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+        }
+        .org-stat-number { display: block; font-family: var(--font-display); font-size: 1.7rem; color: var(--accent-aqua); }
+        .org-stat-label { color: var(--text-muted); font-size: 0.95rem; }
+
+        @keyframes pulse-line {
+            0%, 100% { opacity: 0.35; transform: scaleY(0.9); }
+            50% { opacity: 1; transform: scaleY(1.1); }
+        }
+        @keyframes node-glow {
+            0%, 100% { box-shadow: 0 0 18px rgba(0, 240, 212, 0.15); }
+            50% { box-shadow: 0 0 26px rgba(0, 240, 212, 0.35); }
+        }
 
         /* --- WOW Sections: Stats, Testimonials, Timeline --- */
         .stats-section { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; text-align: center; }
@@ -641,6 +734,11 @@
         html[dir="rtl"] .timeline-item.right { left: auto; right: 50%; text-align: right; }
         html[dir="rtl"] .timeline-item::after { left: -10px; right: auto; }
         html[dir="rtl"] .timeline-item.right::after { right: -10px; left: auto; }
+
+        /* --- Mobile/Text Overflow Safety --- */
+        .content-section, .page-header, .card-content, .timeline-content, .testimonial-text,
+        .footer-column p, .footer-column a, .company-info-text p { overflow-wrap: anywhere; }
+        img, video, iframe { max-width: 100%; }
         
         /* --- Contact Page Specifics --- */
         .contact-form { max-width: 800px; margin: 0 auto; background-color: rgba(26, 26, 56, 0.7); backdrop-filter: blur(10px); padding: 50px; border-radius: 10px; border: 1px solid var(--border-glow); }
@@ -699,11 +797,12 @@
             .cta-button { margin-top: 12vh; padding: 16px 28px; width: min(90%, 320px); }
             .content-section { padding: 100px 5%; }
             .page-header { padding: 150px 5% 80px; }
-            .section-title { margin-bottom: 40px; }
+            .page-back-button { top: 92px; left: 5%; padding: 8px 14px; font-size: 0.95rem; }
+            .section-title { margin-bottom: 36px; }
+            .section-subtitle { margin: -12px auto 28px; }
             .services-grid, .portfolio-grid { gap: 24px; }
             .card-content { padding: 28px; }
-            .portfolio-filter { gap: 10px; margin-bottom: 35px; }
-            .filter-btn { padding: 8px 14px; font-size: 0.9rem; }
+            .testimonial-carousel { padding: 0 16px; }
             .portfolio-overlay { padding: 18px; }
             .portfolio-overlay h3 { font-size: 1.05rem; }
             .portfolio-overlay p { font-size: 0.85rem; }
@@ -711,42 +810,45 @@
             .timeline-item { width: 100%; padding-left: 70px; padding-right: 25px; }
             .timeline-item.left, .timeline-item.right { left: 0%; text-align: left; }
             .timeline-item::after { left: 5px; }
+            .work-library-card { padding: 24px; }
+            .company-info-panel { padding: 22px; }
+            .info-row { flex-direction: column; align-items: flex-start; }
+            .info-value { text-align: left; }
+            .org-level { flex-direction: column; gap: 16px; }
+            .org-connector { height: 28px; }
+            .about-card { padding: 22px; }
+            .services-summary-grid { gap: 12px; }
+            .service-pill { padding: 10px 14px; }
 
             html[dir="rtl"] .timeline::after { right: 15px; left: auto; }
             html[dir="rtl"] .timeline-item { padding-left: 25px; padding-right: 70px; }
             html[dir="rtl"] .timeline-item.left, html[dir="rtl"] .timeline-item.right { text-align: right; }
             html[dir="rtl"] .timeline-item::after { right: 5px; left: auto; }
+            html[dir="rtl"] .info-row { align-items: flex-end; }
+            html[dir="rtl"] .info-value { text-align: right; }
+            html[dir="rtl"] .page-back-button { right: 5%; left: auto; }
         }
     </style>
 </head>
 <body>
     <div id="site-background"></div>
     <div id="cursor-glow"></div>
-    <div id="preloader">
-        <!-- Preloader: provide two video files (desktop/mobile). Replace the data-src values with your files. -->
-        <video id="preloader-video" class="preloader-video" autoplay playsinline muted
-               data-src-desktop="preloader-desktop.mp4"
-               data-src-mobile="preloader-mobile.mp4">
-            <!-- JS will assign the suitable src based on viewport. -->
-        </video>
-        <!-- Skip intro button for quick access -->
-        <button id="preloader-skip" type="button" aria-label="Skip intro">Skip</button>
-        <button id="sound-toggle-button" aria-label="Toggle Sound">
-            <svg class="icon-sound-off" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 9.75L19.5 12m0 0l2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25M12.75 6.364V17.636a1.125 1.125 0 01-2.05.623l-1.002-2.003H6.375a1.125 1.125 0 01-1.125-1.125v-4.5a1.125 1.125 0 011.125-1.125h3.37a1.125 1.125 0 012.05.623z" /></svg>
-            <svg class="icon-sound-on" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" /></svg>
-        </button>
+    <div id="preloader" aria-hidden="true">
+        <div class="preloader-logo" aria-label="VEXUS">
+            <img src="FINED LOGO.png" alt="VEXUS Logo">
+            <span>VEXUS</span>
+        </div>
     </div>
     <div id="scroll-progress-bar"></div>
     <div id="page-transition-overlay"></div>
 
     <header id="main-header">
-            <div class="logo-container" data-target="home-page">
+            <div class="logo-container" data-target="home-page" tabindex="0" role="link" data-i18n-aria="navHome" aria-label="Home">
             <img src="FINED LOGO.png" alt="Your Brand Logo" style="height: 40px; width: auto;">
             <span>VEXUS</span>
         </div>
         <nav class="desktop-nav" role="navigation" aria-label="Main Navigation">
             <a href="#" data-target="home-page" class="active" tabindex="0" role="link" aria-current="page" data-i18n="navHome">Home</a>
-            <a href="#" data-target="vexus-edge-page" tabindex="0" role="link" data-i18n="navEdge">The VEXUS Edge</a>
             <a href="#" data-target="about-page" tabindex="0" role="link" data-i18n="navAbout">About Us</a>
             <a href="#" data-target="contact-page" class="nav-cta-button" tabindex="0" role="link" data-i18n="navContact">Contact Us</a>
             <div class="lang-switcher">
@@ -759,7 +861,6 @@
 
     <nav class="mobile-nav">
         <a href="#" data-target="home-page" tabindex="0" role="link" data-i18n="navHome">Home</a>
-        <a href="#" data-target="vexus-edge-page" tabindex="0" role="link" data-i18n="navEdge">The VEXUS Edge</a>
         <a href="#" data-target="about-page" tabindex="0" role="link" data-i18n="navAbout">About Us</a>
         <a href="#" data-target="contact-page" tabindex="0" role="link" data-i18n="navContact">Contact Us</a>
         <div class="lang-switcher">
@@ -780,9 +881,16 @@
                         <span class="rotating-text-item" data-i18n="heroSubtext2">We combine strategy, design, and production to deliver measurable brand growth.</span>
                         <span class="rotating-text-item" data-i18n="heroSubtext3">From concept to launch, we build fast, polished experiences across web, mobile, and media.</span>
                     </div>
-                    <button class="cta-button" data-scroll-to="#portfolio" data-i18n="heroCTA">Explore Our Work</button>
+                    <button class="cta-button" data-scroll-to="#work-library" data-i18n="heroCTA">Explore Our Work</button>
                 </div>
             </section>
+            <!--
+              PORTFOLIO STRUCTURE OVERVIEW:
+              - Tracks (Categories) live here as clickable cards.
+              - Each Track opens its own Page (service-*-page).
+              - Work Cards live in #portfolio-library (hidden) and are injected into Track Pages only.
+              - Track types: Motion Graphics, Video Editing/Reels, Voice Over, 3D, Branding, Web/App, Packaging, Print/Books.
+            -->
             <section id="services" class="content-section">
                 <h2 class="section-title animate-on-scroll reveal-text" data-i18n="servicesTitle">Our Core Services</h2>
                 <div class="services-grid">
@@ -798,92 +906,217 @@
                     <div class="interactive-card service-card animate-on-scroll" data-target="service-web-page" tabindex="0" role="button" data-i18n-aria="serviceWebTitle"><div class="card-glow"></div><div class="card-content"><i class="service-icon fa-solid fa-code"></i><h3 data-i18n="serviceWebTitle">Web & UX/UI</h3><p data-i18n="serviceWebDesc">High-performance websites and apps with clean UX, strong SEO, and scalable code.</p></div></div>
                 </div>
             </section>
-            <section id="portfolio" class="content-section">
-                <h2 class="section-title animate-on-scroll reveal-text" data-i18n="portfolioTitle">Featured Work</h2>
-                <div class="portfolio-filter animate-on-scroll">
-                    <button class="filter-btn active" data-filter="all" data-i18n="filterAll">All</button>
-                    <button class="filter-btn" data-filter="3d" data-i18n="filter3D">3D</button>
-                    <button class="filter-btn" data-filter="pdf" data-i18n="filterPDF">PDF</button>
-                    <button class="filter-btn" data-filter="motion" data-i18n="filterMotion">Motion</button>
-                    <button class="filter-btn" data-filter="reel" data-i18n="filterReel">Reel</button>
-                    <button class="filter-btn" data-filter="voice" data-i18n="filterVoice">Voice</button>
-                    <button class="filter-btn" data-filter="branding" data-i18n="filterBranding">Branding</button>
-                    <button class="filter-btn" data-filter="packaging" data-i18n="filterPackaging">Packaging</button>
-                    <button class="filter-btn" data-filter="web" data-i18n="filterWeb">Web</button>
-                    <button class="filter-btn" data-filter="app" data-i18n="filterApp">App</button>
-                    <button class="filter-btn" data-filter="print" data-i18n="filterPrint">Print</button>
-                </div>
-                <!--
-                =============================
-                HOW TO ADD A NEW PROJECT CARD
-                =============================
-                1. Copy one of the <div class="interactive-card portfolio-item ..."> blocks below.
-                2. Paste it inside the <div class="portfolio-grid"> ... </div> below.
-                3. Update:
-                   - data-category (ai, 3d, web, motion, etc.)
-                   - data-type ("image" or "video")
-                   - data-src (for images) or data-video-id (for YouTube videos)
-                   - <img> alt and data-src for the thumbnail
-                   - <h3> and <p> for project title and type
-                4. Save and reload the page.
-                -->
-                <div class="portfolio-grid">
-                    <!-- PDFs / 3D packages -->
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="3d" data-type="pdf" data-src="3D Both.pdf" tabindex="0"><div class="card-glow"></div><img src="2D PLAN.png" data-src="2D PLAN.png" alt="3D Both" class="lazy"><div class="portfolio-overlay"><h3>3D Both</h3><p>3D Package (PDF)</p></div></div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="3d" data-type="pdf" data-src="3D Cafe.pdf" tabindex="0"><div class="card-glow"></div><img src="2D PLAN (2).png" data-src="2D PLAN (2).png" alt="3D Cafe" class="lazy"><div class="portfolio-overlay"><h3>3D Cafe</h3><p>Interior Visualization (PDF)</p></div></div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="3d" data-type="pdf" data-src="3D Car Wash Shop Design.pdf" tabindex="0"><div class="card-glow"></div><img src="2D PALN ELECTRIC.png" data-src="2D PALN ELECTRIC.png" alt="Car Wash" class="lazy"><div class="portfolio-overlay"><h3>Car Wash Shop Design</h3><p>Architectural Package (PDF)</p></div></div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="3d" data-type="pdf" data-src="3D Design Samsung Both.pdf" tabindex="0"><div class="card-glow"></div><img src="2D PLAN.png" data-src="2D PLAN.png" alt="Samsung Design" class="lazy"><div class="portfolio-overlay"><h3>Samsung 3D Design</h3><p>3D Assets (PDF)</p></div></div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="3d" data-type="pdf" data-src="3d Project.pdf" tabindex="0"><div class="card-glow"></div><img src="2D PLAN.png" data-src="2D PLAN.png" alt="3D Project" class="lazy"><div class="portfolio-overlay"><h3>3D Project</h3><p>Project Pack (PDF)</p></div></div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="3d" data-type="pdf" data-src="3d21.pdf" tabindex="0"><div class="card-glow"></div><img src="2D PLAN.png" data-src="2D PLAN.png" alt="3D 21" class="lazy"><div class="portfolio-overlay"><h3>3D Project 21</h3><p>Arch. Documentation (PDF)</p></div></div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="3d" data-type="pdf" data-src="3d26.pdf" tabindex="0"><div class="card-glow"></div><img src="2D PLAN.png" data-src="2D PLAN.png" alt="3D 26" class="lazy"><div class="portfolio-overlay"><h3>3D Project 26</h3><p>Arch. Documentation (PDF)</p></div></div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="3d" data-type="pdf" data-src="3d44.pdf" tabindex="0"><div class="card-glow"></div><img src="2D PLAN.png" data-src="2D PLAN.png" alt="3D 44" class="lazy"><div class="portfolio-overlay"><h3>3D Project 44</h3><p>Arch. Documentation (PDF)</p></div></div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="3d" data-type="pdf" data-src="3d58.pdf" tabindex="0"><div class="card-glow"></div><img src="2D PLAN.png" data-src="2D PLAN.png" alt="3D 58" class="lazy"><div class="portfolio-overlay"><h3>3D Project 58</h3><p>Arch. Documentation (PDF)</p></div></div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="3d" data-type="pdf" data-src="Morocco Villa.pdf" tabindex="0"><div class="card-glow"></div><img src="2D PLAN (2).png" data-src="2D PLAN (2).png" alt="Morocco Villa" class="lazy"><div class="portfolio-overlay"><h3>Morocco Villa</h3><p>Villa Design (PDF)</p></div></div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="3d" data-type="pdf" data-src="Qatif Villa.pdf" tabindex="0"><div class="card-glow"></div><img src="2D PLAN.png" data-src="2D PLAN.png" alt="Qatif Villa" class="lazy"><div class="portfolio-overlay"><h3>Qatif Villa</h3><p>Villa Design (PDF)</p></div></div>
-
-                    <!-- Images / Screenshots -->
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="branding" data-type="image" data-src="FINED LOGO.png" tabindex="0"><div class="card-glow"></div><img src="FINED LOGO.png" data-src="FINED LOGO.png" alt="Brand Logo" class="lazy"><div class="portfolio-overlay"><h3>Brand Identity</h3><p>Logo & Identity</p></div></div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="branding" data-type="image" data-src="LOGO.png" tabindex="0"><div class="card-glow"></div><img src="LOGO.png" data-src="LOGO.png" alt="Logo" class="lazy"><div class="portfolio-overlay"><h3>Logotype</h3><p>Brand Mark</p></div></div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="web" data-type="image" data-src="EDU SITE.png" tabindex="0"><div class="card-glow"></div><img src="EDU SITE.png" data-src="EDU SITE.png" alt="Educational Site" class="lazy"><div class="portfolio-overlay"><h3>Educational Site</h3><p>Website Screenshot</p></div></div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="web" data-type="image" data-src="EDU SITE (2).png" tabindex="0"><div class="card-glow"></div><img src="EDU SITE (2).png" data-src="EDU SITE (2).png" alt="Educational Site 2" class="lazy"><div class="portfolio-overlay"><h3>Educational Site (Alt)</h3><p>Website Screenshot</p></div></div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="app" data-type="image" data-src="APP.png" tabindex="0"><div class="card-glow"></div><img src="APP.png" data-src="APP.png" alt="App" class="lazy"><div class="portfolio-overlay"><h3>App UI</h3><p>Mobile App Screens</p></div></div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="app" data-type="image" data-src="APP (2).png" tabindex="0"><div class="card-glow"></div><img src="APP (2).png" data-src="APP (2).png" alt="App 2" class="lazy"><div class="portfolio-overlay"><h3>App UI (Alt)</h3><p>Mobile App Screens</p></div></div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="packaging" data-type="image" data-src="PACKIGING.png" tabindex="0"><div class="card-glow"></div><img src="PACKIGING.png" data-src="PACKIGING.png" alt="Packaging" class="lazy"><div class="portfolio-overlay"><h3>Packaging</h3><p>Product Packaging Design</p></div></div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="print" data-type="image" data-src="SOCHIAL POSTER.png" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER.png" data-src="SOCHIAL POSTER.png" alt="Social Poster" class="lazy"><div class="portfolio-overlay"><h3>Social Poster</h3><p>Campaign Poster</p></div></div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="print" data-type="image" data-src="SOCHIAL POSTER (2).png" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER (2).png" data-src="SOCHIAL POSTER (2).png" alt="Social Poster 2" class="lazy"><div class="portfolio-overlay"><h3>Social Poster (Alt)</h3><p>Campaign Poster</p></div></div>
-
-                    <!-- Motion & Video (local MP4s) -->
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="motion" data-type="video" data-src="MOTION GRAPHICS 1.mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER.png" data-src="SOCHIAL POSTER.png" alt="Motion 1" class="lazy"><div class="portfolio-overlay"><h3>Motion Graphics 1</h3><p>Motion Reel (MP4)</p></div></div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="motion" data-type="video" data-src="MOTION GRAPHICS 2.mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER (2).png" data-src="SOCHIAL POSTER (2).png" alt="Motion 2" class="lazy"><div class="portfolio-overlay"><h3>Motion Graphics 2</h3><p>Motion Reel (MP4)</p></div></div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="motion" data-type="video" data-src="MOTION GRAPHICS 3.mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER.png" data-src="SOCHIAL POSTER.png" alt="Motion 3" class="lazy"><div class="portfolio-overlay"><h3>Motion Graphics 3</h3><p>Motion Reel (MP4)</p></div></div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="motion" data-type="video" data-src="MOTION GRAPHICS 4.mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER (2).png" data-src="SOCHIAL POSTER (2).png" alt="Motion 4" class="lazy"><div class="portfolio-overlay"><h3>Motion Graphics 4</h3><p>Motion Reel (MP4)</p></div></div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="motion" data-type="video" data-src="MOTION GRAPHICS 5.mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER.png" data-src="SOCHIAL POSTER.png" alt="Motion 5" class="lazy"><div class="portfolio-overlay"><h3>Motion Graphics 5</h3><p>Motion Reel (MP4)</p></div></div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="motion" data-type="video" data-src="MOTION GRAPHICS 6.mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER (2).png" data-src="SOCHIAL POSTER (2).png" alt="Motion 6" class="lazy"><div class="portfolio-overlay"><h3>Motion Graphics 6</h3><p>Motion Reel (MP4)</p></div></div>
-
-                    <!-- Reels & Client Videos -->
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="reel" data-type="video" data-src="Reel aboels.mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER.png" data-src="SOCHIAL POSTER.png" alt="Reel Aboels" class="lazy"><div class="portfolio-overlay"><h3>Reel Aboels</h3><p>Client Reel (MP4)</p></div></div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="reel" data-type="video" data-src="Reel bay.mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER (2).png" data-src="SOCHIAL POSTER (2).png" alt="Reel Bay" class="lazy"><div class="portfolio-overlay"><h3>Reel Bay</h3><p>Client Reel (MP4)</p></div></div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="reel" data-type="video" data-src="Reel14.mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER.png" data-src="SOCHIAL POSTER.png" alt="Reel 14" class="lazy"><div class="portfolio-overlay"><h3>Reel 14</h3><p>Client Reel (MP4)</p></div></div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="reel" data-type="video" data-src="Reel16.mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER (2).png" data-src="SOCHIAL POSTER (2).png" alt="Reel 16" class="lazy"><div class="portfolio-overlay"><h3>Reel 16</h3><p>Client Reel (MP4)</p></div></div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="motion" data-type="video" data-src="3rd-Project (2).mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER.png" data-src="SOCHIAL POSTER.png" alt="3rd Project" class="lazy"><div class="portfolio-overlay"><h3>Third Project Video</h3><p>Project Video (MP4)</p></div></div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="motion" data-type="video" data-src="WaelFinal (1).mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER (2).png" data-src="SOCHIAL POSTER (2).png" alt="Wael Final" class="lazy"><div class="portfolio-overlay"><h3>Wael Final</h3><p>Client Video (MP4)</p></div></div>
-
-                    <!-- Preloader and misc video assets -->
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="motion" data-type="video" data-src="preloader-desktop.mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER.png" data-src="SOCHIAL POSTER.png" alt="Preloader Desktop" class="lazy"><div class="portfolio-overlay"><h3>Preloader (Desktop)</h3><p>Video (MP4)</p></div></div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="motion" data-type="video" data-src="preloader-mobile.mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER (2).png" data-src="SOCHIAL POSTER (2).png" alt="Preloader Mobile" class="lazy"><div class="portfolio-overlay"><h3>Preloader (Mobile)</h3><p>Video (MP4)</p></div></div>
-
-                    <!-- Voice over assets (audio/video) -->
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="voice" data-type="audio" data-src="Voice over/انجليزي/Brandatomy  wihtout Music.mp3" tabindex="0"><div class="card-glow"></div><img src="LOGO.png" data-src="LOGO.png" alt="Brandatomy Voice" class="lazy"><div class="portfolio-overlay"><h3>Brandatomy (EN)</h3><p>Voice Over (MP3)</p></div></div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="voice" data-type="audio" data-src="Voice over/خليجي/2.mp3" tabindex="0"><div class="card-glow"></div><img src="LOGO.png" data-src="LOGO.png" alt="Khaleeji 2" class="lazy"><div class="portfolio-overlay"><h3>Khaleeji Voice 2</h3><p>Voice Over (MP3)</p></div></div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="voice" data-type="audio" data-src="Voice over/خليجي/3.mp3" tabindex="0"><div class="card-glow"></div><img src="LOGO.png" data-src="LOGO.png" alt="Khaleeji 3" class="lazy"><div class="portfolio-overlay"><h3>Khaleeji Voice 3</h3><p>Voice Over (MP3)</p></div></div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="voice" data-type="video" data-src="Voice over/خليجي/4.mp4" tabindex="0"><div class="card-glow"></div><img src="LOGO.png" data-src="LOGO.png" alt="Khaleeji 4 Video" class="lazy"><div class="portfolio-overlay"><h3>Khaleeji Voice Video</h3><p>Voice/Video (MP4)</p></div></div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="voice" data-type="audio" data-src="Voice over/خليجي/5.mp3" tabindex="0"><div class="card-glow"></div><img src="LOGO.png" data-src="LOGO.png" alt="Khaleeji 5" class="lazy"><div class="portfolio-overlay"><h3>Khaleeji Voice 5</h3><p>Voice Over (MP3)</p></div></div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="voice" data-type="audio" data-src="Voice over/خليجي/6.mp3" tabindex="0"><div class="card-glow"></div><img src="LOGO.png" data-src="LOGO.png" alt="Khaleeji 6" class="lazy"><div class="portfolio-overlay"><h3>Khaleeji Voice 6</h3><p>Voice Over (MP3)</p></div></div>
-                    <div class="interactive-card portfolio-item animate-on-scroll" data-category="voice" data-type="audio" data-src="Voice over/مصري/1.mp3" tabindex="0"><div class="card-glow"></div><img src="LOGO.png" data-src="LOGO.png" alt="Masri Voice 1" class="lazy"><div class="portfolio-overlay"><h3>Masri Voice 1</h3><p>Voice Over (MP3)</p></div></div>
-
+            <section id="work-library" class="content-section">
+                <h2 class="section-title animate-on-scroll reveal-text" data-i18n="workLibraryTitle">Portfolio / Work Library</h2>
+                <p class="section-subtitle animate-on-scroll" data-i18n="workLibraryDesc">We publish curated samples here to keep the site fast. Access the full library below.</p>
+                <div class="work-library-card animate-on-scroll">
+                    <p data-i18n="workLibraryNote">The website shows samples only. Use the full library for complete project archives and extended reels.</p>
+                    <!-- Replace the href with your Google Drive full portfolio link -->
+                    <a class="cta-button compact" href="https://drive.google.com/drive/folders/REPLACE_WITH_PORTFOLIO_LINK" target="_blank" rel="noopener noreferrer" data-i18n="workLibraryButton">Full Work Library</a>
                 </div>
             </section>
-<section class="content-section">
+        </div>
+
+
+        <!-- Portfolio Library (Hidden Data Source) -->
+        <section id="portfolio-library" class="content-section portfolio-library" aria-hidden="true" hidden>
+            <!--
+              PORTFOLIO MAIN STRUCTURE:
+              - This library stores all Work Cards.
+              - Track Pages clone cards from here based on data-category.
+              - Keep this section hidden so the Home Page shows only Track Cards and the Work Library CTA.
+            -->
+            <!--
+            =============================
+            HOW TO ADD A NEW PROJECT CARD
+            =============================
+            1. Copy one of the <div class="interactive-card portfolio-item ..."> blocks below.
+            2. Paste it inside the <div class="portfolio-grid"> ... </div> below.
+            3. Update:
+               - data-category (ai, 3d, web, motion, etc.)
+               - data-type ("image" or "video")
+               - data-src (for images) or data-video-id (for YouTube videos)
+               - <img> alt and data-src for the thumbnail
+               - <h3> and <p> for project title and type
+            4. Save and reload the page.
+            -->
+            <div class="portfolio-grid">
+                <!-- PDFs / 3D packages -->
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="3d" data-type="pdf" data-src="3D Both.pdf" tabindex="0"><div class="card-glow"></div><img src="2D PLAN.png" data-src="2D PLAN.png" alt="3D Both" class="lazy"><div class="portfolio-overlay"><h3>3D Both</h3><p>3D Package (PDF)</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="3d" data-type="pdf" data-src="3D Cafe.pdf" tabindex="0"><div class="card-glow"></div><img src="2D PLAN (2).png" data-src="2D PLAN (2).png" alt="3D Cafe" class="lazy"><div class="portfolio-overlay"><h3>3D Cafe</h3><p>Interior Visualization (PDF)</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="3d" data-type="pdf" data-src="3D Car Wash Shop Design.pdf" tabindex="0"><div class="card-glow"></div><img src="2D PALN ELECTRIC.png" data-src="2D PALN ELECTRIC.png" alt="Car Wash" class="lazy"><div class="portfolio-overlay"><h3>Car Wash Shop Design</h3><p>Architectural Package (PDF)</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="3d" data-type="pdf" data-src="3D Design Samsung Both.pdf" tabindex="0"><div class="card-glow"></div><img src="2D PLAN.png" data-src="2D PLAN.png" alt="Samsung Design" class="lazy"><div class="portfolio-overlay"><h3>Samsung 3D Design</h3><p>3D Assets (PDF)</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="3d" data-type="pdf" data-src="3d Project.pdf" tabindex="0"><div class="card-glow"></div><img src="2D PLAN.png" data-src="2D PLAN.png" alt="3D Project" class="lazy"><div class="portfolio-overlay"><h3>3D Project</h3><p>Project Pack (PDF)</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="3d" data-type="pdf" data-src="3d21.pdf" tabindex="0"><div class="card-glow"></div><img src="2D PLAN.png" data-src="2D PLAN.png" alt="3D 21" class="lazy"><div class="portfolio-overlay"><h3>3D Project 21</h3><p>Arch. Documentation (PDF)</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="3d" data-type="pdf" data-src="3d26.pdf" tabindex="0"><div class="card-glow"></div><img src="2D PLAN.png" data-src="2D PLAN.png" alt="3D 26" class="lazy"><div class="portfolio-overlay"><h3>3D Project 26</h3><p>Arch. Documentation (PDF)</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="3d" data-type="pdf" data-src="3d44.pdf" tabindex="0"><div class="card-glow"></div><img src="2D PLAN.png" data-src="2D PLAN.png" alt="3D 44" class="lazy"><div class="portfolio-overlay"><h3>3D Project 44</h3><p>Arch. Documentation (PDF)</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="3d" data-type="pdf" data-src="3d58.pdf" tabindex="0"><div class="card-glow"></div><img src="2D PLAN.png" data-src="2D PLAN.png" alt="3D 58" class="lazy"><div class="portfolio-overlay"><h3>3D Project 58</h3><p>Arch. Documentation (PDF)</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="3d" data-type="pdf" data-src="Morocco Villa.pdf" tabindex="0"><div class="card-glow"></div><img src="2D PLAN (2).png" data-src="2D PLAN (2).png" alt="Morocco Villa" class="lazy"><div class="portfolio-overlay"><h3>Morocco Villa</h3><p>Villa Design (PDF)</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="3d" data-type="pdf" data-src="Qatif Villa.pdf" tabindex="0"><div class="card-glow"></div><img src="2D PLAN.png" data-src="2D PLAN.png" alt="Qatif Villa" class="lazy"><div class="portfolio-overlay"><h3>Qatif Villa</h3><p>Villa Design (PDF)</p></div></div>
+
+                <!-- Images / Screenshots -->
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="branding" data-type="image" data-src="FINED LOGO.png" tabindex="0"><div class="card-glow"></div><img src="FINED LOGO.png" data-src="FINED LOGO.png" alt="Brand Logo" class="lazy"><div class="portfolio-overlay"><h3>Brand Identity</h3><p>Logo & Identity</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="branding" data-type="image" data-src="LOGO.png" tabindex="0"><div class="card-glow"></div><img src="LOGO.png" data-src="LOGO.png" alt="Logo" class="lazy"><div class="portfolio-overlay"><h3>Logotype</h3><p>Brand Mark</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="web" data-type="image" data-src="EDU SITE.png" tabindex="0"><div class="card-glow"></div><img src="EDU SITE.png" data-src="EDU SITE.png" alt="Educational Site" class="lazy"><div class="portfolio-overlay"><h3>Educational Site</h3><p>Website Screenshot</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="web" data-type="image" data-src="EDU SITE (2).png" tabindex="0"><div class="card-glow"></div><img src="EDU SITE (2).png" data-src="EDU SITE (2).png" alt="Educational Site 2" class="lazy"><div class="portfolio-overlay"><h3>Educational Site (Alt)</h3><p>Website Screenshot</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="app" data-type="image" data-src="APP.png" tabindex="0"><div class="card-glow"></div><img src="APP.png" data-src="APP.png" alt="App" class="lazy"><div class="portfolio-overlay"><h3>App UI</h3><p>Mobile App Screens</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="app" data-type="image" data-src="APP (2).png" tabindex="0"><div class="card-glow"></div><img src="APP (2).png" data-src="APP (2).png" alt="App 2" class="lazy"><div class="portfolio-overlay"><h3>App UI (Alt)</h3><p>Mobile App Screens</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="packaging" data-type="image" data-src="PACKIGING.png" tabindex="0"><div class="card-glow"></div><img src="PACKIGING.png" data-src="PACKIGING.png" alt="Packaging" class="lazy"><div class="portfolio-overlay"><h3>Packaging</h3><p>Product Packaging Design</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="print" data-type="image" data-src="SOCHIAL POSTER.png" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER.png" data-src="SOCHIAL POSTER.png" alt="Social Poster" class="lazy"><div class="portfolio-overlay"><h3>Social Poster</h3><p>Campaign Poster</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="print" data-type="image" data-src="SOCHIAL POSTER (2).png" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER (2).png" data-src="SOCHIAL POSTER (2).png" alt="Social Poster 2" class="lazy"><div class="portfolio-overlay"><h3>Social Poster (Alt)</h3><p>Campaign Poster</p></div></div>
+
+                <!-- Motion & Video (local MP4s) -->
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="motion" data-type="video" data-src="MOTION GRAPHICS 1.mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER.png" data-src="SOCHIAL POSTER.png" alt="Motion 1" class="lazy"><div class="portfolio-overlay"><h3>Motion Graphics 1</h3><p>Motion Reel (MP4)</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="motion" data-type="video" data-src="MOTION GRAPHICS 2.mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER (2).png" data-src="SOCHIAL POSTER (2).png" alt="Motion 2" class="lazy"><div class="portfolio-overlay"><h3>Motion Graphics 2</h3><p>Motion Reel (MP4)</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="motion" data-type="video" data-src="MOTION GRAPHICS 3.mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER.png" data-src="SOCHIAL POSTER.png" alt="Motion 3" class="lazy"><div class="portfolio-overlay"><h3>Motion Graphics 3</h3><p>Motion Reel (MP4)</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="motion" data-type="video" data-src="MOTION GRAPHICS 4.mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER (2).png" data-src="SOCHIAL POSTER (2).png" alt="Motion 4" class="lazy"><div class="portfolio-overlay"><h3>Motion Graphics 4</h3><p>Motion Reel (MP4)</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="motion" data-type="video" data-src="MOTION GRAPHICS 5.mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER.png" data-src="SOCHIAL POSTER.png" alt="Motion 5" class="lazy"><div class="portfolio-overlay"><h3>Motion Graphics 5</h3><p>Motion Reel (MP4)</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="motion" data-type="video" data-src="MOTION GRAPHICS 6.mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER (2).png" data-src="SOCHIAL POSTER (2).png" alt="Motion 6" class="lazy"><div class="portfolio-overlay"><h3>Motion Graphics 6</h3><p>Motion Reel (MP4)</p></div></div>
+
+                <!-- Reels & Client Videos -->
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="reel" data-type="video" data-src="Reel aboels.mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER.png" data-src="SOCHIAL POSTER.png" alt="Reel Aboels" class="lazy"><div class="portfolio-overlay"><h3>Reel Aboels</h3><p>Client Reel (MP4)</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="reel" data-type="video" data-src="Reel bay.mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER (2).png" data-src="SOCHIAL POSTER (2).png" alt="Reel Bay" class="lazy"><div class="portfolio-overlay"><h3>Reel Bay</h3><p>Client Reel (MP4)</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="reel" data-type="video" data-src="Reel14.mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER.png" data-src="SOCHIAL POSTER.png" alt="Reel 14" class="lazy"><div class="portfolio-overlay"><h3>Reel 14</h3><p>Client Reel (MP4)</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="reel" data-type="video" data-src="Reel16.mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER (2).png" data-src="SOCHIAL POSTER (2).png" alt="Reel 16" class="lazy"><div class="portfolio-overlay"><h3>Reel 16</h3><p>Client Reel (MP4)</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="motion" data-type="video" data-src="3rd-Project (2).mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER.png" data-src="SOCHIAL POSTER.png" alt="3rd Project" class="lazy"><div class="portfolio-overlay"><h3>Third Project Video</h3><p>Project Video (MP4)</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="motion" data-type="video" data-src="WaelFinal (1).mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER (2).png" data-src="SOCHIAL POSTER (2).png" alt="Wael Final" class="lazy"><div class="portfolio-overlay"><h3>Wael Final</h3><p>Client Video (MP4)</p></div></div>
+
+                <!-- Preloader and misc video assets -->
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="motion" data-type="video" data-src="preloader-desktop.mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER.png" data-src="SOCHIAL POSTER.png" alt="Preloader Desktop" class="lazy"><div class="portfolio-overlay"><h3>Preloader (Desktop)</h3><p>Video (MP4)</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="motion" data-type="video" data-src="preloader-mobile.mp4" tabindex="0"><div class="card-glow"></div><img src="SOCHIAL POSTER (2).png" data-src="SOCHIAL POSTER (2).png" alt="Preloader Mobile" class="lazy"><div class="portfolio-overlay"><h3>Preloader (Mobile)</h3><p>Video (MP4)</p></div></div>
+
+                <!-- Voice over assets (audio/video) -->
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="voice" data-type="audio" data-src="Voice over/انجليزي/Brandatomy  wihtout Music.mp3" tabindex="0"><div class="card-glow"></div><img src="LOGO.png" data-src="LOGO.png" alt="Brandatomy Voice" class="lazy"><div class="portfolio-overlay"><h3>Brandatomy (EN)</h3><p>Voice Over (MP3)</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="voice" data-type="audio" data-src="Voice over/خليجي/2.mp3" tabindex="0"><div class="card-glow"></div><img src="LOGO.png" data-src="LOGO.png" alt="Khaleeji 2" class="lazy"><div class="portfolio-overlay"><h3>Khaleeji Voice 2</h3><p>Voice Over (MP3)</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="voice" data-type="audio" data-src="Voice over/خليجي/3.mp3" tabindex="0"><div class="card-glow"></div><img src="LOGO.png" data-src="LOGO.png" alt="Khaleeji 3" class="lazy"><div class="portfolio-overlay"><h3>Khaleeji Voice 3</h3><p>Voice Over (MP3)</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="voice" data-type="video" data-src="Voice over/خليجي/4.mp4" tabindex="0"><div class="card-glow"></div><img src="LOGO.png" data-src="LOGO.png" alt="Khaleeji 4 Video" class="lazy"><div class="portfolio-overlay"><h3>Khaleeji Voice Video</h3><p>Voice/Video (MP4)</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="voice" data-type="audio" data-src="Voice over/خليجي/5.mp3" tabindex="0"><div class="card-glow"></div><img src="LOGO.png" data-src="LOGO.png" alt="Khaleeji 5" class="lazy"><div class="portfolio-overlay"><h3>Khaleeji Voice 5</h3><p>Voice Over (MP3)</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="voice" data-type="audio" data-src="Voice over/خليجي/6.mp3" tabindex="0"><div class="card-glow"></div><img src="LOGO.png" data-src="LOGO.png" alt="Khaleeji 6" class="lazy"><div class="portfolio-overlay"><h3>Khaleeji Voice 6</h3><p>Voice Over (MP3)</p></div></div>
+                <div class="interactive-card portfolio-item animate-on-scroll" data-category="voice" data-type="audio" data-src="Voice over/مصري/1.mp3" tabindex="0"><div class="card-glow"></div><img src="LOGO.png" data-src="LOGO.png" alt="Masri Voice 1" class="lazy"><div class="portfolio-overlay"><h3>Masri Voice 1</h3><p>Voice Over (MP3)</p></div></div>
+            </div>
+        </section>
+
+        <!-- About Us Page (Merged: The VEXUS Edge + About Us) -->
+        <div id="about-page" class="page">
+            <div class="page-header">
+                <div class="aurora-background"></div>
+                <h1 class="animate-on-scroll reveal-text" data-i18n="aboutTitle">A Studio Built for Results</h1>
+                <p class="animate-on-scroll" data-i18n="aboutDesc">VEXUS was founded on 4 February 2025. We started as a 3D-focused studio, expanded into video and photography, and later added development. To date we've completed around 25 projects valued at over $7,000, including a book and an educational website in Saudi Arabia, architectural work in Saudi Arabia and Morocco, video productions in Palestine, and voice-over work in Jordan. We deliver books, educational content, and complete visual identities, and we currently produce thumbnails and media content for recurring clients. Founders & CEOs: Abdelrahman Yahya & Abdelrahman Ahmed lead projects from concept to delivery.</p>
+            </div>
+            <section class="content-section about-vision">
+                <h2 class="section-title animate-on-scroll reveal-text" data-i18n="aboutVisionSectionTitle">Vision & Mission</h2>
+                <div class="about-grid">
+                    <div class="about-card animate-on-scroll">
+                        <h3 data-i18n="aboutVisionTitle">Vision</h3>
+                        <p data-i18n="aboutVisionDesc">To become the region’s most trusted partner for strategic creative and digital production.</p>
+                    </div>
+                    <div class="about-card animate-on-scroll">
+                        <h3 data-i18n="aboutMissionTitle">Mission</h3>
+                        <p data-i18n="aboutMissionDesc">We translate business goals into high-impact design, content, and technology—delivered with clarity, speed, and precision.</p>
+                    </div>
+                </div>
+            </section>
+            <section class="content-section about-value">
+                <h2 class="section-title animate-on-scroll reveal-text" data-i18n="aboutValueTitle">Value Proposition</h2>
+                <p class="section-subtitle animate-on-scroll" data-i18n="aboutValueDesc">An integrated studio model that combines strategy, production, and technology in one accountable team.</p>
+                <div class="about-grid value-grid">
+                    <div class="about-card animate-on-scroll">
+                        <h3 data-i18n="aboutValuePoint1Title">Strategy First</h3>
+                        <p data-i18n="aboutValuePoint1Desc">We define objectives, audiences, and KPIs before design begins.</p>
+                    </div>
+                    <div class="about-card animate-on-scroll">
+                        <h3 data-i18n="aboutValuePoint2Title">Production Excellence</h3>
+                        <p data-i18n="aboutValuePoint2Desc">Consistent quality across video, design, and digital deliverables.</p>
+                    </div>
+                    <div class="about-card animate-on-scroll">
+                        <h3 data-i18n="aboutValuePoint3Title">Operational Clarity</h3>
+                        <p data-i18n="aboutValuePoint3Desc">Clear scopes, timelines, and reporting for enterprise readiness.</p>
+                    </div>
+                </div>
+            </section>
+            <section class="content-section about-services-summary">
+                <h2 class="section-title animate-on-scroll reveal-text" data-i18n="aboutServicesTitle">Core Services</h2>
+                <p class="section-subtitle animate-on-scroll" data-i18n="aboutServicesDesc">Focused service tracks designed for brand growth and digital scale.</p>
+                <div class="services-summary-grid">
+                    <div class="service-pill animate-on-scroll" data-i18n="aboutService1">Brand Identity & Design</div>
+                    <div class="service-pill animate-on-scroll" data-i18n="aboutService2">Motion & Video Production</div>
+                    <div class="service-pill animate-on-scroll" data-i18n="aboutService3">3D Visualization</div>
+                    <div class="service-pill animate-on-scroll" data-i18n="aboutService4">Web & App Development</div>
+                    <div class="service-pill animate-on-scroll" data-i18n="aboutService5">Content Systems & Campaigns</div>
+                    <div class="service-pill animate-on-scroll" data-i18n="aboutService6">Voiceover & Audio</div>
+                </div>
+            </section>
+            <section class="content-section about-edge">
+                <h2 class="section-title animate-on-scroll reveal-text" data-i18n="edgeTitle">Strategic Advantages</h2>
+                <p class="section-subtitle animate-on-scroll" data-i18n="edgeLead">A unified delivery model that keeps strategy, execution, and performance aligned.</p>
+                <div id="rotating-subtext-container" class="animate-on-scroll">
+                    <span class="rotating-subtext active" data-i18n="edgeSubtext1">One integrated pipeline for strategy, design, and production.</span>
+                    <span class="rotating-subtext" data-i18n="edgeSubtext2">Enterprise-grade quality with fast, dependable delivery.</span>
+                    <span class="rotating-subtext" data-i18n="edgeSubtext3">Performance-first execution focused on ROI and growth.</span>
+                    <span class="rotating-subtext" data-i18n="edgeSubtext4">Scalable teams that expand with your needs.</span>
+                </div>
+                <div class="about-grid edge-grid">
+                    <div class="about-card animate-on-scroll">
+                        <h3 data-i18n="edgePoint1Title">Integrated Delivery</h3>
+                        <p data-i18n="edgePoint1Desc">Strategy, design, production, and tech under one accountable team.</p>
+                    </div>
+                    <div class="about-card animate-on-scroll">
+                        <h3 data-i18n="edgePoint2Title">Quality Control</h3>
+                        <p data-i18n="edgePoint2Desc">Senior oversight and documented standards across every deliverable.</p>
+                    </div>
+                    <div class="about-card animate-on-scroll">
+                        <h3 data-i18n="edgePoint3Title">Performance Focus</h3>
+                        <p data-i18n="edgePoint3Desc">Optimized assets, clean UX, and clear metrics to measure impact.</p>
+                    </div>
+                </div>
+            </section>
+            <section class="content-section company-info">
+                <h2 class="section-title animate-on-scroll reveal-text" data-i18n="companyInfoTitle">VEXUS / The VEXUS Age</h2>
+                <p class="section-subtitle animate-on-scroll" data-i18n="companyInfoLead">A formal company profile section with placeholder content ready for future updates.</p>
+                <div class="company-info-grid">
+                    <div class="company-info-text animate-on-scroll">
+                        <p data-i18n="companyInfoBody1">VEXUS Digital Solutions is a multidisciplinary studio delivering strategy-led creative production and product-ready digital experiences.</p>
+                        <p data-i18n="companyInfoBody2">Use this area to document the official mission, legal structure, and corporate positioning once finalized. Replace the text with approved company copy.</p>
+                    </div>
+                    <div class="company-info-panel animate-on-scroll" role="list">
+                        <div class="info-row" role="listitem"><span class="info-label" data-i18n="companyInfoLabel1">Founded</span><span class="info-value" data-i18n="companyInfoValue1">2025</span></div>
+                        <div class="info-row" role="listitem"><span class="info-label" data-i18n="companyInfoLabel2">Headquarters</span><span class="info-value" data-i18n="companyInfoValue2">TBD / Remote-first</span></div>
+                        <div class="info-row" role="listitem"><span class="info-label" data-i18n="companyInfoLabel3">Core Divisions</span><span class="info-value" data-i18n="companyInfoValue3">Creative, Production, Technology</span></div>
+                        <div class="info-row" role="listitem"><span class="info-label" data-i18n="companyInfoLabel4">Engagement Model</span><span class="info-value" data-i18n="companyInfoValue4">Projects + Retainers</span></div>
+                    </div>
+                </div>
+            </section>
+            <section class="content-section company-structure">
+                <h2 class="section-title animate-on-scroll reveal-text" data-i18n="structureTitle">Company Structure</h2>
+                <p class="section-subtitle animate-on-scroll" data-i18n="structureDesc">Animated hierarchy infographic with placeholder data for leadership, teams, and members.</p>
+                <div class="org-chart">
+                    <div class="org-level org-level-top">
+                        <div class="org-node animate-on-scroll" data-i18n="structureLeadership">Executive Leadership</div>
+                    </div>
+                    <div class="org-connector"></div>
+                    <div class="org-level">
+                        <div class="org-node animate-on-scroll" data-i18n="structureCreative">Creative Division</div>
+                        <div class="org-node animate-on-scroll" data-i18n="structureProduction">Production Division</div>
+                        <div class="org-node animate-on-scroll" data-i18n="structureTechnology">Technology Division</div>
+                    </div>
+                    <div class="org-connector"></div>
+                    <div class="org-stats">
+                        <div class="org-stat animate-on-scroll">
+                            <span class="org-stat-number" data-i18n="structureManagersValue">3</span>
+                            <span class="org-stat-label" data-i18n="structureManagersLabel">Managers</span>
+                        </div>
+                        <div class="org-stat animate-on-scroll">
+                            <span class="org-stat-number" data-i18n="structureLeadsValue">6</span>
+                            <span class="org-stat-label" data-i18n="structureLeadsLabel">Team Leads</span>
+                        </div>
+                        <div class="org-stat animate-on-scroll">
+                            <span class="org-stat-number" data-i18n="structureMembersValue">18</span>
+                            <span class="org-stat-label" data-i18n="structureMembersLabel">Team Members</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="content-section">
                  <h2 class="section-title animate-on-scroll reveal-text" data-i18n="testimonialsTitle">What Our Clients Say</h2>
                  <div class="testimonial-carousel animate-on-scroll">
                      <div class="testimonial-slide active">
@@ -900,29 +1133,9 @@
                     </div>
                  </div>
             </section>
-        </div>
-
-        <!-- The VEXUS Edge Page -->
-        <div id="vexus-edge-page" class="page">
-            <div class="page-header">
-                <div class="aurora-background"></div>
-                <h1 class="animate-on-scroll reveal-text" data-i18n="edgeTitle">The VEXUS Edge</h1>
-                <div id="rotating-subtext-container" class="animate-on-scroll">
-                    <span class="rotating-subtext active" data-i18n="edgeSubtext1">Strategy-led creative built to perform across platforms.</span>
-                    <span class="rotating-subtext" data-i18n="edgeSubtext2">One pipeline for design, 2D/3D, video, and development.</span>
-                    <span class="rotating-subtext" data-i18n="edgeSubtext3">Performance-first delivery with SEO and speed in mind.</span>
-                    <span class="rotating-subtext" data-i18n="edgeSubtext4">A partner that scales with your growth.</span>
-                </div>
-            </div>
-            <section class="content-section">
-                <div class="services-grid">
-                    <div class="interactive-card service-card animate-on-scroll" style="cursor: default;"><div class="card-glow"></div><div class="card-content"><div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" /></svg></div><h3 data-i18n="advantage1Title">Strategy + Production</h3><p data-i18n="advantage1Desc">We align goals, then design, model, edit, and build under one cohesive team.</p></div></div>
-                    <div class="interactive-card service-card animate-on-scroll" style="cursor: default;"><div class="card-glow"></div><div class="card-content"><div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" /></svg></div><h3 data-i18n="advantage2Title">Performance & SEO</h3><p data-i18n="advantage2Desc">Lightweight builds, optimized assets, and SEO-ready structure for faster discovery.</p></div></div>
-                    <div class="interactive-card service-card animate-on-scroll" style="cursor: default;"><div class="card-glow"></div><div class="card-content"><div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" /></svg></div><h3 data-i18n="advantage3Title">Reliable Delivery</h3><p data-i18n="advantage3Desc">Clear timelines, transparent communication, and consistent quality from brief to launch.</p></div></div>
-                </div>
-            </section>
             <section class="content-section">
                 <h2 class="section-title animate-on-scroll reveal-text" data-i18n="statsTitle">Our Numbers Speak</h2>
+                <p class="section-subtitle animate-on-scroll" data-i18n="statsLead">A snapshot of our delivery scale and regional experience.</p>
                 <div class="stats-section">
                     <div class="stat-item animate-on-scroll">
                         <span class="stat-number" data-goal="25">25</span>+
@@ -942,14 +1155,6 @@
                     </div>
                 </div>
             </section>
-        </div>
-        <!-- About Us Page -->
-        <div id="about-page" class="page">
-            <div class="page-header">
-                <div class="aurora-background"></div>
-                <h1 class="animate-on-scroll reveal-text" data-i18n="aboutTitle">A Studio Built for Results</h1>
-                <p class="animate-on-scroll" data-i18n="aboutDesc">VEXUS was founded on 4 February 2025. We started as a 3D-focused studio, expanded into video and photography, and later added development. To date we've completed around 25 projects valued at over $7,000, including a book and an educational website in Saudi Arabia, architectural work in Saudi Arabia and Morocco, video productions in Palestine, and voice-over work in Jordan. We deliver books, educational content, and complete visual identities, and we currently produce thumbnails and media content for recurring clients. Founders & CEOs: Abdelrahman Yahya & Abdelrahman Ahmed lead projects from concept to delivery.</p>
-            </div>
             <section class="content-section">
                 <h2 class="section-title animate-on-scroll reveal-text" data-i18n="journeyTitle">Our Journey</h2>
                 <div class="timeline">
@@ -972,23 +1177,6 @@
                         </div>
                     </div>
                 </div>
-            </section>
-            <section class="content-section">
-                 <h2 class="section-title animate-on-scroll reveal-text" data-i18n="testimonialsTitle">What Our Clients Say</h2>
-                 <div class="testimonial-carousel animate-on-scroll">
-                     <div class="testimonial-slide active">
-                         <p class="testimonial-text" data-i18n="testimonial1Text">"VEXUS delivered a full visual system and media content that elevated our launch."</p>
-                         <p class="testimonial-author" data-i18n="testimonial1Author">- Education Partner, Saudi Arabia</p>
-                     </div>
-                     <div class="testimonial-slide">
-                         <p class="testimonial-text" data-i18n="testimonial2Text">"Their 3D visualization and video work brought our architectural concept to life."</p>
-                         <p class="testimonial-author" data-i18n="testimonial2Author">- Architectural Client, Morocco</p>
-                     </div>
-                      <div class="carousel-controls">
-                        <button class="carousel-control prev" data-i18n-aria="prevTestimonial" aria-label="Previous testimonial">&#8249;</button>
-                        <button class="carousel-control next" data-i18n-aria="nextTestimonial" aria-label="Next testimonial">&#8250;</button>
-                    </div>
-                 </div>
             </section>
         </div>
         <!-- Contact Page -->
@@ -1036,7 +1224,7 @@
         <footer>
             <div class="footer-grid animate-on-scroll">
                 <div class="footer-column">
-                    <div class="logo-container" data-target="home-page" style="cursor: pointer;">
+                    <div class="logo-container" data-target="home-page" tabindex="0" role="link" data-i18n-aria="navHome" aria-label="Home" style="cursor: pointer;">
                         <img src="FINED LOGO.png" alt="Your Brand Logo" style="height: 40px; width: auto;">
                         <span>VEXUS</span>
                     </div>
@@ -1046,7 +1234,6 @@
                     <h4 data-i18n="footerLinks">Quick Links</h4>
                     <ul>
                         <li><a href="#" data-target="home-page" data-i18n="navHome">Home</a></li>
-                        <li><a href="#" data-target="vexus-edge-page" data-i18n="navEdge">The VEXUS Edge</a></li>
                         <li><a href="#" data-target="about-page" data-i18n="navAbout">About Us</a></li>
                         <li><a href="#" data-target="contact-page" data-i18n="navContact">Contact Us</a></li>
                     </ul>
@@ -1151,13 +1338,35 @@
         // --- Internationalization (i18n) ---
         const translations = {
             en: {
-                navHome: "Home", navEdge: "The VEXUS Edge", navAbout: "About Us", navContact: "Contact Us",
+                navHome: "Home", navAbout: "About Us", navContact: "Contact Us",
+                backButton: "Back", backButtonAria: "Go back",
                 heroTitle: "Crafting Digital Legends.",
                 heroSubtext1: "A creative digital studio for video reels, social media design, 2D/3D visualization, web & app development, and SEO.",
                 heroSubtext2: "We combine strategy, design, and production to deliver measurable brand growth.",
                 heroSubtext3: "From concept to launch, we build fast, polished experiences across web, mobile, and media.",
                 heroCTA: "Explore Our Work",
                 servicesTitle: "Our Core Services",
+                workLibraryTitle: "Portfolio / Work Library",
+                workLibraryDesc: "We publish curated samples here to keep the site fast. Access the full library below.",
+                workLibraryNote: "The website shows samples only. Use the full library for complete project archives and extended reels.",
+                workLibraryButton: "Full Work Library",
+                companyInfoTitle: "VEXUS / The VEXUS Age",
+                companyInfoLead: "A formal company profile section with placeholder content ready for future updates.",
+                companyInfoBody1: "VEXUS Digital Solutions is a multidisciplinary studio delivering strategy-led creative production and product-ready digital experiences.",
+                companyInfoBody2: "Use this area to document the official mission, legal structure, and corporate positioning once finalized. Replace the text with approved company copy.",
+                companyInfoLabel1: "Founded", companyInfoValue1: "2025",
+                companyInfoLabel2: "Headquarters", companyInfoValue2: "TBD / Remote-first",
+                companyInfoLabel3: "Core Divisions", companyInfoValue3: "Creative, Production, Technology",
+                companyInfoLabel4: "Engagement Model", companyInfoValue4: "Projects + Retainers",
+                structureTitle: "Company Structure",
+                structureDesc: "Animated hierarchy infographic with placeholder data for leadership, teams, and members.",
+                structureLeadership: "Executive Leadership",
+                structureCreative: "Creative Division",
+                structureProduction: "Production Division",
+                structureTechnology: "Technology Division",
+                structureManagersLabel: "Managers", structureManagersValue: "3",
+                structureLeadsLabel: "Team Leads", structureLeadsValue: "6",
+                structureMembersLabel: "Team Members", structureMembersValue: "18",
                 serviceAITitle: "Intelligent Systems", serviceAIDesc: "Applied AI and automation that streamline workflows and enable smarter decisions.",
                 service3DTitle: "3D & Visualization", service3DDesc: "Crafting hyper-realistic models and breathtaking visualizations that bring concepts to life.",
                 serviceBooksTitle: "Book Design", serviceBooksDesc: "Designing striking covers and elegant layouts that give your words a powerful identity.",
@@ -1168,13 +1377,6 @@
                 serviceReelsTitle: "Short-Form Video", serviceReelsDesc: "Engaging your audience with dynamic, trend-setting videos for Instagram Reels and TikTok.",
                 serviceVoiceTitle: "Voiceover Services", serviceVoiceDesc: "Lending a professional voice to your project with our versatile voiceover and narration services.",
                 serviceWebTitle: "Web & UX/UI", serviceWebDesc: "High-performance websites and apps with clean UX, strong SEO, and scalable code.",
-                portfolioTitle: "Featured Work",
-                filterAll: "All", filter3D: "3D", filterPDF: "PDF", filterMotion: "Motion", filterReel: "Reel", filterVoice: "Voice", filterBranding: "Branding", filterPackaging: "Packaging", filterWeb: "Web", filterApp: "App", filterPrint: "Print",
-                altWebProject: "Web Development Project", altMotionProject: "Motion Graphics Reel", altAIProject: "AI Analytics Dashboard", alt3DProject: "3D Model",
-                project1Title: "E-Commerce Platform", project1Type: "Web Development",
-                project2Title: "Brand Intro Animation", project2Type: "Motion Graphics",
-                project3Title: "AI Analytics Dashboard", project3Type: "Intelligent Systems",
-                project4Title: "Cybernetic Arm", project4Type: "3D Modeling",
                 testimonialsTitle: "What Our Clients Say",
                 testimonial1Text: "\"VEXUS delivered a full visual system and media content that elevated our launch.\"",
                 testimonial1Author: "- Education Partner, Saudi Arabia",
@@ -1186,9 +1388,6 @@
                 edgeSubtext2: "One pipeline for design, 2D/3D, video, and development.",
                 edgeSubtext3: "Performance-first delivery with SEO and speed in mind.",
                 edgeSubtext4: "A partner that scales with your growth.",
-                advantage1Title: "Strategy + Production", advantage1Desc: "We align goals, then design, model, edit, and build under one cohesive team.",
-                advantage2Title: "Performance & SEO", advantage2Desc: "Lightweight builds, optimized assets, and SEO-ready structure for faster discovery.",
-                advantage3Title: "Reliable Delivery", advantage3Desc: "Clear timelines, transparent communication, and consistent quality from brief to launch.",
                 statsTitle: "Our Numbers Speak",
                 stat1: "Projects Delivered", stat2: "Countries Served", stat3: "Years in Business", stat4: "Core Services",
                 aboutTitle: "A Studio Built for Results",
@@ -1206,13 +1405,36 @@
                 serviceAIWork: "Our Work in AI", service3DWork: "Our Work in 3D", serviceBooksWork: "Our Book Designs", serviceGraphicsWork: "Our Graphic Designs", serviceLogosWork: "Our Logo Designs", serviceMotionWork: "Our Motion Graphics Work", servicePackWork: "Our Packaging Designs", serviceReelsWork: "Our Reels", serviceVoiceWork: "Our Voice Work", serviceWebWork: "Our Web Projects",
             },
             ar: {
-                navHome: "الرئيسية", navEdge: "ميزة VEXUS", navAbout: "من نحن", navContact: "اتصل بنا",
+                navHome: "الرئيسية", navAbout: "من نحن", navContact: "اتصل بنا",
+                backButton: "رجوع", backButtonAria: "الرجوع للصفحة السابقة",
                 heroTitle: "نصنع الأساطير الرقمية.",
                 heroSubtext1: "استوديو رقمي متخصص في مونتاج الفيديو والريلز، وتصميم السوشيال ميديا، والتصميم 2D/3D (داخلي وخارجي)، وتطوير المواقع والتطبيقات، وتهيئة المواقع لمحركات البحث.",
                 heroSubtext2: "نمزج بين الاستراتيجية والتصميم والإنتاج لتحقيق نمو واضح للعلامات التجارية.",
                 heroSubtext3: "من الفكرة حتى الإطلاق، نبني تجارب سريعة وأنيقة عبر الويب والموبايل والميديا.",
                 heroCTA: "اكتشف أعمالنا",
                 servicesTitle: "خدماتنا الأساسية",
+                workLibraryTitle: "مكتبة الأعمال / البورتفوليو",
+                workLibraryDesc: "نعرض هنا عينات مختارة للحفاظ على سرعة الموقع. للوصول إلى المكتبة الكاملة استخدم الرابط أدناه.",
+                workLibraryNote: "الموقع يعرض عينات فقط. استخدم المكتبة الكاملة لمشاريع كاملة وريلات ممتدة.",
+                workLibraryButton: "مكتبة الأعمال الكاملة",
+                companyInfoTitle: "VEXUS / عصر فيكسوس",
+                companyInfoLead: "قسم تعريفي رسمي بالشركة مع محتوى تجريبي قابل للتعديل لاحقاً.",
+                companyInfoBody1: "VEXUS Digital Solutions استوديو متعدد التخصصات يقدم إنتاجاً إبداعياً موجهاً بالاستراتيجية وتجارب رقمية جاهزة للإطلاق.",
+                companyInfoBody2: "استخدم هذه المساحة لتوثيق الرسالة الرسمية والهيكل القانوني والموقع المؤسسي بعد اعتماده. استبدل النص بنسخة الشركة المعتمدة.",
+                companyInfoLabel1: "تأسست", companyInfoValue1: "2025",
+                companyInfoLabel2: "المقر الرئيسي", companyInfoValue2: "قيد التحديد / فريق موزع",
+                companyInfoLabel3: "الأقسام الأساسية", companyInfoValue3: "الإبداع، الإنتاج، التقنية",
+                companyInfoLabel4: "نموذج التعاقد", companyInfoValue4: "مشاريع + عقود شهرية",
+                structureTitle: "هيكل الشركة",
+                structureDesc: "إنفوجرافيك هيكلي متحرك ببيانات افتراضية للإدارة والفرق والأعضاء.",
+                structureLeadership: "الإدارة التنفيذية",
+                structureCreative: "قسم الإبداع",
+                structureProduction: "قسم الإنتاج",
+                structureTechnology: "قسم التقنية",
+                structureManagersLabel: "المديرون", structureManagersValue: "3",
+                structureLeadsLabel: "قادة الفرق", structureLeadsValue: "6",
+                structureMembersLabel: "أعضاء الفريق", structureMembersValue: "18",
+
                 serviceAITitle: "الأنظمة الذكية", serviceAIDesc: "أتمتة ذكية وحلول تعتمد على البيانات لتسريع العمل واتخاذ قرارات أفضل.",
                 service3DTitle: "التجسيم ثلاثي الأبعاد", service3DDesc: "نصمم نماذج فائقة الواقعية وتصورات مذهلة تعيد الحياة إلى المفاهيم.",
                 serviceBooksTitle: "تصميم الكتب", serviceBooksDesc: "نصمم أغلفة جذابة وتنسيقات أنيقة تمنح كلماتك هوية قوية.",
@@ -1223,13 +1445,6 @@
                 serviceReelsTitle: "فيديو قصير", serviceReelsDesc: "نجذب جمهورك بمقاطع فيديو ديناميكية ورائجة لـ Instagram Reels و TikTok.",
                 serviceVoiceTitle: "خدمات التعليق الصوتي", serviceVoiceDesc: "نضفي صوتًا احترافيًا على مشروعك من خلال خدمات التعليق الصوتي والسرد المتنوعة.",
                 serviceWebTitle: "الويب وتجربة المستخدم", serviceWebDesc: "مواقع وتطبيقات عالية الأداء بتجربة مستخدم قوية وبنية قابلة للتوسع وتهيئة SEO.",
-                portfolioTitle: "أعمال مختارة",
-                filterAll: "الكل", filter3D: "3D", filterPDF: "PDF", filterMotion: "موشن", filterReel: "ريل", filterVoice: "صوت", filterBranding: "الهوية", filterPackaging: "التغليف", filterWeb: "ويب", filterApp: "تطبيق", filterPrint: "مطبوعة",
-                altWebProject: "مشروع تطوير ويب", altMotionProject: "مقطع رسوم متحركة", altAIProject: "لوحة تحكم تحليلية", alt3DProject: "نموذج ثلاثي الأبعاد",
-                project1Title: "منصة تجارة إلكترونية", project1Type: "تطوير ويب",
-                project2Title: "مقدمة متحركة لعلامة تجارية", project2Type: "رسوم متحركة",
-                project3Title: "لوحة تحكم تحليلية بالذكاء الاصطناعي", project3Type: "أنظمة ذكية",
-                project4Title: "ذراع سيبرانية", project4Type: "تصميم ثلاثي الأبعاد",
                 testimonialsTitle: "ماذا يقول عملاؤنا",
                 testimonial1Text: "\"قدّمت VEXUS نظامًا بصريًا ومحتوى ميديا رفع مستوى إطلاقنا.\"",
                 testimonial1Author: "- شريك تعليمي، السعودية",
@@ -1241,9 +1456,6 @@
                 edgeSubtext2: "خط إنتاج واحد للتصميم و2D/3D والفيديو والتطوير.",
                 edgeSubtext3: "أداء عالٍ مع سرعة وتهيئة SEO من البداية.",
                 edgeSubtext4: "شريك ينمو مع نمو أعمالك.",
-                advantage1Title: "استراتيجية + إنتاج", advantage1Desc: "نحدد الهدف ثم نصمم وننمذج ونمنتج ونطوّر ضمن فريق واحد متكامل.",
-                advantage2Title: "الأداء وتهيئة SEO", advantage2Desc: "بناء خفيف وملفات محسنة وهيكلة جاهزة للظهور أسرع.",
-                advantage3Title: "تسليم موثوق", advantage3Desc: "جداول واضحة وتواصل شفاف وجودة ثابتة من البداية للإطلاق.",
                 statsTitle: "أرقامنا تتحدث",
                 stat1: "مشاريع منفذة", stat2: "دول خدمناها", stat3: "سنوات عمل", stat4: "خدمات أساسية",
                 aboutTitle: "استوديو مبني على النتائج",
@@ -1277,11 +1489,67 @@
             // --- Core Variables ---
             const allPages = document.querySelectorAll('.page');
             const allPageLinks = document.querySelectorAll('[data-target]');
-            const desktopNavLinks = document.querySelectorAll('nav.desktop-nav a:not(.nav-cta-button)');
+            const navLinks = document.querySelectorAll('nav.desktop-nav a:not(.nav-cta-button), nav.mobile-nav a');
             const pageTransitionOverlay = document.getElementById('page-transition-overlay');
             const isTouchDevice = 'ontouchstart' in window;
             const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             if (isTouchDevice && !prefersReducedMotion) document.body.classList.add('touch-mode');
+            const DEFAULT_PAGE_ID = 'home-page';
+            let navIndex = 0;
+
+            const resolvePageId = (pageId) => {
+                if (!pageId) return DEFAULT_PAGE_ID;
+                const mappedId = pageId === 'vexus-edge-page' ? 'about-page' : pageId;
+                const candidate = document.getElementById(mappedId);
+                return (candidate && candidate.classList.contains('page')) ? mappedId : DEFAULT_PAGE_ID;
+            };
+
+            const getPageIdFromHash = () => {
+                const raw = window.location.hash ? decodeURIComponent(window.location.hash.replace('#', '')) : '';
+                if (!raw) return null;
+                const mapped = raw === 'vexus-edge-page' ? 'about-page' : raw;
+                const el = document.getElementById(mapped);
+                return (el && el.classList.contains('page')) ? mapped : null;
+            };
+
+            const scrollToHashTarget = () => {
+                const raw = window.location.hash ? decodeURIComponent(window.location.hash.replace('#', '')) : '';
+                if (!raw) return;
+                const target = document.getElementById(raw);
+                if (target && !target.classList.contains('page')) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            };
+
+            const pushNavState = (pageId) => {
+                navIndex += 1;
+                history.pushState({ pageId, vexus: true, vexusIndex: navIndex }, '', `#${pageId}`);
+            };
+
+            const replaceNavState = (pageId, options = {}) => {
+                const { keepHash = false } = options;
+                const urlHash = (keepHash && window.location.hash) ? window.location.hash : `#${pageId}`;
+                history.replaceState({ pageId, vexus: true, vexusIndex: navIndex }, '', urlHash);
+            };
+
+            function injectServiceBackButtons() {
+                document.querySelectorAll('.page[id^="service-"] .page-header').forEach(header => {
+                    if (header.querySelector('.page-back-button')) return;
+                    const button = document.createElement('button');
+                    button.type = 'button';
+                    button.className = 'page-back-button';
+                    button.dataset.navBack = 'true';
+                    button.dataset.i18nAria = 'backButtonAria';
+                    button.setAttribute('aria-label', 'Back');
+                    button.innerHTML = '<span class="back-icon" aria-hidden="true">←</span><span data-i18n="backButton">Back</span>';
+                    const anchor = header.querySelector('.aurora-background');
+                    if (anchor && anchor.nextSibling) {
+                        header.insertBefore(button, anchor.nextSibling);
+                    } else {
+                        header.insertBefore(button, header.firstChild);
+                    }
+                });
+            }
             
             // --- I18n Implementation ---
             const setLanguage = (lang) => {
@@ -1324,161 +1592,23 @@
                 });
             });
 
+            injectServiceBackButtons();
+
             // Initial language setup
             const savedLang = localStorage.getItem('vexus-lang');
             const browserLang = navigator.language.split('-')[0];
             setLanguage(savedLang || (browserLang === 'ar' ? 'ar' : 'en'));
 
-            // --- Preloader Logic with Video ---
+            // --- Preloader Logic (Logo Only) ---
             const preloader = document.getElementById('preloader');
-            const preloaderVideo = document.getElementById('preloader-video');
-            const soundToggleButton = document.getElementById('sound-toggle-button');
-            const preloaderSkip = document.getElementById('preloader-skip');
-
             function hidePreloader() {
-                if (preloader) {
-                    preloader.classList.add('loaded');
-                    if (soundToggleButton) soundToggleButton.style.display = 'none'; // Hide button with preloader
-                    if (preloaderSkip) preloaderSkip.style.display = 'none';
-                    // Show support button after preloader hidden
-                    const supportBtn = document.getElementById('whatsapp-support');
-                    if (supportBtn) supportBtn.style.display = '';
-                }
-                if (preloaderVideo) {
-                    try { preloaderVideo.pause(); } catch(e) {}
-                    try { preloaderVideo.removeAttribute('src'); } catch(e) {}
-                }
+                if (!preloader) return;
+                preloader.classList.add('loaded');
+                const supportBtn = document.getElementById('whatsapp-support');
+                if (supportBtn) supportBtn.style.display = '';
             }
-
-            window.addEventListener('load', () => {
-                if (preloaderVideo) {
-    // choose correct preloader source based on viewport
-    function setPreloaderSource(){
-        try {
-            const desktopSrc = preloaderVideo.dataset.srcDesktop || preloaderVideo.getAttribute('data-src-desktop');
-            const mobileSrc = preloaderVideo.dataset.srcMobile || preloaderVideo.getAttribute('data-src-mobile');
-            const breakpoint = 768;
-            const useMobile = window.innerWidth <= breakpoint;
-
-            // helper: resolve a URL to absolute string (safe)
-            function resolveUrl(url) {
-                try {
-                    return url ? new URL(String(url), location.href).href : '';
-                } catch(e) {
-                    return String(url || '');
-                }
-            }
-
-            // helper: get current effective src for the <video> (prefer currentSrc, then src, then first <source>)
-            function getCurrentVideoSrc() {
-                if (preloaderVideo.currentSrc) return preloaderVideo.currentSrc;
-                if (preloaderVideo.src) return preloaderVideo.src;
-                const firstSource = preloaderVideo.querySelector && preloaderVideo.querySelector('source');
-                if (firstSource && firstSource.src) return firstSource.src;
-                return preloaderVideo.getAttribute('src') || '';
-            }
-
-            // helper: set the video source (supports <source> children as well)
-            function assignVideoSrc(url) {
-                if (!url) return;
-                const sources = preloaderVideo.querySelectorAll ? preloaderVideo.querySelectorAll('source') : [];
-                if (sources && sources.length) {
-                    sources.forEach(s => {
-                        try { s.src = url; } catch(e) {}
-                    });
-                    // remove src attribute on video tag if present to avoid conflicts
-                    try { preloaderVideo.removeAttribute('src'); } catch(e) {}
-                } else {
-                    try { preloaderVideo.src = url; } catch(e) {}
-                }
-                // reload media element so browser picks up new sources
-                try { preloaderVideo.load(); } catch(e) {}
-            }
-
-            // Always prefer and assign a mobile-optimized preloader when on small viewports
-            if (useMobile && mobileSrc) {
-                const current = resolveUrl(getCurrentVideoSrc());
-                const target = resolveUrl(mobileSrc);
-                if (current !== target) {
-                    assignVideoSrc(mobileSrc);
-                    preloaderVideo.play().catch((err) => {
-                        try { preloaderVideo.muted = true; } catch(e) {}
-                        if (soundToggleButton) soundToggleButton.classList.remove('sound-active');
-                        preloaderVideo.play().catch(()=>{});
-                    });
-                }
-                return;
-            }
-
-            // For desktop viewports, keep gating to high-performance devices to avoid heavy downloads
-            if (!useMobile && performanceProfile !== 'high') {
-                setTimeout(hidePreloader, 700);
-                return;
-            }
-
-            // If we get here and desktopSrc exists, set desktop; if not available but mobile exists, fall back to mobile
-            const chosenSrc = desktopSrc || mobileSrc || '';
-            if (!chosenSrc) {
-                // nothing to play, hide gracefully
-                setTimeout(hidePreloader, 700);
-                return;
-            }
-
-            const current = resolveUrl(getCurrentVideoSrc());
-            const target = resolveUrl(chosenSrc);
-            if (current !== target) {
-                assignVideoSrc(chosenSrc);
-                preloaderVideo.play().catch((err) => {
-                    try { preloaderVideo.muted = true; } catch(e) {}
-                    if (soundToggleButton) soundToggleButton.classList.remove('sound-active');
-                    preloaderVideo.play().catch(()=>{});
-                });
-            }
-        } catch(e) { /* ignore */ }
-    }
-    setPreloaderSource();
-    // switch on resize when crossing breakpoint
-    let lastWasMobile = window.innerWidth <= 768;
-    window.addEventListener('resize', () => {
-        const nowMobile = window.innerWidth <= 768;
-        if (nowMobile !== lastWasMobile) { lastWasMobile = nowMobile; setPreloaderSource(); }
-    });
-    // Hide preloader when video ends
-    preloaderVideo.addEventListener('ended', hidePreloader);
-
-    // Fallback: if video fails to play, hide preloader after a delay
-    preloaderVideo.addEventListener('error', hidePreloader);
-    setTimeout(hidePreloader, 8500); // Safety net, hides after ~8.5s max
-} else {
-    // If no video, hide immediately on load
-    hidePreloader();
-}
-
-
-
-            });
-
-            if (soundToggleButton && preloaderVideo) {
-                soundToggleButton.classList.toggle('sound-active', !preloaderVideo.muted);
-                soundToggleButton.setAttribute('aria-label', preloaderVideo.muted ? 'Unmute' : 'Mute');
-                soundToggleButton.addEventListener('click', () => {
-                    preloaderVideo.muted = !preloaderVideo.muted;
-                    soundToggleButton.classList.toggle('sound-active', !preloaderVideo.muted);
-                    soundToggleButton.setAttribute('aria-label', preloaderVideo.muted ? 'Unmute' : 'Mute');
-                });
-            }
-            if (preloaderSkip) {
-                preloaderSkip.addEventListener('click', () => hidePreloader());
-            }
-            if (preloader) {
-                preloader.addEventListener('click', (e) => {
-                    const isControl = e.target.closest('#sound-toggle-button') || e.target.closest('#preloader-skip');
-                    if (!isControl) hidePreloader();
-                });
-            }
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && preloader && !preloader.classList.contains('loaded')) hidePreloader();
-            });
+            window.addEventListener('load', hidePreloader);
+            setTimeout(hidePreloader, 4000); // Safety net if load is delayed
 
             // --- Global Cursor Glow ---
             const cursorGlow = document.getElementById('cursor-glow');
@@ -1519,35 +1649,102 @@
             }
 
             // --- Page Navigation & Animation Trigger ---
-            function showPage(pageId){
+            function showPage(pageId, options = {}) {
+                const { pushState = false, transition = true } = options;
+                const targetId = resolvePageId(pageId);
                 AnimationManager.killAll();
-                pageTransitionOverlay.classList.add('active');
 
-                setTimeout(() => {
+                const applyPageChange = () => {
                     allPages.forEach(p => p.classList.remove('active'));
-                    const targetPage = document.getElementById(pageId);
+                    const targetPage = document.getElementById(targetId);
                     if (targetPage) {
                         targetPage.classList.add('active');
                         window.scrollTo(0, 0);
                         observeElements(targetPage.querySelectorAll('.animate-on-scroll'));
                         observeLazyImages(targetPage.querySelectorAll('img.lazy'));
-                            // If this is a service page, convert its portfolio into a structured library view
-                            if (pageId && pageId.indexOf('service-') === 0) { populateServicePage(targetPage); }
-                            // Normalize single-item grids after page is shown
-                            transformSingleItemGrids(targetPage);
-                            refreshPortfolioThumbnails();
+                        // If this is a service page, populate its Work Cards from the hidden library.
+                        if (targetId && targetId.indexOf('service-') === 0) { populateServicePage(targetPage); }
+                        // Normalize single-item grids after page is shown
+                        transformSingleItemGrids(targetPage);
+                        refreshPortfolioThumbnails();
+                        if (targetId === 'home-page') initHeroRotatingText();
+                        if (targetPage.querySelector('#rotating-subtext-container')) initRotatingSubtext();
                     }
-                    desktopNavLinks.forEach(link => link.classList.toggle('active', link.dataset.target === pageId));
-                    setTimeout(() => pageTransitionOverlay.classList.remove('active'), 50);
-                }, 500);
+                    navLinks.forEach(link => {
+                        const isActive = link.dataset.target === targetId;
+                        link.classList.toggle('active', isActive);
+                        if (isActive) link.setAttribute('aria-current', 'page');
+                        else link.removeAttribute('aria-current');
+                    });
+                    if (pushState) pushNavState(targetId);
+                    if (pageTransitionOverlay && transition) setTimeout(() => pageTransitionOverlay.classList.remove('active'), 50);
+                };
+
+                if (pageTransitionOverlay && transition) {
+                    pageTransitionOverlay.classList.add('active');
+                    setTimeout(applyPageChange, 500);
+                } else {
+                    applyPageChange();
+                }
             }
-            allPageLinks.forEach(link => { link.addEventListener('click', e => { e.preventDefault(); const targetId = link.dataset.target; if (targetId) { showPage(targetId); mobileNav.classList.remove('active'); mobileNavToggle.classList.remove('open'); } }); });
+
+            function safeHistoryBack() {
+                const state = history.state;
+                if (state && state.vexus && typeof state.vexusIndex === 'number' && state.vexusIndex > 0) {
+                    history.back();
+                } else {
+                    showPage(DEFAULT_PAGE_ID, { pushState: false });
+                }
+            }
+
+            allPageLinks.forEach(link => {
+                const handleNav = (e) => {
+                    e.preventDefault();
+                    const targetId = link.dataset.target;
+                    if (targetId) {
+                        showPage(targetId, { pushState: true });
+                        if (mobileNav) mobileNav.classList.remove('active');
+                        if (mobileNavToggle) mobileNavToggle.classList.remove('open');
+                    }
+                };
+                link.addEventListener('click', handleNav);
+                link.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') handleNav(e);
+                });
+            });
+
+            window.addEventListener('popstate', (event) => {
+                const state = event.state;
+                if (state && state.vexus) {
+                    navIndex = typeof state.vexusIndex === 'number' ? state.vexusIndex : 0;
+                    showPage(state.pageId, { pushState: false });
+                } else {
+                    navIndex = 0;
+                    const fallbackId = getPageIdFromHash() || DEFAULT_PAGE_ID;
+                    showPage(fallbackId, { pushState: false });
+                    scrollToHashTarget();
+                }
+            });
+
+            document.addEventListener('click', (e) => {
+                const backBtn = e.target.closest('[data-nav-back]');
+                if (!backBtn) return;
+                e.preventDefault();
+                safeHistoryBack();
+            });
 
             // --- Mobile Navigation ---
-            const mobileNavToggle = document.querySelector('.mobile-nav-toggle'); const mobileNav = document.querySelector('.mobile-nav'); mobileNavToggle.addEventListener('click', () => { mobileNavToggle.classList.toggle('open'); mobileNav.classList.toggle('active'); });
+            const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+            const mobileNav = document.querySelector('.mobile-nav');
+            if (mobileNavToggle && mobileNav) {
+                mobileNavToggle.addEventListener('click', () => {
+                    mobileNavToggle.classList.toggle('open');
+                    mobileNav.classList.toggle('active');
+                });
+            }
             
             // --- Scroll-to Logic ---
-            const scrollLinks = document.querySelectorAll('[data-scroll-to]'); scrollLinks.forEach(link => { link.addEventListener('click', e => { e.preventDefault(); const targetSelector = link.dataset.scrollTo; const targetElement = document.querySelector(targetSelector); if (targetElement) { if (document.getElementById('home-page').classList.contains('active')) { targetElement.scrollIntoView({ behavior: 'smooth' }); } else { showPage('home-page'); setTimeout(() => { targetElement.scrollIntoView({ behavior: 'smooth' }); }, 600); } } }); });
+            const scrollLinks = document.querySelectorAll('[data-scroll-to]'); scrollLinks.forEach(link => { link.addEventListener('click', e => { e.preventDefault(); const targetSelector = link.dataset.scrollTo; const targetElement = document.querySelector(targetSelector); if (targetElement) { if (document.getElementById('home-page').classList.contains('active')) { targetElement.scrollIntoView({ behavior: 'smooth' }); } else { showPage('home-page', { pushState: true }); setTimeout(() => { targetElement.scrollIntoView({ behavior: 'smooth' }); }, 600); } } }); });
             
             // --- Header Scroll Effect ---
             const header = document.getElementById('main-header'); window.addEventListener('scroll', () => { header.classList.toggle('scrolled', window.scrollY > 50); }, { passive: true });
@@ -1625,6 +1822,9 @@
                 } else { openModal(item); }
             });
 
+            // Track -> Page -> Card mapping
+            // Track types: Motion Graphics (motion), Video Editing/Reels (reel), Voice Over (voice),
+            // 3D/Visualization (3d), Branding/Logo (branding), Web/App (web/app), Packaging (packaging), Print/Books (print).
             const serviceCategoryMap = {
                 'service-ai-page': ['web', 'app'],
                 'service-3d-page': ['3d'],
@@ -1646,7 +1846,8 @@
                 const grid = pageEl.querySelector('.portfolio-grid');
                 if (!grid) return;
 
-                const sourceItems = Array.from(document.querySelectorAll('#home-page .portfolio-item'));
+                // Work cards are stored in the hidden portfolio library (not visible on Home)
+                const sourceItems = Array.from(document.querySelectorAll('#portfolio-library .portfolio-item'));
                 const matches = sourceItems.filter(item => categories.includes((item.dataset.category || '').toLowerCase()));
                 grid.innerHTML = '';
                 matches.forEach(item => {
@@ -1661,69 +1862,12 @@
                 transformSingleItemGrids(pageEl);
             }
 
-// --- Helpers: transform single-item grids and build organized library for service pages ---
+// --- Helpers: transform single-item grids ---
             function transformSingleItemGrids(root=document){
                 (root.querySelectorAll ? Array.from(root.querySelectorAll('.services-grid, .portfolio-grid')) : []).forEach(grid => {
                     const items = grid.querySelectorAll('.interactive-card, .portfolio-item');
                     if (items.length <= 1) grid.classList.add('single-item'); else grid.classList.remove('single-item');
                 });
-            }
-
-            function buildLibrary(pageEl){
-                if (!pageEl) return;
-                const grid = pageEl.querySelector('.portfolio-grid');
-                if (!grid || grid.dataset.libInitialized) return;
-                const items = Array.from(grid.querySelectorAll('.portfolio-item'));
-                if (items.length === 0) return;
-
-                const typeMap = { image: 'صور', video: 'فيديو', link: 'روابط', other: 'أعمال' };
-                const types = Array.from(new Set(items.map(i => i.dataset.type || 'other')));
-
-                // Create library wrapper
-                const library = document.createElement('div');
-                library.className = 'library';
-
-                // Filter bar
-                const filterBar = document.createElement('div');
-                filterBar.className = 'portfolio-filter';
-                const allBtn = document.createElement('button'); allBtn.className = 'filter-btn active'; allBtn.textContent = 'الكل';
-                filterBar.appendChild(allBtn);
-                types.forEach(t => { const btn = document.createElement('button'); btn.className = 'filter-btn'; btn.textContent = typeMap[t] || t; btn.dataset.filter = t; filterBar.appendChild(btn); });
-                library.appendChild(filterBar);
-
-                // Sections per type
-                const content = document.createElement('div'); content.className = 'library-content';
-                types.forEach(t => {
-                    const section = document.createElement('section'); section.className = 'library-section';
-                    const h = document.createElement('h3'); h.textContent = typeMap[t] || t; section.appendChild(h);
-                    const secGrid = document.createElement('div'); secGrid.className = 'portfolio-grid';
-                    items.filter(i => (i.dataset.type || 'other') === t).forEach(i => secGrid.appendChild(i));
-                    section.appendChild(secGrid);
-                    content.appendChild(section);
-                });
-                library.appendChild(content);
-
-                grid.parentElement.replaceChild(library, grid);
-                grid.dataset.libInitialized = '1';
-
-                // Filter behavior
-                filterBar.querySelectorAll('.filter-btn').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        filterBar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                        btn.classList.add('active');
-                        const filter = btn.dataset.filter;
-                        content.querySelectorAll('.library-section').forEach(sec => {
-                            if (!filter || filter === undefined) { sec.style.display = ''; return; }
-                            const secType = sec.querySelector('.portfolio-item') ? sec.querySelector('.portfolio-item').dataset.type || 'other' : '';
-                            sec.style.display = (filter === 'all' || secType === filter) ? '' : 'none';
-                        });
-                    });
-                });
-
-                // observe and normalize
-                observeElements(pageEl.querySelectorAll('.animate-on-scroll'));
-                observeLazyImages(pageEl.querySelectorAll('img.lazy'));
-                transformSingleItemGrids(pageEl);
             }
 
             // Run initial normalization on DOM ready
@@ -2030,26 +2174,10 @@
                 }
             }, { passive: true });
 
-            // --- Portfolio Filter ---
-            const filterBtns = document.querySelectorAll('.filter-btn');
-            const portfolioItems = document.querySelectorAll('.portfolio-item');
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    filterBtns.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    const filter = btn.dataset.filter;
-                    portfolioItems.forEach(item => {
-                        const category = item.dataset.category || '';
-                        const type = item.dataset.type || '';
-                        item.classList.toggle('hide', !(filter === 'all' || category === filter || type === filter));
-                    });
-                });
-            });
-
-            // --- Testimonial Carousel (Refactored) ---
-            const carousel = document.querySelector('.testimonial-carousel');
-            if (carousel) {
+            // --- Testimonial Carousel (Robust Multi-Instance) ---
+            document.querySelectorAll('.testimonial-carousel').forEach((carousel) => {
                 const slides = carousel.querySelectorAll('.testimonial-slide');
+                if (!slides.length) return;
                 const nextBtn = carousel.querySelector('.next');
                 const prevBtn = carousel.querySelector('.prev');
                 let currentSlide = 0;
@@ -2058,7 +2186,6 @@
                 function showSlide(index) {
                     slides.forEach((slide, i) => slide.classList.toggle('active', i === index));
                 }
-
                 function next() { currentSlide = (currentSlide + 1) % slides.length; showSlide(currentSlide); }
                 function prev() { currentSlide = (currentSlide - 1 + slides.length) % slides.length; showSlide(currentSlide); }
 
@@ -2066,14 +2193,15 @@
                     stopAutoPlay();
                     autoPlayInterval = setInterval(next, 5000);
                 }
-                function stopAutoPlay() { clearInterval(autoPlayInterval); }
+                function stopAutoPlay() { if (autoPlayInterval) clearInterval(autoPlayInterval); }
 
-                nextBtn.addEventListener('click', () => { next(); startAutoPlay(); });
-                prevBtn.addEventListener('click', () => { prev(); startAutoPlay(); });
+                if (nextBtn) nextBtn.addEventListener('click', () => { next(); startAutoPlay(); });
+                if (prevBtn) prevBtn.addEventListener('click', () => { prev(); startAutoPlay(); });
                 carousel.addEventListener('mouseenter', stopAutoPlay);
                 carousel.addEventListener('mouseleave', startAutoPlay);
+                showSlide(0);
                 startAutoPlay();
-            }
+            });
             
             // --- Stat Number Tweening ---
             function animateStatNumber(el) {
@@ -2417,14 +2545,11 @@
             }
 
             // --- Initial Page Load Setup ---
-            const initialPage = document.querySelector('.page.active');
-            if (initialPage) {
-                observeElements(initialPage.querySelectorAll('.animate-on-scroll'));
-                observeLazyImages(initialPage.querySelectorAll('img.lazy'));
-                // Initialize animations specific to the active page
-                if (initialPage.id === 'home-page') initHeroRotatingText();
-                if (initialPage.id === 'vexus-edge-page') initRotatingSubtext();
-            }
+            const initialHashPage = getPageIdFromHash();
+            const initialPageId = initialHashPage || document.querySelector('.page.active')?.id || DEFAULT_PAGE_ID;
+            showPage(initialPageId, { pushState: false, transition: false });
+            replaceNavState(initialPageId, { keepHash: !initialHashPage });
+            if (!initialHashPage) scrollToHashTarget();
             // setupRevealText(); // This is now called within setLanguage
             // --- Generate unique SVG thumbnails for each portfolio item ---
             function escapeXml(value) {
