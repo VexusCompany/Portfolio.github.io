@@ -10,10 +10,10 @@
     <meta name="author" content="VEXUS Agency">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="theme-color" content="#040612">
-    <link rel="canonical" href="https://vex-us.com/">
-    <link rel="alternate" hreflang="en" href="https://vex-us.com/">
-    <link rel="alternate" hreflang="ar" href="https://vex-us.com/">
-    <link rel="alternate" hreflang="x-default" href="https://vex-us.com/">
+    <link id="canonical-link" rel="canonical" href="https://vex-us.com/?lang=en">
+    <link id="hreflang-en" rel="alternate" hreflang="en" href="https://vex-us.com/?lang=en">
+    <link id="hreflang-ar" rel="alternate" hreflang="ar" href="https://vex-us.com/?lang=ar">
+    <link id="hreflang-x" rel="alternate" hreflang="x-default" href="https://vex-us.com/">
     <link rel="sitemap" type="application/xml" title="Sitemap" href="sitemap.xml">
     <!-- Favicon / App icons -->
     <link rel="icon" type="image/png" href="https://vex-us.com/FINED%20LOGO.png">
@@ -984,7 +984,7 @@
 
 
         <!-- Portfolio Library (Hidden Data Source) -->
-        <section id="portfolio-library" class="content-section portfolio-library" aria-hidden="true" hidden>
+        <template id="portfolio-template">
             <!--
               PORTFOLIO MAIN STRUCTURE:
               - This library stores all Work Cards.
@@ -1055,7 +1055,9 @@
                 <div class="interactive-card portfolio-item animate-on-scroll" data-category="voice" data-type="audio" data-src="Voice over/خليجي/6.mp3" tabindex="0"><div class="card-glow"></div><img src="LOGO.png" data-src="LOGO.png" alt="Khaleeji 6" class="lazy"><div class="portfolio-overlay"><h3>Khaleeji Voice 6</h3><p>Voice Over (MP3)</p></div></div>
                 <div class="interactive-card portfolio-item animate-on-scroll" data-category="voice" data-type="audio" data-src="Voice over/مصري/1.mp3" tabindex="0"><div class="card-glow"></div><img src="LOGO.png" data-src="LOGO.png" alt="Masri Voice 1" class="lazy"><div class="portfolio-overlay"><h3>Masri Voice 1</h3><p>Voice Over (MP3)</p></div></div>
             </div>
-        </section>
+        </template>
+
+        <section id="portfolio-library" class="content-section portfolio-library" aria-hidden="true" hidden></section>
 
         <!-- About Us Page (Merged: The VEXUS Edge + About Us) -->
         <div id="about-page" class="page">
@@ -1325,7 +1327,10 @@
             </div>
         </footer>
 
-    <div id="portfolio-modal" class="modal"><span class="close-button">&times;</span><div class="modal-content" id="modal-content-host"></div></div>
+    <div id="portfolio-modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true" data-i18n-aria="modalLabel" aria-label="Portfolio preview">
+        <button class="close-button" type="button" data-i18n-aria="modalClose" aria-label="Close dialog">&times;</button>
+        <div class="modal-content" id="modal-content-host"></div>
+    </div>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
@@ -1342,6 +1347,25 @@
         // --- Global Settings & Utilities ---
         const DEBUG = false;
         if (DEBUG) console.log(`[VEXUS] Debug mode enabled. Timestamp: ${new Date().toISOString()}`);
+        const SITE_URL = 'https://vex-us.com/';
+        const LANG_PARAM = 'lang';
+
+        function getLangFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            const lang = params.get(LANG_PARAM);
+            if (lang === 'ar' || lang === 'en') return lang;
+            return null;
+        }
+
+        function buildLangUrl(lang) {
+            return `${SITE_URL}?${LANG_PARAM}=${lang}`;
+        }
+
+        function updateLanguageInUrl(lang) {
+            const url = new URL(window.location.href);
+            url.searchParams.set(LANG_PARAM, lang);
+            history.replaceState(history.state, '', `${url.pathname}${url.search}${url.hash}`);
+        }
 
         // --- WebGL/Three.js Fallback ---
         function isWebGLAvailable() {
@@ -1367,7 +1391,8 @@
                 canvas.style.display = 'none';
                 const fallback = document.createElement('div');
                 fallback.className = 'hero-3d-fallback';
-                fallback.innerHTML = '<div style="color:var(--accent-aqua);font-size:1.2em;padding:60px 0;">3D preview unavailable on this device.</div>';
+                const fallbackText = getTranslation('threeFallback') || '3D preview unavailable on this device.';
+                fallback.innerHTML = `<div style="color:var(--accent-aqua);font-size:1.2em;padding:60px 0;">${fallbackText}</div>`;
                 canvas.parentNode.insertBefore(fallback, canvas.nextSibling);
             }
         }
@@ -1529,6 +1554,12 @@
                 footerLinks: "Quick Links",
                 footerServices: "Services",
                 footerConnect: "Connect With Us",
+                whatsappSupportLabel: "Support",
+                whatsappSupportAria: "WhatsApp support",
+                modalClose: "Close dialog",
+                modalLabel: "Portfolio preview",
+                modalUnsupported: "Unsupported preview type.",
+                threeFallback: "3D preview unavailable on this device.",
                 copyright: "(c) 2026 VEXUS Digital Solutions. All Rights Reserved.",
                 // Service Pages
                 serviceAIWork: "Selected Work in AI",
@@ -1670,6 +1701,12 @@
                 footerLinks: "روابط سريعة",
                 footerServices: "الخدمات",
                 footerConnect: "تواصل معنا",
+                whatsappSupportLabel: "دعم فني",
+                whatsappSupportAria: "واتساب دعم فني",
+                modalClose: "إغلاق النافذة",
+                modalLabel: "معاينة الأعمال",
+                modalUnsupported: "نوع المعاينة غير مدعوم.",
+                threeFallback: "المعاينة ثلاثية الأبعاد غير متاحة على هذا الجهاز.",
                 copyright: "© 2026 VEXUS Digital Solutions. جميع الحقوق محفوظة.",
                 serviceAIWork: "مختارات من أعمال الأنظمة الذكية",
                 service3DWork: "مختارات من أعمال 3D",
@@ -1683,6 +1720,10 @@
                 serviceWebWork: "مختارات من مشاريع الويب"
             }
         };
+
+        function getTranslation(key, lang = document.documentElement.lang || 'en') {
+            return (translations[lang] && translations[lang][key]) || (translations.en && translations.en[key]) || '';
+        }
         document.addEventListener('DOMContentLoaded', () => {
             if (DEBUG) console.log('[Lifecycle] DOMContentLoaded');
 
@@ -1731,15 +1772,21 @@
                 }
             };
 
+            const buildNavUrl = (pageId, options = {}) => {
+                const { keepHash = false } = options;
+                const url = new URL(window.location.href);
+                const hash = (keepHash && url.hash) ? url.hash : `#${pageId}`;
+                return `${url.pathname}${url.search}${hash}`;
+            };
+
             const pushNavState = (pageId) => {
                 navIndex += 1;
-                history.pushState({ pageId, vexus: true, vexusIndex: navIndex }, '', `#${pageId}`);
+                history.pushState({ pageId, vexus: true, vexusIndex: navIndex }, '', buildNavUrl(pageId));
             };
 
             const replaceNavState = (pageId, options = {}) => {
                 const { keepHash = false } = options;
-                const urlHash = (keepHash && window.location.hash) ? window.location.hash : `#${pageId}`;
-                history.replaceState({ pageId, vexus: true, vexusIndex: navIndex }, '', urlHash);
+                history.replaceState({ pageId, vexus: true, vexusIndex: navIndex }, '', buildNavUrl(pageId, { keepHash }));
             };
 
             const pageTitleMap = {
@@ -1774,6 +1821,18 @@
                 'service-web-page': 'serviceWebDesc',
             };
 
+            function updateCanonicalAndHreflang(lang) {
+                const canonicalLink = document.getElementById('canonical-link');
+                const hreflangEn = document.getElementById('hreflang-en');
+                const hreflangAr = document.getElementById('hreflang-ar');
+                const hreflangX = document.getElementById('hreflang-x');
+                const canonicalUrl = buildLangUrl(lang);
+                if (canonicalLink) canonicalLink.setAttribute('href', canonicalUrl);
+                if (hreflangEn) hreflangEn.setAttribute('href', buildLangUrl('en'));
+                if (hreflangAr) hreflangAr.setAttribute('href', buildLangUrl('ar'));
+                if (hreflangX) hreflangX.setAttribute('href', SITE_URL);
+            }
+
             function updateDocumentTitle(pageId) {
                 const lang = document.documentElement.lang || 'en';
                 const key = pageTitleMap[pageId] || 'heroTitle';
@@ -1792,8 +1851,20 @@
                 setMetaContent('meta[name="description"]', description);
                 setMetaContent('meta[property="og:title"]', fullTitle);
                 setMetaContent('meta[property="og:description"]', description);
+                setMetaContent('meta[property="og:locale"]', lang === 'ar' ? 'ar_SA' : 'en_US');
                 setMetaContent('meta[name="twitter:title"]', fullTitle);
                 setMetaContent('meta[name="twitter:description"]', description);
+                updateCanonicalAndHreflang(lang);
+            }
+
+            function enhancePortfolioAccessibility(root = document) {
+                root.querySelectorAll('.portfolio-item').forEach(item => {
+                    item.setAttribute('role', 'button');
+                    if (!item.getAttribute('aria-label')) {
+                        const label = (item.querySelector('h3')?.textContent || item.querySelector('img')?.alt || '').trim();
+                        if (label) item.setAttribute('aria-label', label);
+                    }
+                });
             }
 
             function injectServiceBackButtons() {
@@ -1852,6 +1923,7 @@
                 });
 
                 localStorage.setItem('vexus-lang', lang);
+                updateLanguageInUrl(lang);
                 setupRevealText(); // Re-initialize text splitting after language change
                 refreshPortfolioThumbnails();
                 updateDocumentTitle(document.querySelector('.page.active')?.id || DEFAULT_PAGE_ID);
@@ -1864,11 +1936,13 @@
             });
 
             injectServiceBackButtons();
+            enhancePortfolioAccessibility();
 
-            // Initial language setup
+            // Initial language setup (URL param > localStorage > browser)
             const savedLang = localStorage.getItem('vexus-lang');
             const browserLang = navigator.language.split('-')[0];
-            setLanguage(savedLang || (browserLang === 'ar' ? 'ar' : 'en'));
+            const urlLang = getLangFromUrl();
+            setLanguage(urlLang || savedLang || (browserLang === 'ar' ? 'ar' : 'en'));
 
             // --- Preloader Logic (Logo Only) ---
             const preloader = document.getElementById('preloader');
@@ -1994,6 +2068,10 @@
             });
 
             window.addEventListener('popstate', (event) => {
+                const urlLang = getLangFromUrl();
+                if (urlLang && urlLang !== document.documentElement.lang) {
+                    setLanguage(urlLang);
+                }
                 const state = event.state;
                 if (state && state.vexus) {
                     navIndex = typeof state.vexusIndex === 'number' ? state.vexusIndex : 0;
@@ -2033,6 +2111,7 @@
             const modal = document.getElementById('portfolio-modal');
             const modalContentHost = document.getElementById('modal-content-host');
             const closeButton = modal.querySelector('.close-button');
+            let lastFocusedElement = null;
             const focusableElementsString = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
             function normalizeAssetUrl(url) {
@@ -2043,31 +2122,37 @@
             function openModal(item) {
                 const type = item.dataset.type;
                 const normalizedSrc = normalizeAssetUrl(item.dataset.src);
+                const label = (item.querySelector('h3')?.textContent || item.querySelector('img')?.alt || 'Preview').trim();
                 modalContentHost.innerHTML = '';
                 if (type === 'image') {
-                    modalContentHost.innerHTML = `<img src="${normalizedSrc}" alt="">`;
+                    modalContentHost.innerHTML = `<img src="${normalizedSrc}" alt="${label}">`;
                 } else if (type === 'video') {
                     // Support YouTube embeds (videoId) or local MP4 files (data-src)
                     if (item.dataset.videoId) {
-                        modalContentHost.innerHTML = `<iframe src="https://www.youtube.com/embed/${item.dataset.videoId}?autoplay=1&rel=0&modestbranding=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+                        modalContentHost.innerHTML = `<iframe title="${label}" src="https://www.youtube.com/embed/${item.dataset.videoId}?autoplay=1&rel=0&modestbranding=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
                     } else if (normalizedSrc) {
                         modalContentHost.innerHTML = `<video controls autoplay style="width:100%;height:100%;max-height:80vh;object-fit:contain"><source src="${normalizedSrc}" type="video/mp4">Your browser does not support the video tag.</video>`;
                     }
                 } else if (type === 'pdf') {
                     // Embed PDFs directly
-                    modalContentHost.innerHTML = `<iframe src="${normalizedSrc}" style="width:100%;height:100%;border:none"></iframe>`;
+                    modalContentHost.innerHTML = `<iframe title="${label}" src="${normalizedSrc}" style="width:100%;height:100%;border:none"></iframe>`;
                 } else if (type === 'audio') {
                     modalContentHost.innerHTML = `<audio controls autoplay style="width:100%"><source src="${normalizedSrc}" type="audio/mpeg">Your browser does not support the audio element.</audio>`;
                 } else {
-                    modalContentHost.innerHTML = `<div style="color:white;padding:20px">Unsupported preview type.</div>`;
+                    const unsupportedText = getTranslation('modalUnsupported') || 'Unsupported preview type.';
+                    modalContentHost.innerHTML = `<div style="color:white;padding:20px">${unsupportedText}</div>`;
                 }
+                lastFocusedElement = document.activeElement;
                 modal.classList.add('visible');
+                modal.setAttribute('aria-hidden', 'false');
                 document.body.classList.add('no-scroll');
                 document.addEventListener('keydown', trapFocus);
+                if (closeButton) closeButton.focus();
             }
 
             function closeModal() {
                 modal.classList.remove('visible');
+                modal.setAttribute('aria-hidden', 'true');
                 document.body.classList.remove('no-scroll');
                 // Stop any media playback and clear content
                 const iframe = modalContentHost.querySelector('iframe');
@@ -2077,6 +2162,9 @@
                 const audio = modalContentHost.querySelector('audio');
                 if (audio) { try { audio.pause(); audio.src = ''; } catch(e) {} }
                 document.removeEventListener('keydown', trapFocus);
+                if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
+                    lastFocusedElement.focus();
+                }
             }
             
             function trapFocus(e) {
@@ -2125,6 +2213,16 @@
                 'service-web-page': ['web'],
             };
 
+            let cachedPortfolioItems = null;
+            function getPortfolioSourceItems() {
+                if (cachedPortfolioItems) return cachedPortfolioItems;
+                const template = document.getElementById('portfolio-template');
+                if (!template) return [];
+                const fragment = template.content.cloneNode(true);
+                cachedPortfolioItems = Array.from(fragment.querySelectorAll('.portfolio-item'));
+                return cachedPortfolioItems;
+            }
+
             function populateServicePage(pageEl) {
                 if (!pageEl || pageEl.dataset.servicePopulated === '1') return;
                 const pageId = pageEl.id;
@@ -2133,8 +2231,8 @@
                 const grid = pageEl.querySelector('.portfolio-grid');
                 if (!grid) return;
 
-                // Work cards are stored in the hidden portfolio library (not visible on Home)
-                const sourceItems = Array.from(document.querySelectorAll('#portfolio-library .portfolio-item'));
+                // Work cards are stored in a template to prevent eager loading.
+                const sourceItems = getPortfolioSourceItems();
                 const matches = sourceItems.filter(item => categories.includes((item.dataset.category || '').toLowerCase()));
                 grid.innerHTML = '';
                 if (!matches.length) {
@@ -2161,6 +2259,7 @@
                 observeElements(grid.querySelectorAll('.animate-on-scroll'));
                 observeLazyImages(grid.querySelectorAll('img.lazy'));
                 transformSingleItemGrids(pageEl);
+                enhancePortfolioAccessibility(pageEl);
                 applyTranslations(grid);
             }
 
@@ -2574,9 +2673,9 @@
                     if (DEBUG) console.warn('[3D] WebGL/Three.js not available, fallback shown.');
                 } else {
                     const quality = {
-                        low: { particles: 800, useBloom: false, bloomStrength: 0, bloomRadius: 0 },
-                        medium: { particles: 2000, useBloom: true, bloomStrength: 0.5, bloomRadius: 0.5 },
-                        high: { particles: 5000, useBloom: true, bloomStrength: 0.7, bloomRadius: 0.5 }
+                        low: { particles: 350, useBloom: false, bloomStrength: 0, bloomRadius: 0 },
+                        medium: { particles: 1200, useBloom: true, bloomStrength: 0.35, bloomRadius: 0.4 },
+                        high: { particles: 3000, useBloom: true, bloomStrength: 0.6, bloomRadius: 0.5 }
                     }[performanceProfile];
 
                     let scene, camera, renderer, composer, mainObject, particles, clock;
@@ -2591,9 +2690,11 @@
                         scene.background = new THREE.Color(0x000000); // Black background for high contrast
                         camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
                         camera.position.z = 5;
-                        renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+                        const powerPreference = performanceProfile === 'low' ? 'low-power' : 'high-performance';
+                        renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: performanceProfile !== 'low', alpha: true, powerPreference });
                         renderer.setSize(window.innerWidth, window.innerHeight);
-                        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Cap pixel ratio for performance
+                        const pixelRatioCap = performanceProfile === 'low' ? 1 : 2;
+                        renderer.setPixelRatio(Math.min(window.devicePixelRatio, pixelRatioCap)); // Cap pixel ratio for performance
                         clock = new THREE.Clock();
 
                         // Load assets and initialize objects sequentially
@@ -2602,7 +2703,9 @@
                         if (quality.useBloom) initPostProcessing();
 
                         window.addEventListener('resize', onWindowResize);
-                        window.addEventListener('mousemove', onMouseMove);
+                        if (performanceProfile !== 'low') {
+                            window.addEventListener('mousemove', onMouseMove);
+                        }
                         animate();
                     }
 
@@ -2684,10 +2787,9 @@
                                     vec3 baseColor = mix(color1, color2, lightFactor * 1.2);
                                     vec3 finalColor = mix(baseColor, color2, lineFactor * 0.5); // Add energy lines
                                     finalColor = mix(finalColor, color2, fresnel); // Add edge glow
-                                    gl_FragColor = vec4(finalColor, 1.0);
-                                }
+                                gl_FragColor = vec4(finalColor, 1.0);
+                            }
                             `,
-                            envMap: envMap,
                         });
                         mainObject = new THREE.Mesh(textGeometry, material);
                         scene.add(mainObject);
@@ -3098,7 +3200,7 @@
         <!-- استبدل PHONE_NUMBER برقمك بصيغة الدولة بدون علامة + (مثال: 201234567890) -->
         <style>
                 #whatsapp-support{position:fixed;left:20px;bottom:20px;z-index:10001}
-                #whatsapp-support a{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;background:#3596e5;color:#fff;border-radius:30px;box-shadow:0 8px 22px rgba(229,57,53,.18);text-decoration:none;font-size:15px;font-weight:700}
+                #whatsapp-support a{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;background:#1f6fbf;color:#fff;border-radius:30px;box-shadow:0 8px 22px rgba(229,57,53,.18);text-decoration:none;font-size:15px;font-weight:700}
                 #whatsapp-support a:hover{transform:translateY(-3px)}
                 #whatsapp-support .icon-crown{font-size:12px;opacity:0.95}
                 #whatsapp-support .icon-headset{font-size:18px}
@@ -3107,10 +3209,10 @@
         </style>
         <div id="whatsapp-support" aria-hidden="false" style="display:none;">
                 <!-- استبدل PHONE_NUMBER برقمك (مثال: 201234567890) -->
-                <a id="whatsapp-link" href="https://wa.me/201044170454" target="_blank" rel="noopener noreferrer" aria-label="واتساب دعم فني">
+                <a id="whatsapp-link" href="https://wa.me/201044170454" target="_blank" rel="noopener noreferrer" data-i18n-aria="whatsappSupportAria" aria-label="WhatsApp support">
                         
                         <i class="fa-solid fa-headset icon-headset" aria-hidden="true"></i>
-                        <span class="premium-label">دعم فني</span>
+                        <span class="premium-label" data-i18n="whatsappSupportLabel">Support</span>
                 </a>
         </div>
         <script>
