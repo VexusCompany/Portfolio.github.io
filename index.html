@@ -465,6 +465,15 @@
         html[dir="rtl"] .page-back-button { left: auto; right: 8%; flex-direction: row-reverse; }
         html[dir="rtl"] .page-back-button .back-icon { transform: rotate(180deg); }
         .section-title { text-align: center; font-family: var(--font-display); font-size: clamp(2rem, 5vw, 2.8rem); margin-bottom: 48px; color: var(--text-light); line-height: 1.2; }
+        /* Keep About page primary headings always visible across language switches. */
+        #about-page .section-title,
+        #about-page .page-header h1 {
+            opacity: 1 !important;
+            transform: none !important;
+        }
+        #about-page .reveal-text .char {
+            transform: translateY(0) !important;
+        }
 
         .aurora-background { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; overflow: hidden; }
         .aurora-background::before, .aurora-background::after { content: ''; position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, var(--accent-purple), transparent 60%); border-radius: 50%; opacity: 0.15; animation: aurora-move 20s infinite; }
@@ -480,12 +489,14 @@
             max-width: 800px;
             margin: 20px auto 0;
             line-height: 1.7;
+            text-align: center;
         }
         .rotating-subtext {
             position: absolute; left: 0; right: 0; top: 0;
             opacity: 0;
             transform: translateY(15px);
             transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+            text-align: center;
         }
         .rotating-subtext.active { opacity: 1; transform: translateY(0); }
 
@@ -1063,54 +1074,54 @@
         <div id="about-page" class="page">
             <div class="page-header">
                 <div class="aurora-background"></div>
-                <h1 class="animate-on-scroll reveal-text" data-i18n="aboutTitle">A Strategic Digital Studio</h1>
-                <p class="animate-on-scroll" data-i18n="aboutDesc">Founded in 2025, VEXUS is a strategy-led digital studio delivering brand identity, 3D visualization, motion, and product-ready web experiences. We collaborate with education, architecture, and growth-stage brands across Saudi Arabia, Morocco, Palestine, and Jordan. Our leadership team guides projects from concept to delivery with disciplined execution and clear accountability.</p>
+                <h1 class="animate-on-scroll reveal-text" data-i18n="aboutTitle">Multidisciplinary Creative & Tech Studio</h1>
+                <p class="animate-on-scroll" data-i18n="aboutDesc">We deliver engineering and architectural design, visual production, brand identity, and custom development. Our scope spans 2D plans, 3D exterior/interior visualization, professional video editing, motion graphics, reels and media shooting, plus logo design, full brand systems, social media design, and scalable web/app or bespoke software.</p>
             </div>
             <section class="content-section about-vision">
                 <h2 class="section-title animate-on-scroll reveal-text" data-i18n="aboutVisionSectionTitle">Vision & Mission</h2>
                 <div class="about-grid">
                     <div class="about-card animate-on-scroll">
                         <h3 data-i18n="aboutVisionTitle">Vision</h3>
-                        <p data-i18n="aboutVisionDesc">To be the region's most trusted partner for strategic creative and digital production.</p>
+                        <p data-i18n="aboutVisionDesc">To be the trusted regional partner for architectural design, media production, brand identity, and technology solutions.</p>
                     </div>
                     <div class="about-card animate-on-scroll">
                         <h3 data-i18n="aboutMissionTitle">Mission</h3>
-                        <p data-i18n="aboutMissionDesc">We translate business goals into high-impact design, content, and technology delivered with clarity, speed, and precision.</p>
+                        <p data-i18n="aboutMissionDesc">We turn ideas into build-ready visuals and digital products through clear process, high quality, and on-time delivery.</p>
                     </div>
                 </div>
             </section>
             <section class="content-section about-value">
                 <h2 class="section-title animate-on-scroll reveal-text" data-i18n="aboutValueTitle">Value Proposition</h2>
-                <p class="section-subtitle animate-on-scroll" data-i18n="aboutValueDesc">An integrated studio model that combines strategy, production, and technology in one accountable team.</p>
+                <p class="section-subtitle animate-on-scroll" data-i18n="aboutValueDesc">One studio combining engineering precision, visual storytelling, and reliable technical execution.</p>
                 <div class="about-grid value-grid">
                     <div class="about-card animate-on-scroll">
-                        <h3 data-i18n="aboutValuePoint1Title">Strategy First</h3>
-                        <p data-i18n="aboutValuePoint1Desc">We define objectives, audiences, and KPIs before design begins.</p>
+                        <h3 data-i18n="aboutValuePoint1Title">Engineering Precision</h3>
+                        <p data-i18n="aboutValuePoint1Desc">Accurate 2D plans and 3D exterior/interior visualization aligned with real-world needs.</p>
                     </div>
                     <div class="about-card animate-on-scroll">
-                        <h3 data-i18n="aboutValuePoint2Title">Production Excellence</h3>
-                        <p data-i18n="aboutValuePoint2Desc">Consistent quality across video, design, and digital deliverables.</p>
+                        <h3 data-i18n="aboutValuePoint2Title">Visual Production</h3>
+                        <p data-i18n="aboutValuePoint2Desc">Video editing, motion graphics, reels, and media shooting that amplify your message.</p>
                     </div>
                     <div class="about-card animate-on-scroll">
-                        <h3 data-i18n="aboutValuePoint3Title">Operational Clarity</h3>
-                        <p data-i18n="aboutValuePoint3Desc">Clear scopes, timelines, and reporting for enterprise readiness.</p>
+                        <h3 data-i18n="aboutValuePoint3Title">Scalable Technology</h3>
+                        <p data-i18n="aboutValuePoint3Desc">Websites, mobile apps, and custom systems built for growth.</p>
                     </div>
                 </div>
             </section>
             <section class="content-section about-services-summary">
                 <h2 class="section-title animate-on-scroll reveal-text" data-i18n="aboutServicesTitle">Core Services</h2>
-                <p class="section-subtitle animate-on-scroll" data-i18n="aboutServicesDesc">Focused service tracks designed for brand growth and digital scale.</p>
+                <p class="section-subtitle animate-on-scroll" data-i18n="aboutServicesDesc">Service tracks aligned to engineering, media, branding, and development.</p>
                 <div class="services-summary-grid">
-                    <div class="service-pill animate-on-scroll" data-i18n="aboutService1">Brand Identity & Design</div>
-                    <div class="service-pill animate-on-scroll" data-i18n="aboutService2">Motion & Video Production</div>
-                    <div class="service-pill animate-on-scroll" data-i18n="aboutService3">3D Visualization</div>
-                    <div class="service-pill animate-on-scroll" data-i18n="aboutService4">Web & App Development</div>
-                    <div class="service-pill animate-on-scroll" data-i18n="aboutService5">Content Systems & Campaigns</div>
-                    <div class="service-pill animate-on-scroll" data-i18n="aboutService6">Voiceover & Audio</div>
+                    <div class="service-pill animate-on-scroll" data-i18n="aboutService1">2D Plans</div>
+                    <div class="service-pill animate-on-scroll" data-i18n="aboutService2">3D Exterior & Interior</div>
+                    <div class="service-pill animate-on-scroll" data-i18n="aboutService3">Video Editing & Motion Graphics</div>
+                    <div class="service-pill animate-on-scroll" data-i18n="aboutService4">Reels & Media Shooting</div>
+                    <div class="service-pill animate-on-scroll" data-i18n="aboutService5">Logo & Brand Identity</div>
+                    <div class="service-pill animate-on-scroll" data-i18n="aboutService6">Web, Mobile Apps & Custom Systems</div>
                 </div>
             </section>
             <section class="content-section about-edge">
-                <h2 class="section-title animate-on-scroll reveal-text" data-i18n="edgeTitle">The VEXUS Edge</h2>
+                <h2 class="section-title" data-i18n="edgeTitle">VEXUS Approach</h2>
                 <p class="section-subtitle animate-on-scroll" data-i18n="edgeLead">A unified delivery model that keeps strategy, execution, and performance aligned.</p>
                 <div id="rotating-subtext-container" class="animate-on-scroll">
                     <span class="rotating-subtext active" data-i18n="edgeSubtext1">One integrated pipeline for strategy, design, and production.</span>
@@ -1183,12 +1194,52 @@
                  <h2 class="section-title animate-on-scroll reveal-text" data-i18n="testimonialsTitle">What Our Clients Say</h2>
                  <div class="testimonial-carousel animate-on-scroll">
                      <div class="testimonial-slide active">
-                         <p class="testimonial-text" data-i18n="testimonial1Text">"VEXUS delivered a complete visual system and media content that elevated our launch."</p>
-                         <p class="testimonial-author" data-i18n="testimonial1Author">- Education Partner, Saudi Arabia</p>
+                         <p class="testimonial-text" data-i18n="testimonial1Text">"Rated 5/5. VEXUS delivered precise 2D plans and 3D visuals that accelerated municipality approvals and reduced revision rounds."</p>
+                         <p class="testimonial-author" data-i18n="testimonial1Author">- Engineering Client, Morocco</p>
                      </div>
                      <div class="testimonial-slide">
-                         <p class="testimonial-text" data-i18n="testimonial2Text">"Their 3D visualization and video work brought our architectural concept to life."</p>
-                         <p class="testimonial-author" data-i18n="testimonial2Author">- Architectural Client, Morocco</p>
+                         <p class="testimonial-text" data-i18n="testimonial2Text">"Rated 5/5. The video editing and brand identity work transformed our campaign performance across Meta and TikTok."</p>
+                         <p class="testimonial-author" data-i18n="testimonial2Author">- Marketing Client, Egypt</p>
+                     </div>
+                     <div class="testimonial-slide">
+                         <p class="testimonial-text" data-i18n="testimonial3Text">"Rated 5/5. Their technical drawings were accurate, documented, and ready for execution with zero ambiguity for contractors."</p>
+                         <p class="testimonial-author" data-i18n="testimonial3Author">- Engineering Consultant, Saudi Arabia</p>
+                     </div>
+                     <div class="testimonial-slide">
+                         <p class="testimonial-text" data-i18n="testimonial4Text">"Rated 5/5. VEXUS produced premium launch videos and social assets that helped us position as a high-end hospitality brand."</p>
+                         <p class="testimonial-author" data-i18n="testimonial4Author">- Hospitality Group, UAE</p>
+                     </div>
+                     <div class="testimonial-slide">
+                         <p class="testimonial-text" data-i18n="testimonial5Text">"Rated 5/5. The packaging and visual identity system improved shelf impact and gave our retail line a unified professional look."</p>
+                         <p class="testimonial-author" data-i18n="testimonial5Author">- Retail Brand, Kuwait</p>
+                     </div>
+                     <div class="testimonial-slide">
+                         <p class="testimonial-text" data-i18n="testimonial6Text">"Rated 5/5. The team handled strategy, content, and execution in one workflow with clear reporting and reliable timelines."</p>
+                         <p class="testimonial-author" data-i18n="testimonial6Author">- Education Group, Qatar</p>
+                     </div>
+                     <div class="testimonial-slide">
+                         <p class="testimonial-text" data-i18n="testimonial7Text">"Rated 5/5. Their web and UX delivery significantly reduced bounce rate and improved qualified inquiry volume."</p>
+                         <p class="testimonial-author" data-i18n="testimonial7Author">- Healthcare Brand, Bahrain</p>
+                     </div>
+                     <div class="testimonial-slide">
+                         <p class="testimonial-text" data-i18n="testimonial8Text">"Rated 5/5. Motion graphics quality was outstanding and aligned perfectly with our technical messaging."</p>
+                         <p class="testimonial-author" data-i18n="testimonial8Author">- Industrial Client, Oman</p>
+                     </div>
+                     <div class="testimonial-slide">
+                         <p class="testimonial-text" data-i18n="testimonial9Text">"Rated 5/5. We received fast iterations, clear communication, and production-ready outputs for every milestone."</p>
+                         <p class="testimonial-author" data-i18n="testimonial9Author">- Property Developer, Morocco</p>
+                     </div>
+                     <div class="testimonial-slide">
+                         <p class="testimonial-text" data-i18n="testimonial10Text">"Rated 5/5. Reels editing and short-form content increased engagement consistency and improved conversion quality."</p>
+                         <p class="testimonial-author" data-i18n="testimonial10Author">- E-commerce Brand, Egypt</p>
+                     </div>
+                     <div class="testimonial-slide">
+                         <p class="testimonial-text" data-i18n="testimonial11Text">"Rated 5/5. Their brand system gave us a clear visual language across sales decks, social media, and campaign pages."</p>
+                         <p class="testimonial-author" data-i18n="testimonial11Author">- Media House, Saudi Arabia</p>
+                     </div>
+                     <div class="testimonial-slide">
+                         <p class="testimonial-text" data-i18n="testimonial12Text">"Rated 5/5. VEXUS delivered enterprise-level quality while maintaining startup speed and flexibility."</p>
+                         <p class="testimonial-author" data-i18n="testimonial12Author">- Tech Startup, UAE</p>
                      </div>
                       <div class="carousel-controls">
                         <button class="carousel-control prev" data-i18n-aria="prevTestimonial" aria-label="Previous testimonial">&#8249;</button>
@@ -1313,10 +1364,10 @@
                 <div class="footer-column social-column">
                     <h4 data-i18n="footerConnect">Connect With Us</h4>
                     <div class="social-buttons">
-                        <a class="social-button" href="https://dribbble.com" target="_blank" rel="noopener noreferrer" aria-label="Dribbble"><i class="fa-brands fa-dribbble"></i><span>Dribbble</span></a>
-                        <a class="social-button" href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i><span>LinkedIn</span></a>
-                        <a class="social-button" href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i><span>Facebook</span></a>
-                        <a class="social-button" href="https://x.com" target="_blank" rel="noopener noreferrer" aria-label="X"><i class="fa-brands fa-x-twitter"></i><span>X</span></a>
+                        <a class="social-button" href="https://dribbble.com/account/profile" target="_blank" rel="noopener noreferrer" aria-label="Dribbble"><i class="fa-brands fa-dribbble"></i><span>Dribbble</span></a>
+                        <a class="social-button" href="https://www.linkedin.com/in/vexus-agency-5394973b0/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i><span>LinkedIn</span></a>
+                        <a class="social-button" href="https://www.facebook.com/profile.php?id=61581238565147" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i><span>Facebook</span></a>
+                        <a class="social-button" href="https://x.com/Vexus_Agency" target="_blank" rel="noopener noreferrer" aria-label="X"><i class="fa-brands fa-x-twitter"></i><span>X</span></a>
                         <a class="social-button" href="https://www.tiktok.com" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i><span>TikTok</span></a>
                         <a class="social-button" href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i><span>Instagram</span></a>
                     </div>
@@ -1433,91 +1484,91 @@
                 siteTitleSuffix: "VEXUS Digital Solutions",
                 backButton: "Back",
                 backButtonAria: "Go back",
-                heroTitle: "Crafting Digital Legends.",
-                heroSubtext1: "A strategic digital studio delivering brand systems, motion, 3D, and product-ready web experiences.",
-                heroSubtext2: "We align strategy, design, and production to drive measurable growth.",
-                heroSubtext3: "From concept to launch, we deliver fast, reliable work across media and technology.",
+                heroTitle: "Engineering. Media. Design. Development.",
+                heroSubtext1: "Engineering & architecture: 2D plans plus 3D exterior/interior visualization.",
+                heroSubtext2: "Video production: professional editing, motion graphics, reels, and media shooting.",
+                heroSubtext3: "Graphic design & development: logos, full identity, social design, plus web/mobile and custom systems.",
                 heroCTA: "Explore Our Work",
-                servicesTitle: "Core Service Tracks",
-                serviceAITitle: "Intelligent Systems",
-                serviceAIDesc: "Applied AI and automation that streamline workflows and enable smarter decisions.",
-                service3DTitle: "3D & Visualization",
-                service3DDesc: "High-fidelity models and visualizations that bring concepts to life.",
-                serviceBooksTitle: "Book Design",
-                serviceBooksDesc: "Covers and layouts that give your publication a distinct identity.",
-                serviceGraphicsTitle: "Graphic Design",
-                serviceGraphicsDesc: "Strategic visual systems for social media, print, and campaigns.",
-                serviceLogosTitle: "Logo & Identity",
-                serviceLogosDesc: "Comprehensive identity systems that define and unify your brand.",
-                serviceMotionTitle: "Motion Graphics",
-                serviceMotionDesc: "Explainers, intros, and motion systems built to capture attention.",
-                servicePackTitle: "Packaging Design",
-                servicePackDesc: "Packaging that stands out on the shelf and elevates the unboxing experience.",
-                serviceReelsTitle: "Short-Form Video",
-                serviceReelsDesc: "Performance-led Reels and TikTok content that drives engagement.",
-                serviceVoiceTitle: "Voiceover Services",
-                serviceVoiceDesc: "Professional voiceover and narration tailored to your message.",
-                serviceWebTitle: "Web & UX/UI",
-                serviceWebDesc: "High-performance websites and apps with clean UX, strong SEO, and scalable code.",
+                servicesTitle: "Our Core Sectors",
+                serviceAITitle: "Custom Systems",
+                serviceAIDesc: "Tailored software solutions that automate workflows and scale with you.",
+                service3DTitle: "3D Exterior & Interior",
+                service3DDesc: "Realistic exterior and interior visualization with accurate materials and lighting.",
+                serviceBooksTitle: "2D Plans",
+                serviceBooksDesc: "Detailed architectural and engineering drawings ready for execution.",
+                serviceGraphicsTitle: "Graphic & Social Design",
+                serviceGraphicsDesc: "Campaign visuals, social media designs, and branded assets.",
+                serviceLogosTitle: "Logo & Visual Identity",
+                serviceLogosDesc: "Logos, full identity systems, and brand guidelines.",
+                serviceMotionTitle: "Video Editing",
+                serviceMotionDesc: "Professional editing, color grading, and sound finishing.",
+                servicePackTitle: "Motion Graphics",
+                servicePackDesc: "Animated graphics, titles, and explainer visuals.",
+                serviceReelsTitle: "Reels & Short Video",
+                serviceReelsDesc: "Short-form content optimized for engagement.",
+                serviceVoiceTitle: "Media Shooting",
+                serviceVoiceDesc: "On-site photo and video production for your brand.",
+                serviceWebTitle: "Web & Mobile Development",
+                serviceWebDesc: "Websites and mobile apps built for performance and growth.",
                 workLibraryTitle: "Portfolio / Work Library",
                 workLibraryDesc: "We share selected samples to keep the site fast. Access the full library below.",
                 workLibraryNote: "This site shows curated samples only. Use the full library for complete project archives and extended reels.",
                 workLibraryButton: "Full Work Library",
                 placeholderTitle: "Samples Coming Soon",
                 placeholderDesc: "Add work items in the hidden Work Library and assign matching data-category values to show them here.",
-                aboutTitle: "A Strategic Digital Studio",
-                aboutDesc: "Founded in 2025, VEXUS is a strategy-led digital studio delivering brand identity, 3D visualization, motion, and product-ready web experiences. We collaborate with education, architecture, and growth-stage brands across Saudi Arabia, Morocco, Palestine, and Jordan. Our leadership team guides projects from concept to delivery with disciplined execution and clear accountability.",
+                aboutTitle: "Multidisciplinary Creative & Tech Studio",
+                aboutDesc: "We deliver engineering and architectural design, visual production, brand identity, and custom development. Our scope spans 2D plans, 3D exterior/interior visualization, professional video editing, motion graphics, reels and media shooting, plus logo design, full brand systems, social media design, and scalable web/app or bespoke software.",
                 aboutVisionSectionTitle: "Vision & Mission",
                 aboutVisionTitle: "Vision",
-                aboutVisionDesc: "To be the region's most trusted partner for strategic creative and digital production.",
+                aboutVisionDesc: "To be the trusted regional partner for architectural design, media production, brand identity, and technology solutions.",
                 aboutMissionTitle: "Mission",
-                aboutMissionDesc: "We translate business goals into high-impact design, content, and technology delivered with clarity, speed, and precision.",
+                aboutMissionDesc: "We turn ideas into build-ready visuals and digital products through clear process, high quality, and on-time delivery.",
                 aboutValueTitle: "Value Proposition",
-                aboutValueDesc: "An integrated studio model that combines strategy, production, and technology in one accountable team.",
-                aboutValuePoint1Title: "Strategy First",
-                aboutValuePoint1Desc: "We define objectives, audiences, and KPIs before design begins.",
-                aboutValuePoint2Title: "Production Excellence",
-                aboutValuePoint2Desc: "Consistent quality across video, design, and digital deliverables.",
-                aboutValuePoint3Title: "Operational Clarity",
-                aboutValuePoint3Desc: "Clear scopes, timelines, and reporting for enterprise readiness.",
+                aboutValueDesc: "One studio combining engineering precision, visual storytelling, and reliable technical execution.",
+                aboutValuePoint1Title: "Engineering Precision",
+                aboutValuePoint1Desc: "Accurate 2D plans and 3D exterior/interior visualization aligned with real-world needs.",
+                aboutValuePoint2Title: "Visual Production",
+                aboutValuePoint2Desc: "Video editing, motion graphics, reels, and media shooting that amplify your message.",
+                aboutValuePoint3Title: "Scalable Technology",
+                aboutValuePoint3Desc: "Websites, mobile apps, and custom systems built for growth.",
                 aboutServicesTitle: "Core Services",
-                aboutServicesDesc: "Focused service tracks designed for brand growth and digital scale.",
-                aboutService1: "Brand Identity & Design",
-                aboutService2: "Motion & Video Production",
-                aboutService3: "3D Visualization",
-                aboutService4: "Web & App Development",
-                aboutService5: "Content Systems & Campaigns",
-                aboutService6: "Voiceover & Audio",
-                edgeTitle: "The VEXUS Edge",
-                edgeLead: "A unified delivery model that keeps strategy, execution, and performance aligned.",
-                edgeSubtext1: "One integrated pipeline for strategy, design, and production.",
-                edgeSubtext2: "Enterprise-grade quality with fast, dependable delivery.",
-                edgeSubtext3: "Performance-first execution focused on ROI and growth.",
-                edgeSubtext4: "Scalable teams that expand with your needs.",
-                edgePoint1Title: "Integrated Delivery",
-                edgePoint1Desc: "Strategy, design, production, and technology under one accountable team.",
-                edgePoint2Title: "Quality Control",
-                edgePoint2Desc: "Senior oversight and documented standards across every deliverable.",
-                edgePoint3Title: "Performance Focus",
-                edgePoint3Desc: "Optimized assets, clean UX, and clear metrics to measure impact.",
-                companyInfoTitle: "VEXUS / The VEXUS Age",
-                companyInfoLead: "A formal company profile section with placeholder content ready for future updates.",
-                companyInfoBody1: "VEXUS Digital Solutions is a multidisciplinary studio delivering strategy-led creative production and product-ready digital experiences.",
-                companyInfoBody2: "Use this space to document the official mission, legal structure, and corporate positioning once finalized. Replace the text with approved company copy.",
+                aboutServicesDesc: "Service tracks aligned to engineering, media, branding, and development.",
+                aboutService1: "2D Plans",
+                aboutService2: "3D Exterior & Interior",
+                aboutService3: "Video Editing & Motion Graphics",
+                aboutService4: "Reels & Media Shooting",
+                aboutService5: "Logo & Brand Identity",
+                aboutService6: "Web, Mobile Apps & Custom Systems",
+                edgeTitle: "VEXUS Approach",
+                edgeLead: "A unified workflow across engineering, media, branding, and development.",
+                edgeSubtext1: "A clear process from drawings to visuals to delivery.",
+                edgeSubtext2: "Consistent quality control across every sector.",
+                edgeSubtext3: "Fast, reliable execution without sacrificing detail.",
+                edgeSubtext4: "Teams that scale with your project size.",
+                edgePoint1Title: "Unified Workflow",
+                edgePoint1Desc: "One team handling 2D/3D, video, branding, and development.",
+                edgePoint2Title: "Quality Assurance",
+                edgePoint2Desc: "Clear standards for drawings, visuals, and code.",
+                edgePoint3Title: "On-Time Delivery",
+                edgePoint3Desc: "Structured timelines that keep production on schedule.",
+                companyInfoTitle: "VEXUS Company Profile",
+                companyInfoLead: "An overview of our core sectors and delivery model.",
+                companyInfoBody1: "VEXUS Digital Solutions specializes in engineering and architectural design, video production, graphic design, and development.",
+                companyInfoBody2: "Replace this placeholder with your finalized company profile, legal details, and official mission.",
                 companyInfoLabel1: "Founded",
                 companyInfoValue1: "2025",
                 companyInfoLabel2: "Headquarters",
                 companyInfoValue2: "TBD / Remote-first",
-                companyInfoLabel3: "Core Divisions",
-                companyInfoValue3: "Creative, Production, Technology",
+                companyInfoLabel3: "Core Sectors",
+                companyInfoValue3: "Engineering & Architecture, Video Production, Graphic Design, Development",
                 companyInfoLabel4: "Engagement Model",
                 companyInfoValue4: "Projects + Retainers",
-                structureTitle: "Company Structure",
-                structureDesc: "Animated hierarchy infographic with placeholder data for leadership, teams, and members.",
+                structureTitle: "Team Structure",
+                structureDesc: "Dedicated teams across engineering, video production, graphic design, and development.",
                 structureLeadership: "Executive Leadership",
-                structureCreative: "Creative Division",
-                structureProduction: "Production Division",
-                structureTechnology: "Technology Division",
+                structureCreative: "Engineering & Architecture",
+                structureProduction: "Video Production",
+                structureTechnology: "Graphic Design & Development",
                 structureManagersLabel: "Managers",
                 structureManagersValue: "2",
                 structureLeadsLabel: "Team Leads",
@@ -1525,32 +1576,52 @@
                 structureMembersLabel: "Team Members",
                 structureMembersValue: "80",
                 testimonialsTitle: "What Our Clients Say",
-                testimonial1Text: "VEXUS delivered a complete visual system and media content that elevated our launch.",
-                testimonial1Author: "- Education Partner, Saudi Arabia",
-                testimonial2Text: "Their 3D visualization and video work brought our architectural concept to life.",
-                testimonial2Author: "- Architectural Client, Morocco",
+                testimonial1Text: "Rated 5/5. VEXUS delivered precise 2D plans and 3D visuals that accelerated municipality approvals and reduced revision rounds.",
+                testimonial1Author: "- Engineering Client, Morocco",
+                testimonial2Text: "Rated 5/5. The video editing and brand identity work transformed our campaign performance across Meta and TikTok.",
+                testimonial2Author: "- Marketing Client, Egypt",
+                testimonial3Text: "Rated 5/5. Their technical drawings were accurate, documented, and ready for execution with zero ambiguity for contractors.",
+                testimonial3Author: "- Engineering Consultant, Saudi Arabia",
+                testimonial4Text: "Rated 5/5. VEXUS produced premium launch videos and social assets that helped us position as a high-end hospitality brand.",
+                testimonial4Author: "- Hospitality Group, UAE",
+                testimonial5Text: "Rated 5/5. The packaging and visual identity system improved shelf impact and gave our retail line a unified professional look.",
+                testimonial5Author: "- Retail Brand, Kuwait",
+                testimonial6Text: "Rated 5/5. The team handled strategy, content, and execution in one workflow with clear reporting and reliable timelines.",
+                testimonial6Author: "- Education Group, Qatar",
+                testimonial7Text: "Rated 5/5. Their web and UX delivery significantly reduced bounce rate and improved qualified inquiry volume.",
+                testimonial7Author: "- Healthcare Brand, Bahrain",
+                testimonial8Text: "Rated 5/5. Motion graphics quality was outstanding and aligned perfectly with our technical messaging.",
+                testimonial8Author: "- Industrial Client, Oman",
+                testimonial9Text: "Rated 5/5. We received fast iterations, clear communication, and production-ready outputs for every milestone.",
+                testimonial9Author: "- Property Developer, Morocco",
+                testimonial10Text: "Rated 5/5. Reels editing and short-form content increased engagement consistency and improved conversion quality.",
+                testimonial10Author: "- E-commerce Brand, Egypt",
+                testimonial11Text: "Rated 5/5. Their brand system gave us a clear visual language across sales decks, social media, and campaign pages.",
+                testimonial11Author: "- Media House, Saudi Arabia",
+                testimonial12Text: "Rated 5/5. VEXUS delivered enterprise-level quality while maintaining startup speed and flexibility.",
+                testimonial12Author: "- Tech Startup, UAE",
                 prevTestimonial: "Previous testimonial",
                 nextTestimonial: "Next testimonial",
                 statsTitle: "Performance at a Glance",
-                statsLead: "A snapshot of delivery scale and regional reach.",
+                statsLead: "A snapshot of delivery across our four core sectors.",
                 stat1: "Projects Delivered",
                 stat2: "Countries Served",
                 stat3: "Years in Business",
-                stat4: "Core Service Tracks",
+                stat4: "Service Sectors",
                 journeyTitle: "Our Journey",
                 timeline1Title: "February 2025 - Foundation",
-                timeline1Desc: "VEXUS was founded on 4 February 2025 with a focus on 3D and visualization.",
-                timeline2Title: "2025 - Expansion into Video",
-                timeline2Desc: "We expanded into video production and photography to broaden our creative capabilities.",
-                timeline3Title: "2026 - Development & Scale",
-                timeline3Desc: "We added development services and grew our portfolio across the region.",
+                timeline1Desc: "VEXUS launched with 2D plans and 3D visualization services.",
+                timeline2Title: "2025 - Video Production Expansion",
+                timeline2Desc: "We added editing, motion graphics, reels, and media shooting.",
+                timeline3Title: "2026 - Design & Development",
+                timeline3Desc: "We expanded into branding and development for full-stack delivery.",
                 contactTitle: "Contact Us",
                 contactDesc: "Let's build what is next together. Reach out to discuss your project or learn more about our services.",
                 formName: "Full Name",
                 formEmail: "Email Address",
                 formMessage: "Message",
                 formSubmit: "Send Message",
-                footerDesc: "VEXUS Digital Solutions is a strategy-led digital studio for video, design, 3D visualization, web/app development, and SEO.",
+                footerDesc: "VEXUS Digital Solutions delivers architectural design, visual production, brand identity, and web/mobile development.",
                 footerLinks: "Quick Links",
                 footerServices: "Services",
                 footerConnect: "Connect With Us",
@@ -1562,16 +1633,16 @@
                 threeFallback: "3D preview unavailable on this device.",
                 copyright: "(c) 2026 VEXUS Digital Solutions. All Rights Reserved.",
                 // Service Pages
-                serviceAIWork: "Selected Work in AI",
-                service3DWork: "Selected 3D Work",
-                serviceBooksWork: "Selected Book Designs",
-                serviceGraphicsWork: "Selected Graphic Design",
-                serviceLogosWork: "Selected Identity Work",
-                serviceMotionWork: "Selected Motion Work",
-                servicePackWork: "Selected Packaging Designs",
+                serviceAIWork: "Selected Custom Systems",
+                service3DWork: "Selected 3D Exterior & Interior",
+                serviceBooksWork: "Selected 2D Plans",
+                serviceGraphicsWork: "Selected Graphic & Social Design",
+                serviceLogosWork: "Selected Logo & Identity",
+                serviceMotionWork: "Selected Video Editing",
+                servicePackWork: "Selected Motion Graphics",
                 serviceReelsWork: "Selected Reels",
-                serviceVoiceWork: "Selected Voice Work",
-                serviceWebWork: "Selected Web Projects"
+                serviceVoiceWork: "Selected Media Shooting",
+                serviceWebWork: "Selected Web & Mobile Projects"
             },
             ar: {
                 navHome: "الرئيسية",
@@ -1580,124 +1651,144 @@
                 siteTitleSuffix: "حلول فيكسوس الرقمية",
                 backButton: "رجوع",
                 backButtonAria: "العودة للخلف",
-                heroTitle: "نصنع أساطير رقمية.",
-                heroSubtext1: "استوديو رقمي استراتيجي يقدّم أنظمة علامة تجارية، موشن، ثلاثي الأبعاد، وتجارب ويب جاهزة للإطلاق.",
-                heroSubtext2: "نُوائم بين الاستراتيجية والتصميم والإنتاج لتحقيق نمو قابل للقياس.",
-                heroSubtext3: "من الفكرة حتى الإطلاق، ننجز أعمالًا موثوقة بسرعة عبر الوسائط والتقنية.",
+                heroTitle: "الهندسة، الإنتاج، التصميم، والتطوير.",
+                heroSubtext1: "القطاع الهندسي والمعماري: مخططات 2D وتصاميم 3D خارجية وداخلية.",
+                heroSubtext2: "الإنتاج المرئي: مونتاج فيديو احترافي، موشن جرافيك، ريلز، وتصوير ميديا.",
+                heroSubtext3: "الهوية البصرية والتقنية: تصميم لوجو وهوية كاملة، تصاميم سوشيال ميديا، وتطوير مواقع وتطبيقات وأنظمة خاصة.",
                 heroCTA: "استكشف أعمالنا",
-                servicesTitle: "مسارات الخدمة الأساسية",
-                serviceAITitle: "الأنظمة الذكية",
-                serviceAIDesc: "حلول ذكاء اصطناعي وأتمتة تُبسّط سير العمل وتُحسن اتخاذ القرار.",
-                service3DTitle: "التصميم ثلاثي الأبعاد",
-                service3DDesc: "نماذج وتصوير عالي الدقة يُحوّل الأفكار إلى واقع بصري.",
-                serviceBooksTitle: "تصميم الكتب",
-                serviceBooksDesc: "أغلفة وتخطيطات تمنح منشوراتك هوية مميزة.",
-                serviceGraphicsTitle: "التصميم الجرافيكي",
-                serviceGraphicsDesc: "أنظمة بصرية استراتيجية للسوشيال والطباعة والحملات.",
-                serviceLogosTitle: "الشعارات والهوية",
-                serviceLogosDesc: "هويات متكاملة تعرّف العلامة وتوحّد حضورها.",
-                serviceMotionTitle: "الموشن جرافيك",
-                serviceMotionDesc: "شروحات ومقدمات وأنظمة حركة تجذب الانتباه.",
-                servicePackTitle: "تصميم التغليف",
-                servicePackDesc: "تغليف يبرز على الرف ويرتقي بتجربة الفتح.",
-                serviceReelsTitle: "الفيديو القصير",
-                serviceReelsDesc: "محتوى Reels وTikTok مُوجّه للأداء لرفع التفاعل.",
-                serviceVoiceTitle: "خدمات التعليق الصوتي",
-                serviceVoiceDesc: "تعليق صوتي احترافي مُصمم لرسالتك.",
-                serviceWebTitle: "الويب وتجربة المستخدم",
-                serviceWebDesc: "مواقع وتطبيقات عالية الأداء بتجربة مستخدم نظيفة وSEO قوي وكود قابل للتوسع.",
+                servicesTitle: "مجالاتنا الأساسية",
+                serviceAITitle: "أنظمة برمجية خاصة",
+                serviceAIDesc: "حلول برمجية مخصصة تُسهل العمل وتتوسع مع نموك.",
+                service3DTitle: "تصميم خارجي وداخلي 3D",
+                service3DDesc: "تصوير خارجي وداخلي واقعي بخامات وإضاءة دقيقة.",
+                serviceBooksTitle: "مخططات 2D",
+                serviceBooksDesc: "رسومات هندسية ومعمارية دقيقة جاهزة للتنفيذ.",
+                serviceGraphicsTitle: "تصاميم سوشيال ميديا وجرافيك",
+                serviceGraphicsDesc: "تصاميم حملات ومنشورات سوشيال ميديا وأصول بصرية للعلامة.",
+                serviceLogosTitle: "تصميم لوجو وهوية بصرية كاملة",
+                serviceLogosDesc: "شعارات وهوية كاملة ودليل استخدام للعلامة.",
+                serviceMotionTitle: "مونتاج فيديو احترافي",
+                serviceMotionDesc: "مونتاج احترافي مع تصحيح ألوان ومعالجة صوت.",
+                servicePackTitle: "موشن جرافيك",
+                servicePackDesc: "حركات جرافيكية وعناوين وفيديوهات توضيحية.",
+                serviceReelsTitle: "ريلز وفيديوهات قصيرة",
+                serviceReelsDesc: "محتوى قصير مُوجّه لزيادة التفاعل.",
+                serviceVoiceTitle: "تصوير ميديا",
+                serviceVoiceDesc: "تصوير فوتوغرافي وفيديو في الموقع.",
+                serviceWebTitle: "تطوير مواقع وتطبيقات",
+                serviceWebDesc: "مواقع وتطبيقات هواتف ذكية مبنية للأداء والنمو.",
                 workLibraryTitle: "مكتبة الأعمال / البورتفوليو",
                 workLibraryDesc: "نشارك عينات مختارة للحفاظ على سرعة الموقع. يمكنك الوصول للمكتبة الكاملة أدناه.",
                 workLibraryNote: "الموقع يعرض عينات منتقاة فقط. استخدم المكتبة الكاملة للأرشيف الكامل والريلز الممتدة.",
                 workLibraryButton: "المكتبة الكاملة للأعمال",
                 placeholderTitle: "عينات قادمة قريبًا",
                 placeholderDesc: "أضف عناصر في قسم مكتبة الأعمال المخفي مع تعيين قيمة data-category المطابقة لعرضها هنا.",
-                aboutTitle: "استوديو رقمي استراتيجي",
-                aboutDesc: "تأسست VEXUS في 2025 كاستوديو رقمي يقوده التخطيط الاستراتيجي لتقديم الهوية البصرية، التصوير ثلاثي الأبعاد، الموشن، وتجارب ويب جاهزة للإطلاق. نتعاون مع قطاعات التعليم والهندسة المعمارية والعلامات النامية في السعودية والمغرب وفلسطين والأردن. يقود فريقنا المشاريع من الفكرة إلى التسليم بانضباط وتنفيذ واضح.",
+                aboutTitle: "استوديو إبداعي وتقني متعدد التخصصات",
+                aboutDesc: "نخدم قطاعات الهندسة والمعمار، والإنتاج المرئي، والهوية البصرية، والحلول التقنية. نقدم مخططات 2D وتصاميم 3D داخلية وخارجية، ومونتاج فيديو وموشن جرافيك وريلز وتصوير ميديا، إلى جانب تصميم اللوجو والهوية الكاملة وتصاميم السوشيال ميديا، مع تطوير مواقع وتطبيقات وأنظمة خاصة قابلة للتوسع.",
                 aboutVisionSectionTitle: "الرؤية والرسالة",
                 aboutVisionTitle: "الرؤية",
-                aboutVisionDesc: "أن نكون الشريك الأكثر موثوقية في المنطقة للإنتاج الإبداعي والرقمي الاستراتيجي.",
+                aboutVisionDesc: "أن نكون الشريك الموثوق إقليميًا في التصميم المعماري والإنتاج المرئي والهوية البصرية والحلول التقنية.",
                 aboutMissionTitle: "الرسالة",
-                aboutMissionDesc: "نحوّل أهداف الأعمال إلى تصميم ومحتوى وتقنية عالية الأثر تُنفّذ بوضوح وسرعة ودقة.",
+                aboutMissionDesc: "نحوّل الأفكار إلى مرئيات قابلة للتنفيذ ومنتجات رقمية عبر مسار واضح وجودة عالية وتسليم منضبط.",
                 aboutValueTitle: "عرض القيمة",
-                aboutValueDesc: "نموذج استوديو متكامل يجمع الاستراتيجية والإنتاج والتقنية ضمن فريق واحد مسؤول.",
-                aboutValuePoint1Title: "الاستراتيجية أولًا",
-                aboutValuePoint1Desc: "نحدّد الأهداف والجمهور ومؤشرات الأداء قبل بدء التصميم.",
-                aboutValuePoint2Title: "تميز الإنتاج",
-                aboutValuePoint2Desc: "جودة متسقة عبر الفيديو والتصميم والمخرجات الرقمية.",
-                aboutValuePoint3Title: "وضوح تشغيلي",
-                aboutValuePoint3Desc: "نطاقات عمل وجداول زمنية وتقارير واضحة لمستوى مؤسسي.",
+                aboutValueDesc: "فريق واحد يجمع الدقة الهندسية والسرد البصري والتنفيذ التقني الموثوق.",
+                aboutValuePoint1Title: "دقة هندسية",
+                aboutValuePoint1Desc: "التزام بالمقاييس في المخططات والواجهات والفراغات الداخلية.",
+                aboutValuePoint2Title: "إنتاج مرئي مؤثر",
+                aboutValuePoint2Desc: "مونتاج وموشن وريلز وتصوير يخدم رسالتك بوضوح.",
+                aboutValuePoint3Title: "حلول تقنية قابلة للتوسع",
+                aboutValuePoint3Desc: "مواقع وتطبيقات وأنظمة خاصة تدعم النمو.",
                 aboutServicesTitle: "الخدمات الأساسية",
-                aboutServicesDesc: "مسارات خدمة مركزة لنمو العلامة والتوسع الرقمي.",
-                aboutService1: "الهوية البصرية والتصميم",
-                aboutService2: "إنتاج الفيديو والموشن",
-                aboutService3: "التصوير ثلاثي الأبعاد",
-                aboutService4: "تطوير الويب والتطبيقات",
-                aboutService5: "أنظمة المحتوى والحملات",
-                aboutService6: "التعليق الصوتي والصوتيات",
-                edgeTitle: "ميزة VEXUS",
-                edgeLead: "نموذج تسليم موحّد يحافظ على اتساق الاستراتيجية والتنفيذ والأداء.",
-                edgeSubtext1: "مسار متكامل للاستراتيجية والتصميم والإنتاج.",
-                edgeSubtext2: "جودة بمعايير مؤسسية وتسليم سريع وموثوق.",
-                edgeSubtext3: "تنفيذ يركز على الأداء والعائد والنمو.",
-                edgeSubtext4: "فرق قابلة للتوسع حسب احتياجك.",
-                edgePoint1Title: "تسليم متكامل",
-                edgePoint1Desc: "استراتيجية وتصميم وإنتاج وتقنية ضمن فريق واحد مسؤول.",
-                edgePoint2Title: "ضبط الجودة",
-                edgePoint2Desc: "إشراف خبراء ومعايير موثقة لكل مخرج.",
-                edgePoint3Title: "تركيز على الأداء",
-                edgePoint3Desc: "أصول محسّنة وتجربة مستخدم واضحة ومؤشرات أداء قابلة للقياس.",
-                companyInfoTitle: "VEXUS / عصر فيكسوس",
-                companyInfoLead: "قسم ملف تعريفي رسمي للشركة بمحتوى مؤقت جاهز للتحديث لاحقًا.",
-                companyInfoBody1: "VEXUS Digital Solutions استوديو متعدد التخصصات يقدم إنتاجًا إبداعيًا يقوده التخطيط الاستراتيجي وتجارب رقمية جاهزة للإطلاق.",
-                companyInfoBody2: "استخدم هذه المساحة لتوثيق الرسالة الرسمية والبنية القانونية والتموضع المؤسسي عند اعتمادها. استبدل النص بنسخة الشركة المعتمدة.",
+                aboutServicesDesc: "مسارات خدمة تغطي الهندسة والإنتاج المرئي والهوية البصرية والحلول التقنية.",
+                aboutService1: "مخططات 2D",
+                aboutService2: "تصميم 3D داخلي وخارجي",
+                aboutService3: "مونتاج فيديو وموشن جرافيك",
+                aboutService4: "ريلز وتصوير ميديا",
+                aboutService5: "تصميم لوجو وهوية بصرية",
+                aboutService6: "تطوير مواقع وتطبيقات وأنظمة خاصة",
+                edgeTitle: "نهج VEXUS",
+                edgeLead: "مسار موحد يجمع الهندسة والإنتاج المرئي والهوية البصرية والتطوير.",
+                edgeSubtext1: "عملية واضحة من المخططات إلى التصاميم والتنفيذ.",
+                edgeSubtext2: "ضبط جودة ثابت عبر كل قطاع.",
+                edgeSubtext3: "تسليم سريع دون التضحية بالتفاصيل.",
+                edgeSubtext4: "فرق مرنة تتوسع حسب حجم المشروع.",
+                edgePoint1Title: "مسار موحد",
+                edgePoint1Desc: "فريق واحد يدير 2D/3D والفيديو والهوية والتطوير.",
+                edgePoint2Title: "ضمان الجودة",
+                edgePoint2Desc: "معايير واضحة للرسومات والمرئيات والكود.",
+                edgePoint3Title: "التزام بالوقت",
+                edgePoint3Desc: "جداول إنتاج منضبطة تضمن التسليم في الموعد.",
+                companyInfoTitle:  " عن VEXUS",
+                companyInfoLead: "نظرة عامة على مجالاتنا الأساسية وطريقة عملنا.",
+                companyInfoBody1: "VEXUS Digital Solutions استوديو متعدد التخصصات في الهندسة المعمارية، الإنتاج المرئي، التصميم الجرافيكي، والتطوير.",
+                companyInfoBody2: "استبدل هذه المساحة بنسخة الملف التعريفي الرسمية والبيانات القانونية المعتمدة.",
                 companyInfoLabel1: "سنة التأسيس",
                 companyInfoValue1: "2025",
                 companyInfoLabel2: "المقر",
                 companyInfoValue2: "تحت التحديد / عن بُعد",
-                companyInfoLabel3: "الأقسام الأساسية",
-                companyInfoValue3: "الإبداع، الإنتاج، التقنية",
+                companyInfoLabel3: "المجالات الأساسية",
+                companyInfoValue3: "الهندسة والمعمار، الإنتاج المرئي، الهوية البصرية، التطوير",
                 companyInfoLabel4: "نموذج التعاون",
                 companyInfoValue4: "مشاريع + عقود مستمرة",
-                structureTitle: "الهيكل التنظيمي",
-                structureDesc: "إنفوجرافيك هرمي متحرك ببيانات مؤقتة للقيادة والفرق والأعضاء.",
+                structureTitle: "هيكل الفريق",
+                structureDesc: "فرق متخصصة تغطي الهندسة والإنتاج المرئي والتصميم والتطوير.",
                 structureLeadership: "القيادة التنفيذية",
-                structureCreative: "قسم الإبداع",
-                structureProduction: "قسم الإنتاج",
-                structureTechnology: "قسم التقنية",
+                structureCreative: "الهندسة والمعمار",
+                structureProduction: "الإنتاج المرئي",
+                structureTechnology: "التصميم والتطوير",
                 structureManagersLabel: "مدراء",
                 structureManagersValue: "2",
                 structureLeadsLabel: "قادة فرق",
                 structureLeadsValue: "4",
                 structureMembersLabel: "أعضاء الفريق",
                 structureMembersValue: "80",
-                testimonialsTitle: "ماذا يقول عملاؤنا",
-                testimonial1Text: "قدّمت VEXUS نظامًا بصريًا متكاملًا ومحتوى إعلاميًا رفع مستوى إطلاقنا.",
-                testimonial1Author: "- شريك تعليمي، السعودية",
-                testimonial2Text: "أعمال التصوير ثلاثي الأبعاد والفيديو أحيت مفهومنا المعماري.",
-                testimonial2Author: "- عميل معماري، المغرب",
+                testimonialsTitle: "آراء العملاء",
+                testimonial1Text: "التقييم 5/5. قدمت VEXUS مخططات 2D دقيقة وتصاميم 3D سرّعت الاعتمادات الرسمية وقللت جولات التعديل.",
+                testimonial1Author: "- عميل هندسي، المغرب",
+                testimonial2Text: "التقييم 5/5. أعمال المونتاج والهوية البصرية رفعت أداء حملاتنا بوضوح على ميتا وتيك توك.",
+                testimonial2Author: "- عميل تسويق، مصر",
+                testimonial3Text: "التقييم 5/5. المخططات الفنية كانت دقيقة وموثقة وجاهزة للتنفيذ بدون أي لبس للمقاولين.",
+                testimonial3Author: "- استشاري هندسي، السعودية",
+                testimonial4Text: "التقييم 5/5. أنتجت VEXUS فيديوهات إطلاق وأصول سوشيال بجودة عالية عززت تموضعنا كعلامة راقية.",
+                testimonial4Author: "- مجموعة ضيافة، الإمارات",
+                testimonial5Text: "التقييم 5/5. نظام التغليف والهوية البصرية حسّن الحضور على الرف ووحّد شكل منتجاتنا.",
+                testimonial5Author: "- علامة تجزئة، الكويت",
+                testimonial6Text: "التقييم 5/5. الفريق أدار الاستراتيجية والمحتوى والتنفيذ في مسار واحد مع تقارير واضحة ومواعيد منضبطة.",
+                testimonial6Author: "- مجموعة تعليمية، قطر",
+                testimonial7Text: "التقييم 5/5. تنفيذ الويب وتجربة المستخدم خفّض معدل الارتداد ورفع جودة الطلبات المؤهلة.",
+                testimonial7Author: "- علامة رعاية صحية، البحرين",
+                testimonial8Text: "التقييم 5/5. جودة الموشن جرافيك كانت ممتازة ومتوافقة تمامًا مع الرسائل الفنية.",
+                testimonial8Author: "- عميل صناعي، عُمان",
+                testimonial9Text: "التقييم 5/5. تلقينا تعديلات سريعة وتواصل واضح ومخرجات جاهزة للتشغيل في كل مرحلة.",
+                testimonial9Author: "- مطور عقاري، المغرب",
+                testimonial10Text: "التقييم 5/5. مونتاج الريلز والمحتوى القصير رفع التفاعل بشكل ثابت وحسّن جودة التحويلات.",
+                testimonial10Author: "- علامة تجارة إلكترونية، مصر",
+                testimonial11Text: "التقييم 5/5. نظام الهوية أعطانا لغة بصرية موحدة عبر عروض المبيعات والسوشيال وصفحات الحملات.",
+                testimonial11Author: "- بيت إعلامي، السعودية",
+                testimonial12Text: "التقييم 5/5. VEXUS قدمت جودة مؤسسية مع سرعة ومرونة تناسب شركات ما بعد التأسيس.",
+                testimonial12Author: "- شركة تقنية ناشئة، الإمارات",
                 prevTestimonial: "التوصية السابقة",
                 nextTestimonial: "التوصية التالية",
                 statsTitle: "لمحة عن الأداء",
-                statsLead: "نظرة سريعة على حجم التسليم وانتشارنا الإقليمي.",
+                statsLead: "مؤشرات مختصرة عن حجم أعمالنا في القطاعات الأربعة.",
                 stat1: "المشاريع المنجزة",
                 stat2: "الدول التي خدمناها",
                 stat3: "سنوات الخبرة",
-                stat4: "مسارات الخدمة الأساسية",
+                stat4: "مجالات الخدمة",
                 journeyTitle: "مسيرتنا",
                 timeline1Title: "فبراير 2025 - التأسيس",
-                timeline1Desc: "تأسست VEXUS في 4 فبراير 2025 مع تركيز على التصوير ثلاثي الأبعاد.",
-                timeline2Title: "2025 - التوسع نحو الفيديو",
-                timeline2Desc: "توسعنا إلى إنتاج الفيديو والتصوير لتعزيز قدراتنا الإبداعية.",
-                timeline3Title: "2026 - التطوير والتوسع",
-                timeline3Desc: "أضفنا خدمات التطوير ونمّينا أعمالنا عبر المنطقة.",
+                timeline1Desc: "انطلقت VEXUS بخدمات المخططات والتصميم ثلاثي الأبعاد.",
+                timeline2Title: "2025 - توسع الإنتاج المرئي",
+                timeline2Desc: "أضفنا المونتاج والموشن جرافيك والريلز والتصوير لتوسيع قدراتنا.",
+                timeline3Title: "2026 - التصميم والتطوير",
+                timeline3Desc: "وسعنا الهوية البصرية وخدمات التطوير لتقديم حلول متكاملة.",
                 contactTitle: "تواصل معنا",
                 contactDesc: "فلنبنِ ما هو قادم معًا. تواصل لمناقشة مشروعك أو لمعرفة المزيد عن خدماتنا.",
                 formName: "الاسم الكامل",
                 formEmail: "البريد الإلكتروني",
                 formMessage: "الرسالة",
                 formSubmit: "إرسال الرسالة",
-                footerDesc: "VEXUS Digital Solutions استوديو رقمي يقوده التخطيط الاستراتيجي للفيديو والتصميم والتصوير ثلاثي الأبعاد وتطوير الويب/التطبيقات وSEO.",
+                footerDesc: "VEXUS Digital Solutions استوديو يقدم التصميم الهندسي والمعماري، الإنتاج المرئي، الهوية البصرية، وتطوير المواقع والتطبيقات.",
                 footerLinks: "روابط سريعة",
                 footerServices: "الخدمات",
                 footerConnect: "تواصل معنا",
@@ -1708,16 +1799,16 @@
                 modalUnsupported: "نوع المعاينة غير مدعوم.",
                 threeFallback: "المعاينة ثلاثية الأبعاد غير متاحة على هذا الجهاز.",
                 copyright: "© 2026 VEXUS Digital Solutions. جميع الحقوق محفوظة.",
-                serviceAIWork: "مختارات من أعمال الأنظمة الذكية",
-                service3DWork: "مختارات من أعمال 3D",
-                serviceBooksWork: "مختارات من تصاميم الكتب",
-                serviceGraphicsWork: "مختارات من التصميم الجرافيكي",
-                serviceLogosWork: "مختارات من أعمال الهوية",
-                serviceMotionWork: "مختارات من أعمال الموشن",
-                servicePackWork: "مختارات من تصاميم التغليف",
+                serviceAIWork: "مختارات من أنظمة برمجية خاصة",
+                service3DWork: "مختارات من تصاميم 3D خارجية وداخلية",
+                serviceBooksWork: "مختارات من مخططات 2D",
+                serviceGraphicsWork: "مختارات من التصاميم الجرافيكية والسوشيال",
+                serviceLogosWork: "مختارات من اللوجو والهوية البصرية",
+                serviceMotionWork: "مختارات من المونتاج الاحترافي",
+                servicePackWork: "مختارات من الموشن جرافيك",
                 serviceReelsWork: "مختارات من الريلز",
-                serviceVoiceWork: "مختارات من أعمال التعليق الصوتي",
-                serviceWebWork: "مختارات من مشاريع الويب"
+                serviceVoiceWork: "مختارات من تصوير الميديا",
+                serviceWebWork: "مختارات من مشاريع الويب والتطبيقات"
             }
         };
 
@@ -1912,6 +2003,26 @@
                 });
             }
 
+            function revealInViewportAfterLanguageSwitch() {
+                const activePage = document.querySelector('.page.active');
+                if (!activePage) return;
+                const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+                activePage.querySelectorAll('.animate-on-scroll').forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    if (rect.bottom > 0 && rect.top < viewportHeight * 0.92) {
+                        el.classList.add('visible');
+                    }
+                });
+            }
+
+            function revealPrimaryHeadingsAfterLanguageSwitch() {
+                const activePage = document.querySelector('.page.active');
+                if (!activePage) return;
+                activePage.querySelectorAll('.page-header h1.animate-on-scroll, .section-title.animate-on-scroll').forEach(el => {
+                    el.classList.add('visible');
+                });
+            }
+
             const setLanguage = (lang) => {
                 document.documentElement.lang = lang;
                 document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
@@ -1927,6 +2038,10 @@
                 setupRevealText(); // Re-initialize text splitting after language change
                 refreshPortfolioThumbnails();
                 updateDocumentTitle(document.querySelector('.page.active')?.id || DEFAULT_PAGE_ID);
+                // Keep currently visible headings/cards visible after rebuilding translated text.
+                setTimeout(revealInViewportAfterLanguageSwitch, 0);
+                // Ensure primary section headings stay visible across language switches.
+                setTimeout(revealPrimaryHeadingsAfterLanguageSwitch, 0);
             };
 
             document.querySelectorAll('.lang-switcher button').forEach(btn => {
