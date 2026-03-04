@@ -1,13 +1,238 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://vex-us.com/</loc>
-    <lastmod>2026-02-09</lastmod>
+    <loc>https://vex-us.com/?lang=en</loc>
+    <lastmod>2026-03-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://vex-us.com/"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://vex-us.com/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://vex-us.com/"/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/?lang=en'/>
+    <xhtml:link rel='alternate' hreflang='ar' href='https://vex-us.com/?lang=ar'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://vex-us.com/'/>
+  </url>
+  <url>
+    <loc>https://vex-us.com/?lang=ar</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/?lang=en'/>
+    <xhtml:link rel='alternate' hreflang='ar' href='https://vex-us.com/?lang=ar'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://vex-us.com/'/>
+  </url>
+  <url>
+    <loc>https://vex-us.com/?lang=en&amp;page=about-page</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/?lang=en&amp;page=about-page'/>
+    <xhtml:link rel='alternate' hreflang='ar' href='https://vex-us.com/?lang=ar&amp;page=about-page'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://vex-us.com/?page=about-page'/>
+  </url>
+  <url>
+    <loc>https://vex-us.com/?lang=ar&amp;page=about-page</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/?lang=en&amp;page=about-page'/>
+    <xhtml:link rel='alternate' hreflang='ar' href='https://vex-us.com/?lang=ar&amp;page=about-page'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://vex-us.com/?page=about-page'/>
+  </url>
+  <url>
+    <loc>https://vex-us.com/?lang=en&amp;page=contact-page</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/?lang=en&amp;page=contact-page'/>
+    <xhtml:link rel='alternate' hreflang='ar' href='https://vex-us.com/?lang=ar&amp;page=contact-page'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://vex-us.com/?page=contact-page'/>
+  </url>
+  <url>
+    <loc>https://vex-us.com/?lang=ar&amp;page=contact-page</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/?lang=en&amp;page=contact-page'/>
+    <xhtml:link rel='alternate' hreflang='ar' href='https://vex-us.com/?lang=ar&amp;page=contact-page'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://vex-us.com/?page=contact-page'/>
+  </url>
+  <url>
+    <loc>https://vex-us.com/?lang=en&amp;page=service-ai-page</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/?lang=en&amp;page=service-ai-page'/>
+    <xhtml:link rel='alternate' hreflang='ar' href='https://vex-us.com/?lang=ar&amp;page=service-ai-page'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://vex-us.com/?page=service-ai-page'/>
+  </url>
+  <url>
+    <loc>https://vex-us.com/?lang=ar&amp;page=service-ai-page</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/?lang=en&amp;page=service-ai-page'/>
+    <xhtml:link rel='alternate' hreflang='ar' href='https://vex-us.com/?lang=ar&amp;page=service-ai-page'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://vex-us.com/?page=service-ai-page'/>
+  </url>
+  <url>
+    <loc>https://vex-us.com/?lang=en&amp;page=service-3d-page</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/?lang=en&amp;page=service-3d-page'/>
+    <xhtml:link rel='alternate' hreflang='ar' href='https://vex-us.com/?lang=ar&amp;page=service-3d-page'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://vex-us.com/?page=service-3d-page'/>
+  </url>
+  <url>
+    <loc>https://vex-us.com/?lang=ar&amp;page=service-3d-page</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/?lang=en&amp;page=service-3d-page'/>
+    <xhtml:link rel='alternate' hreflang='ar' href='https://vex-us.com/?lang=ar&amp;page=service-3d-page'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://vex-us.com/?page=service-3d-page'/>
+  </url>
+  <url>
+    <loc>https://vex-us.com/?lang=en&amp;page=service-books-page</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/?lang=en&amp;page=service-books-page'/>
+    <xhtml:link rel='alternate' hreflang='ar' href='https://vex-us.com/?lang=ar&amp;page=service-books-page'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://vex-us.com/?page=service-books-page'/>
+  </url>
+  <url>
+    <loc>https://vex-us.com/?lang=ar&amp;page=service-books-page</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/?lang=en&amp;page=service-books-page'/>
+    <xhtml:link rel='alternate' hreflang='ar' href='https://vex-us.com/?lang=ar&amp;page=service-books-page'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://vex-us.com/?page=service-books-page'/>
+  </url>
+  <url>
+    <loc>https://vex-us.com/?lang=en&amp;page=service-graphics-page</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/?lang=en&amp;page=service-graphics-page'/>
+    <xhtml:link rel='alternate' hreflang='ar' href='https://vex-us.com/?lang=ar&amp;page=service-graphics-page'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://vex-us.com/?page=service-graphics-page'/>
+  </url>
+  <url>
+    <loc>https://vex-us.com/?lang=ar&amp;page=service-graphics-page</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/?lang=en&amp;page=service-graphics-page'/>
+    <xhtml:link rel='alternate' hreflang='ar' href='https://vex-us.com/?lang=ar&amp;page=service-graphics-page'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://vex-us.com/?page=service-graphics-page'/>
+  </url>
+  <url>
+    <loc>https://vex-us.com/?lang=en&amp;page=service-logos-page</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/?lang=en&amp;page=service-logos-page'/>
+    <xhtml:link rel='alternate' hreflang='ar' href='https://vex-us.com/?lang=ar&amp;page=service-logos-page'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://vex-us.com/?page=service-logos-page'/>
+  </url>
+  <url>
+    <loc>https://vex-us.com/?lang=ar&amp;page=service-logos-page</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/?lang=en&amp;page=service-logos-page'/>
+    <xhtml:link rel='alternate' hreflang='ar' href='https://vex-us.com/?lang=ar&amp;page=service-logos-page'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://vex-us.com/?page=service-logos-page'/>
+  </url>
+  <url>
+    <loc>https://vex-us.com/?lang=en&amp;page=service-motion-page</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/?lang=en&amp;page=service-motion-page'/>
+    <xhtml:link rel='alternate' hreflang='ar' href='https://vex-us.com/?lang=ar&amp;page=service-motion-page'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://vex-us.com/?page=service-motion-page'/>
+  </url>
+  <url>
+    <loc>https://vex-us.com/?lang=ar&amp;page=service-motion-page</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/?lang=en&amp;page=service-motion-page'/>
+    <xhtml:link rel='alternate' hreflang='ar' href='https://vex-us.com/?lang=ar&amp;page=service-motion-page'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://vex-us.com/?page=service-motion-page'/>
+  </url>
+  <url>
+    <loc>https://vex-us.com/?lang=en&amp;page=service-pack-page</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/?lang=en&amp;page=service-pack-page'/>
+    <xhtml:link rel='alternate' hreflang='ar' href='https://vex-us.com/?lang=ar&amp;page=service-pack-page'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://vex-us.com/?page=service-pack-page'/>
+  </url>
+  <url>
+    <loc>https://vex-us.com/?lang=ar&amp;page=service-pack-page</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/?lang=en&amp;page=service-pack-page'/>
+    <xhtml:link rel='alternate' hreflang='ar' href='https://vex-us.com/?lang=ar&amp;page=service-pack-page'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://vex-us.com/?page=service-pack-page'/>
+  </url>
+  <url>
+    <loc>https://vex-us.com/?lang=en&amp;page=service-reels-page</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/?lang=en&amp;page=service-reels-page'/>
+    <xhtml:link rel='alternate' hreflang='ar' href='https://vex-us.com/?lang=ar&amp;page=service-reels-page'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://vex-us.com/?page=service-reels-page'/>
+  </url>
+  <url>
+    <loc>https://vex-us.com/?lang=ar&amp;page=service-reels-page</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/?lang=en&amp;page=service-reels-page'/>
+    <xhtml:link rel='alternate' hreflang='ar' href='https://vex-us.com/?lang=ar&amp;page=service-reels-page'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://vex-us.com/?page=service-reels-page'/>
+  </url>
+  <url>
+    <loc>https://vex-us.com/?lang=en&amp;page=service-voice-page</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/?lang=en&amp;page=service-voice-page'/>
+    <xhtml:link rel='alternate' hreflang='ar' href='https://vex-us.com/?lang=ar&amp;page=service-voice-page'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://vex-us.com/?page=service-voice-page'/>
+  </url>
+  <url>
+    <loc>https://vex-us.com/?lang=ar&amp;page=service-voice-page</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/?lang=en&amp;page=service-voice-page'/>
+    <xhtml:link rel='alternate' hreflang='ar' href='https://vex-us.com/?lang=ar&amp;page=service-voice-page'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://vex-us.com/?page=service-voice-page'/>
+  </url>
+  <url>
+    <loc>https://vex-us.com/?lang=en&amp;page=service-web-page</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/?lang=en&amp;page=service-web-page'/>
+    <xhtml:link rel='alternate' hreflang='ar' href='https://vex-us.com/?lang=ar&amp;page=service-web-page'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://vex-us.com/?page=service-web-page'/>
+  </url>
+  <url>
+    <loc>https://vex-us.com/?lang=ar&amp;page=service-web-page</loc>
+    <lastmod>2026-03-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/?lang=en&amp;page=service-web-page'/>
+    <xhtml:link rel='alternate' hreflang='ar' href='https://vex-us.com/?lang=ar&amp;page=service-web-page'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://vex-us.com/?page=service-web-page'/>
   </url>
 </urlset>
