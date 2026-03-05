@@ -379,4 +379,16 @@
     <xhtml:link rel='alternate' hreflang='ar' href='https://vex-us.com/?lang=ar&amp;page=branded-web-page'/>
     <xhtml:link rel='alternate' hreflang='x-default' href='https://vex-us.com/?page=branded-web-page'/>
   </url>
+  <url>
+    <loc>https://vex-us.com/llms.txt</loc>
+    <lastmod>2026-03-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://vex-us.com/brand-entity.json</loc>
+    <lastmod>2026-03-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>
