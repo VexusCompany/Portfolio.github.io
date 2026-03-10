@@ -3204,7 +3204,20 @@
 
             function normalizeAssetUrl(url) {
                 if (!url) return '';
-                return url.includes(' ') ? encodeURI(url) : url;
+                const raw = String(url).trim();
+                if (!raw) return '';
+
+                // Preserve absolute/data/blob URLs as-is (with safe encoding).
+                if (/^(?:[a-z]+:)?\/\//i.test(raw) || raw.startsWith('data:') || raw.startsWith('blob:')) {
+                    return raw.includes(' ') ? encodeURI(raw) : raw;
+                }
+
+                // Asset files in this SPA live at site root, not under /en/... routes.
+                const rootRelative = (raw.startsWith('/') ? raw : `/${raw}`)
+                    .replace(/\\/g, '/')
+                    .replace(/\/{2,}/g, '/');
+
+                return encodeURI(rootRelative);
             }
 
             function openModal(item) {
