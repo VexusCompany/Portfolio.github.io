@@ -1,4 +1,18 @@
 User-agent: *
 Allow: /
 
+# Block legacy parameterized URL variants to reduce duplicate crawl paths.
+Disallow: /*?*lang=
+Disallow: /*?*page=
+Disallow: /*?*utm_
+Disallow: /*?*fbclid=
+Disallow: /*?*gclid=
+
+# Non-essential internal artifacts.
+Disallow: /node_modules/
+Disallow: /qa-logs/
+Disallow: /qa-screenshots/
+Disallow: /tools/
+
 Sitemap: https://vex-us.com/sitemap.xml
+Host: vex-us.com
