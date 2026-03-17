@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -18,7 +18,7 @@
     <link id="canonical-link" rel="canonical" href="https://vex-us.com/en/">
     <link id="hreflang-en" rel="alternate" hreflang="en" href="https://vex-us.com/en/">
     <link id="hreflang-ar" rel="alternate" hreflang="ar" href="https://vex-us.com/ar/">
-    <link id="hreflang-x" rel="alternate" hreflang="x-default" href="https://vex-us.com/">
+    <link id="hreflang-x" rel="alternate" hreflang="x-default" href="https://vex-us.com/en/">
     <link rel="sitemap" type="application/xml" title="Sitemap" href="sitemap.xml">
     <link rel="alternate" type="application/json" title="VEXUS Brand Entity" href="https://vex-us.com/brand-entity.json">
     <link rel="alternate" type="text/plain" title="LLMs Reference" href="https://vex-us.com/llms.txt">
@@ -2156,8 +2156,6 @@
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/FontLoader.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/geometries/TextGeometry.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js" defer></script>
 
     <script>
@@ -2167,6 +2165,7 @@
         const SITE_URL = 'https://vex-us.com/';
         const LANG_PARAM = 'lang';
         const PAGE_PARAM = 'page';
+        const ROUTE_FALLBACK_PARAM = 'route';
         const DEFAULT_LANG = 'en';
         const PAGE_ROUTE_MAP = Object.freeze({
             'home-page': '',
@@ -2204,6 +2203,22 @@
             return normalized;
         }
 
+        function getFallbackRouteUrl() {
+            const params = new URLSearchParams(window.location.search);
+            const rawRoute = params.get(ROUTE_FALLBACK_PARAM);
+            if (!rawRoute) return null;
+            try {
+                return new URL(rawRoute, SITE_URL);
+            } catch (_error) {
+                return null;
+            }
+        }
+
+        function getEffectiveLocationPathname() {
+            const fallbackRouteUrl = getFallbackRouteUrl();
+            return fallbackRouteUrl ? fallbackRouteUrl.pathname : window.location.pathname;
+        }
+
         function resolveRouteFromPath(pathname) {
             const normalizedPath = normalizePathname(pathname);
             const parts = normalizedPath.split('/').filter(Boolean);
@@ -2216,11 +2231,11 @@
         }
 
         function getPageIdFromPath() {
-            return resolveRouteFromPath(window.location.pathname).pageId;
+            return resolveRouteFromPath(getEffectiveLocationPathname()).pageId;
         }
 
         function getLangFromUrl() {
-            const route = resolveRouteFromPath(window.location.pathname);
+            const route = resolveRouteFromPath(getEffectiveLocationPathname());
             if (route.lang === 'ar' || route.lang === 'en') return route.lang;
             const params = new URLSearchParams(window.location.search);
             const lang = params.get(LANG_PARAM);
@@ -2310,7 +2325,7 @@
                 navHome: "Home",
                 navAbout: "About Us",
                 navContact: "Contact Us",
-                siteTitleSuffix: "VEXUS Software Agency",
+                siteTitleSuffix: "VEXUS Agency",
                 backButton: "Back",
                 backButtonAria: "Go back",
                 heroTitle: "Engineering. Media. Design. Development.",
@@ -2746,6 +2761,51 @@
             const performanceProfile = detectPerformanceProfile();
             if (DEBUG) console.log(`[Performance] Detected profile: ${performanceProfile}`);
             const ENABLE_GENERATED_THUMBNAILS = true;
+            const externalScriptPromises = new Map();
+
+            function loadScriptOnce(src) {
+                if (externalScriptPromises.has(src)) return externalScriptPromises.get(src);
+
+                const existing = document.querySelector(`script[data-dynamic-src="${src}"]`);
+                if (existing?.dataset.loaded === 'true') {
+                    const resolved = Promise.resolve();
+                    externalScriptPromises.set(src, resolved);
+                    return resolved;
+                }
+
+                const promise = new Promise((resolve, reject) => {
+                    const script = existing || document.createElement('script');
+                    script.src = src;
+                    script.async = true;
+                    script.defer = true;
+                    script.dataset.dynamicSrc = src;
+
+                    const handleLoad = () => {
+                        script.dataset.loaded = 'true';
+                        resolve();
+                    };
+                    const handleError = () => reject(new Error(`Failed to load script: ${src}`));
+
+                    script.addEventListener('load', handleLoad, { once: true });
+                    script.addEventListener('error', handleError, { once: true });
+
+                    if (!existing) document.head.appendChild(script);
+                });
+
+                externalScriptPromises.set(src, promise);
+                return promise;
+            }
+
+            async function ensureHero3DDependencies() {
+                const deps = [];
+                if (typeof THREE?.FontLoader === 'undefined') {
+                    deps.push(loadScriptOnce('https://threejs.org/examples/js/loaders/FontLoader.js'));
+                }
+                if (typeof THREE?.TextGeometry === 'undefined') {
+                    deps.push(loadScriptOnce('https://threejs.org/examples/js/geometries/TextGeometry.js'));
+                }
+                if (deps.length) await Promise.all(deps);
+            }
 
             // --- Core Variables ---
             const allPages = document.querySelectorAll('.page');
@@ -2855,26 +2915,58 @@
             };
 
             const pageKeywordsByLang = {
-                en: 'software development agency, custom software development, embedded systems development, AI software solutions, technical SEO, VEXUS, web development, mobile app development',
-                ar: '\u0648\u0643\u0627\u0644\u0629 \u062A\u0637\u0648\u064A\u0631 \u0628\u0631\u0645\u062C\u064A\u0627\u062A, \u062A\u0637\u0648\u064A\u0631 \u0628\u0631\u0645\u062C\u064A\u0627\u062A \u0645\u062E\u0635\u0635\u0629, \u062D\u0644\u0648\u0644 \u0628\u0631\u0645\u062C\u064A\u0627\u062A \u0627\u0644\u0630\u0643\u0627\u0621 \u0627\u0644\u0627\u0635\u0637\u0646\u0627\u0639\u064A, SEO \u062A\u0642\u0646\u064A, VEXUS'
+                en: 'VEXUS Agency, VEXUS Digital Solutions, VEXUS, 3D visualization, video editing, motion graphics, voice over, branding, web development, mobile app development, technical SEO',
+                ar: '\u0641\u064A\u0643\u0633\u0648\u0633, VEXUS, \u062D\u0644\u0648\u0644 \u0641\u064A\u0643\u0633\u0648\u0633 \u0627\u0644\u0631\u0642\u0645\u064A\u0629, \u062A\u0635\u0645\u064A\u0645 3D, \u0645\u0648\u0646\u062A\u0627\u062C \u0641\u064A\u062F\u064A\u0648, \u0645\u0648\u0634\u0646 \u062C\u0631\u0627\u0641\u064A\u0643, \u062A\u0639\u0644\u064A\u0642 \u0635\u0648\u062A\u064A, \u0647\u0648\u064A\u0629 \u0628\u0635\u0631\u064A\u0629, \u062A\u0637\u0648\u064A\u0631 \u0645\u0648\u0627\u0642\u0639, \u062A\u0637\u0648\u064A\u0631 \u062A\u0637\u0628\u064A\u0642\u0627\u062A, SEO'
             };
 
-            const pageKeywordIntentByLang = {
+            const pageDescriptionSupportByLang = {
                 en: {
-                    default: 'software development agency, custom software development, embedded systems development, and AI software solutions.',
-                    'home-page': 'software development agency, custom software development, embedded systems development, and AI software solutions.',
-                    'about-page': 'custom software development and embedded systems development delivery expertise.',
-                    'contact-page': 'custom software development consultation and AI software solutions discovery.',
-                    'service-ai-page': 'AI software solutions and intelligent product engineering.',
-                    'service-web-page': 'software development agency services and custom software architecture.'
+                    default: 'Delivered by VEXUS Agency within one coordinated workflow for design, media, and technology.',
+                    'home-page': 'Official VEXUS website for engineering, media production, branding, software development, and SEO.',
+                    'about-page': 'Learn how VEXUS combines engineering, media production, branding, and digital delivery under one team.',
+                    'contact-page': 'Send your scope, goals, and timeline to receive a clear next-step plan.',
+                    'service-ai-page': 'Suitable for AI-enabled apps, internal tools, MVPs, and production-ready product launches.',
+                    'service-3d-page': 'Built for architects, developers, real estate teams, and presentation-ready approvals.',
+                    'service-books-page': 'Prepared for architectural, engineering, and execution-ready documentation workflows.',
+                    'service-graphics-page': 'Designed for campaigns, social channels, and consistent brand communication.',
+                    'service-logos-page': 'Created to unify brand presentation across digital and offline touchpoints.',
+                    'service-motion-page': 'Optimized for campaigns, launches, explainers, and platform-ready delivery.',
+                    'service-pack-page': 'Used for explainers, product launches, branded storytelling, and marketing assets.',
+                    'service-reels-page': 'Created for Reels, Shorts, TikTok, and performance-led short-form distribution.',
+                    'service-voice-page': 'Arabic and English delivery options are available for ads, reels, and explainer content.',
+                    'service-web-page': 'Built for high-performance websites, landing pages, product platforms, and technical SEO.',
+                    'branded-official-page': 'Use this page as the primary entity reference for VEXUS Agency and VEXUS Digital Solutions.',
+                    'branded-about-page': 'A brand profile page that supports entity consistency and search confidence.',
+                    'branded-3d-page': 'This branded page reinforces VEXUS relevance for 3D exterior and interior visualization searches.',
+                    'branded-video-page': 'This branded page reinforces VEXUS relevance for video editing and motion graphics searches.',
+                    'branded-voice-page': 'This branded page reinforces VEXUS relevance for Arabic and English voice over searches.',
+                    'branded-branding-page': 'This branded page reinforces VEXUS relevance for logo systems and brand identity searches.',
+                    'branded-app-page': 'This branded page reinforces VEXUS relevance for app product builds and launch support.',
+                    'branded-web-page': 'This branded page reinforces VEXUS relevance for web development and technical SEO searches.'
                 },
                 ar: {
-                    default: '\u062D\u0644\u0648\u0644 \u062A\u0637\u0648\u064A\u0631 \u0628\u0631\u0645\u062C\u064A\u0627\u062A \u0645\u062E\u0635\u0635\u0629 \u0648\u062D\u0644\u0648\u0644 \u0630\u0643\u0627\u0621 \u0627\u0635\u0637\u0646\u0627\u0639\u064A.',
-                    'home-page': '\u0648\u0643\u0627\u0644\u0629 \u062A\u0637\u0648\u064A\u0631 \u0628\u0631\u0645\u062C\u064A\u0627\u062A \u0645\u062E\u0635\u0635\u0629 \u0648\u062D\u0644\u0648\u0644 \u0630\u0643\u0627\u0621 \u0627\u0635\u0637\u0646\u0627\u0639\u064A.',
-                    'about-page': '\u062E\u0628\u0631\u0629 \u0641\u064A \u062A\u0637\u0648\u064A\u0631 \u0628\u0631\u0645\u062C\u064A\u0627\u062A \u0645\u062E\u0635\u0635\u0629 \u0648\u062A\u062D\u0633\u064A\u0646 \u0627\u0644\u0628\u0646\u064A\u0629 \u0627\u0644\u062A\u0642\u0646\u064A\u0629.',
-                    'contact-page': '\u062A\u0648\u0627\u0635\u0644 \u0645\u0628\u0627\u0634\u0631 \u0644\u062F\u0631\u0627\u0633\u0629 \u0645\u0634\u0631\u0648\u0639 \u0628\u0631\u0645\u062C\u064A \u0642\u0627\u0628\u0644 \u0644\u0644\u062A\u0648\u0633\u0639.',
-                    'service-ai-page': '\u062D\u0644\u0648\u0644 \u0628\u0631\u0645\u062C\u064A\u0627\u062A \u0627\u0644\u0630\u0643\u0627\u0621 \u0627\u0644\u0627\u0635\u0637\u0646\u0627\u0639\u064A \u0648\u0647\u0646\u062F\u0633\u0629 \u0623\u0646\u0638\u0645\u0629 \u0630\u0643\u064A\u0629.',
-                    'service-web-page': '\u062E\u062F\u0645\u0627\u062A \u062A\u0637\u0648\u064A\u0631 \u0628\u0631\u0645\u062C\u064A \u0648\u0628\u0646\u0627\u0621 \u0645\u0646\u0635\u0627\u062A \u0642\u0627\u0628\u0644\u0629 \u0644\u0644\u0646\u0645\u0648.'
+                    default: '\u062A\u0646\u0641\u064A\u0630 \u0645\u062A\u0643\u0627\u0645\u0644 \u0645\u0646 VEXUS \u064A\u062C\u0645\u0639 \u0627\u0644\u062A\u0635\u0645\u064A\u0645 \u0648\u0627\u0644\u0625\u0646\u062A\u0627\u062C \u0648\u0627\u0644\u062D\u0644\u0648\u0644 \u0627\u0644\u062A\u0642\u0646\u064A\u0629 \u0641\u064A \u0645\u0633\u0627\u0631 \u0648\u0627\u062D\u062F.',
+                    'home-page': '\u0627\u0644\u0645\u0648\u0642\u0639 \u0627\u0644\u0631\u0633\u0645\u064A \u0644\u0640 VEXUS \u0644\u062E\u062F\u0645\u0627\u062A \u0627\u0644\u0647\u0646\u062F\u0633\u0629 \u0648\u0627\u0644\u0625\u0646\u062A\u0627\u062C \u0627\u0644\u0645\u0631\u0626\u064A \u0648\u0627\u0644\u0647\u0648\u064A\u0629 \u0627\u0644\u0628\u0635\u0631\u064A\u0629 \u0648\u0627\u0644\u062A\u0637\u0648\u064A\u0631 \u0648SEO.',
+                    'about-page': '\u062A\u0639\u0631\u0651\u0641 \u0639\u0644\u0649 \u0643\u064A\u0641 \u062A\u062C\u0645\u0639 VEXUS \u0628\u064A\u0646 \u0627\u0644\u0647\u0646\u062F\u0633\u0629 \u0648\u0627\u0644\u0625\u0646\u062A\u0627\u062C \u0627\u0644\u0645\u0631\u0626\u064A \u0648\u0627\u0644\u0647\u0648\u064A\u0629 \u0627\u0644\u0628\u0635\u0631\u064A\u0629 \u0648\u0627\u0644\u062A\u0637\u0648\u064A\u0631 \u0641\u064A \u0641\u0631\u064A\u0642 \u0648\u0627\u062D\u062F.',
+                    'contact-page': '\u0623\u0631\u0633\u0644 \u0646\u0637\u0627\u0642 \u0645\u0634\u0631\u0648\u0639\u0643 \u0648\u0623\u0647\u062F\u0627\u0641\u0647 \u0648\u0627\u0644\u062C\u062F\u0648\u0644 \u0627\u0644\u0632\u0645\u0646\u064A \u0644\u062A\u062D\u0635\u0644 \u0639\u0644\u0649 \u062E\u0637\u0648\u0629 \u062A\u0627\u0644\u064A\u0629 \u0648\u0627\u0636\u062D\u0629.',
+                    'service-ai-page': '\u0645\u0646\u0627\u0633\u0628\u0629 \u0644\u062A\u0637\u0628\u064A\u0642\u0627\u062A \u0630\u0643\u064A\u0629 \u0648\u0623\u062F\u0648\u0627\u062A \u062F\u0627\u062E\u0644\u064A\u0629 \u0648MVP \u0648\u0625\u0637\u0644\u0627\u0642\u0627\u062A \u0645\u0646\u062A\u062C\u0627\u062A \u062C\u0627\u0647\u0632\u0629 \u0644\u0644\u062A\u0634\u063A\u064A\u0644.',
+                    'service-3d-page': '\u0645\u0646\u0627\u0633\u0628\u0629 \u0644\u0644\u0645\u0647\u0646\u062F\u0633\u064A\u0646 \u0648\u0627\u0644\u0645\u0637\u0648\u0631\u064A\u0646 \u0627\u0644\u0639\u0642\u0627\u0631\u064A\u064A\u0646 \u0648\u0627\u0644\u0639\u0631\u0648\u0636 \u0627\u0644\u062A\u0642\u062F\u064A\u0645\u064A\u0629 \u0627\u0644\u062C\u0627\u0647\u0632\u0629 \u0644\u0644\u0627\u0639\u062A\u0645\u0627\u062F.',
+                    'service-books-page': '\u0645\u062C\u0647\u0632\u0629 \u0644\u0645\u0633\u0627\u0631\u0627\u062A \u0627\u0644\u0645\u062E\u0637\u0637\u0627\u062A \u0627\u0644\u0645\u0639\u0645\u0627\u0631\u064A\u0629 \u0648\u0627\u0644\u0647\u0646\u062F\u0633\u064A\u0629 \u0648\u0627\u0644\u0648\u062B\u0627\u0626\u0642 \u0627\u0644\u062C\u0627\u0647\u0632\u0629 \u0644\u0644\u062A\u0646\u0641\u064A\u0630.',
+                    'service-graphics-page': '\u0645\u0635\u0645\u0645\u0629 \u0644\u0644\u062D\u0645\u0644\u0627\u062A \u0648\u0642\u0646\u0648\u0627\u062A \u0627\u0644\u0633\u0648\u0634\u064A\u0627\u0644 \u0645\u064A\u062F\u064A\u0627 \u0648\u0628\u0646\u0627\u0621 \u062A\u0648\u0627\u0635\u0644 \u0628\u0635\u0631\u064A \u0645\u062A\u0633\u0642 \u0644\u0644\u0639\u0644\u0627\u0645\u0629.',
+                    'service-logos-page': '\u0645\u062E\u0635\u0635\u0629 \u0644\u062A\u0648\u062D\u064A\u062F \u0638\u0647\u0648\u0631 \u0627\u0644\u0639\u0644\u0627\u0645\u0629 \u0639\u0628\u0631 \u0627\u0644\u0642\u0646\u0648\u0627\u062A \u0627\u0644\u0631\u0642\u0645\u064A\u0629 \u0648\u0627\u0644\u0645\u0637\u0628\u0648\u0639\u0629.',
+                    'service-motion-page': '\u0645\u062D\u0633\u0646\u0629 \u0644\u0644\u062D\u0645\u0644\u0627\u062A \u0648\u0627\u0644\u0625\u0637\u0644\u0627\u0642\u0627\u062A \u0648\u0627\u0644\u0641\u064A\u062F\u064A\u0648\u0647\u0627\u062A \u0627\u0644\u062A\u0648\u0636\u064A\u062D\u064A\u0629 \u0648\u0627\u0644\u0646\u0634\u0631 \u0627\u0644\u062C\u0627\u0647\u0632 \u0644\u0644\u0645\u0646\u0635\u0627\u062A.',
+                    'service-pack-page': '\u062A\u0633\u062A\u062E\u062F\u0645 \u0641\u064A \u0627\u0644\u0641\u064A\u062F\u064A\u0648\u0647\u0627\u062A \u0627\u0644\u062A\u0648\u0636\u064A\u062D\u064A\u0629 \u0648\u0625\u0637\u0644\u0627\u0642\u0627\u062A \u0627\u0644\u0645\u0646\u062A\u062C\u0627\u062A \u0648\u0633\u0631\u062F \u0627\u0644\u0639\u0644\u0627\u0645\u0629 \u0648\u0623\u0635\u0648\u0644 \u0627\u0644\u062A\u0633\u0648\u064A\u0642.',
+                    'service-reels-page': '\u0645\u062C\u0647\u0632\u0629 \u0644\u0640 Reels \u0648Shorts \u0648TikTok \u0648\u0645\u0633\u0627\u0631\u0627\u062A \u0627\u0644\u0646\u0634\u0631 \u0627\u0644\u0642\u0635\u064A\u0631 \u0627\u0644\u0645\u0648\u062C\u0647 \u0644\u0644\u0623\u062F\u0627\u0621.',
+                    'service-voice-page': '\u062A\u062A\u0648\u0641\u0631 \u062E\u064A\u0627\u0631\u0627\u062A \u062A\u0633\u0644\u064A\u0645 \u0639\u0631\u0628\u064A \u0648\u0625\u0646\u062C\u0644\u064A\u0632\u064A \u0644\u0644\u0625\u0639\u0644\u0627\u0646\u0627\u062A \u0648\u0627\u0644\u0631\u064A\u0644\u0632 \u0648\u0627\u0644\u0641\u064A\u062F\u064A\u0648\u0647\u0627\u062A \u0627\u0644\u062A\u0648\u0636\u064A\u062D\u064A\u0629.',
+                    'service-web-page': '\u0645\u0646\u0627\u0633\u0628\u0629 \u0644\u0644\u0645\u0648\u0627\u0642\u0639 \u0639\u0627\u0644\u064A\u0629 \u0627\u0644\u0623\u062F\u0627\u0621 \u0648Landing Pages \u0648\u0627\u0644\u0645\u0646\u0635\u0627\u062A \u0627\u0644\u0631\u0642\u0645\u064A\u0629 \u0648\u0627\u0644\u062A\u0647\u064A\u0626\u0629 \u0627\u0644\u062A\u0642\u0646\u064A\u0629 \u0644\u0645\u062D\u0631\u0643\u0627\u062A \u0627\u0644\u0628\u062D\u062B.',
+                    'branded-official-page': '\u0627\u0633\u062A\u062E\u062F\u0645 \u0647\u0630\u0647 \u0627\u0644\u0635\u0641\u062D\u0629 \u0643\u0645\u0631\u062C\u0639 \u0627\u0644\u0643\u064A\u0627\u0646 \u0627\u0644\u0623\u0633\u0627\u0633\u064A \u0644\u0640 VEXUS Agency \u0648VEXUS Digital Solutions.',
+                    'branded-about-page': '\u0635\u0641\u062D\u0629 \u062A\u0639\u0631\u064A\u0641\u064A\u0629 \u062A\u062F\u0639\u0645 \u062B\u0628\u0627\u062A \u0627\u0644\u0643\u064A\u0627\u0646 \u0648\u062A\u0639\u0632\u0632 \u062B\u0642\u0629 \u0645\u062D\u0631\u0643\u0627\u062A \u0627\u0644\u0628\u062D\u062B.',
+                    'branded-3d-page': '\u062A\u062F\u0639\u0645 \u0647\u0630\u0647 \u0627\u0644\u0635\u0641\u062D\u0629 \u0627\u0644\u0639\u0644\u0627\u0645\u064A\u0629 \u0635\u0644\u0629 VEXUS \u0628\u0628\u062D\u0648\u062B \u0627\u0644\u062A\u0635\u0645\u064A\u0645 \u0627\u0644\u062E\u0627\u0631\u062C\u064A \u0648\u0627\u0644\u062F\u0627\u062E\u0644\u064A 3D.',
+                    'branded-video-page': '\u062A\u062F\u0639\u0645 \u0647\u0630\u0647 \u0627\u0644\u0635\u0641\u062D\u0629 \u0627\u0644\u0639\u0644\u0627\u0645\u064A\u0629 \u0635\u0644\u0629 VEXUS \u0628\u0628\u062D\u0648\u062B \u0627\u0644\u0645\u0648\u0646\u062A\u0627\u062C \u0648\u0627\u0644\u0645\u0648\u0634\u0646 \u062C\u0631\u0627\u0641\u064A\u0643.',
+                    'branded-voice-page': '\u062A\u062F\u0639\u0645 \u0647\u0630\u0647 \u0627\u0644\u0635\u0641\u062D\u0629 \u0627\u0644\u0639\u0644\u0627\u0645\u064A\u0629 \u0635\u0644\u0629 VEXUS \u0628\u0628\u062D\u0648\u062B \u0627\u0644\u062A\u0639\u0644\u064A\u0642 \u0627\u0644\u0635\u0648\u062A\u064A \u0628\u0627\u0644\u0639\u0631\u0628\u064A\u0629 \u0648\u0627\u0644\u0625\u0646\u062C\u0644\u064A\u0632\u064A\u0629.',
+                    'branded-branding-page': '\u062A\u062F\u0639\u0645 \u0647\u0630\u0647 \u0627\u0644\u0635\u0641\u062D\u0629 \u0627\u0644\u0639\u0644\u0627\u0645\u064A\u0629 \u0635\u0644\u0629 VEXUS \u0628\u0628\u062D\u0648\u062B \u0627\u0644\u0644\u0648\u062C\u0648 \u0648\u0627\u0644\u0647\u0648\u064A\u0629 \u0627\u0644\u0628\u0635\u0631\u064A\u0629.',
+                    'branded-app-page': '\u062A\u062F\u0639\u0645 \u0647\u0630\u0647 \u0627\u0644\u0635\u0641\u062D\u0629 \u0627\u0644\u0639\u0644\u0627\u0645\u064A\u0629 \u0635\u0644\u0629 VEXUS \u0628\u062A\u0637\u0648\u064A\u0631 \u0627\u0644\u062A\u0637\u0628\u064A\u0642\u0627\u062A \u0648\u0625\u0637\u0644\u0627\u0642 \u0627\u0644\u0645\u0646\u062A\u062C\u0627\u062A.',
+                    'branded-web-page': '\u062A\u062F\u0639\u0645 \u0647\u0630\u0647 \u0627\u0644\u0635\u0641\u062D\u0629 \u0627\u0644\u0639\u0644\u0627\u0645\u064A\u0629 \u0635\u0644\u0629 VEXUS \u0628\u0628\u062D\u0648\u062B \u062A\u0637\u0648\u064A\u0631 \u0627\u0644\u0648\u064A\u0628 \u0648\u0627\u0644\u062A\u0647\u064A\u0626\u0629 \u0627\u0644\u062A\u0642\u0646\u064A\u0629 \u0644\u0645\u062D\u0631\u0643\u0627\u062A \u0627\u0644\u0628\u062D\u062B.'
                 }
             };
 
@@ -3038,40 +3130,29 @@
                 const normalizedLabel = normalizeMetaText(label);
                 const normalizedSuffix = normalizeMetaText(suffix);
                 const maxLength = lang === 'ar' ? 65 : 60;
-                const minLength = lang === 'ar' ? 35 : 50;
-                let title = /vexus/i.test(normalizedLabel)
+                if (!normalizedLabel) return trimMeta(normalizedSuffix, maxLength);
+                const title = /vexus/i.test(normalizedLabel)
                     ? normalizedLabel
                     : `${normalizedLabel} | ${normalizedSuffix}`;
-                if (title.length > maxLength) {
-                    title = trimMeta(title, maxLength);
-                }
-                if (title.length < minLength) {
-                    let expanded = `${normalizedLabel} | ${normalizedSuffix}`;
-                    if (expanded.length < minLength) {
-                        expanded = `${expanded} Digital Solutions`;
-                    }
-                    title = expanded.length <= maxLength ? expanded : trimMeta(expanded, maxLength);
-                }
-                return title;
+                return title.length > maxLength ? trimMeta(title, maxLength) : title;
             }
 
             function buildSeoDescription(baseDescription, pageId, lang) {
                 const normalizedDescription = normalizeMetaText(baseDescription);
-                const intentMap = pageKeywordIntentByLang[lang] || pageKeywordIntentByLang.en;
-                const intent = normalizeMetaText(intentMap[pageId] || intentMap.default || '');
-                const minLength = lang === 'ar' ? 120 : 150;
+                const supportMap = pageDescriptionSupportByLang[lang] || pageDescriptionSupportByLang.en;
+                const support = normalizeMetaText(supportMap[pageId] || supportMap.default || '');
+                const minLength = lang === 'ar' ? 105 : 135;
                 const maxLength = lang === 'ar' ? 170 : 160;
                 let description = normalizedDescription;
 
-                if (intent && !description.toLowerCase().includes(intent.toLowerCase().slice(0, 24))) {
-                    description = `${description} ${intent}`.trim();
+                if (support && description.length < minLength) {
+                    const lowerDescription = description.toLowerCase();
+                    const lowerSupport = support.toLowerCase();
+                    if (!lowerDescription.includes(lowerSupport)) {
+                        description = `${description} ${support}`.trim();
+                    }
                 }
-                if (description.length > maxLength) description = trimMeta(description, maxLength);
-                if (description.length < minLength && intent && !description.includes(intent)) {
-                    description = `${description} ${intent}`.trim();
-                    if (description.length > maxLength) description = trimMeta(description, maxLength);
-                }
-                return description;
+                return description.length > maxLength ? trimMeta(description, maxLength) : description;
             }
 
             function updateDocumentTitle(pageId) {
@@ -3089,7 +3170,7 @@
                 const keywordsBase = pageKeywordsByLang[lang] || pageKeywordsByLang.en;
                 const pageKeyword = getTranslation(pageTitleMap[normalizedPageId], lang);
                 const keywords = pageKeyword ? `${keywordsBase}, ${pageKeyword}` : keywordsBase;
-                const ogType = normalizedPageId === DEFAULT_PAGE_ID ? 'website' : 'article';
+                const ogType = 'website';
 
                 const setMetaContent = (selector, value) => {
                     if (!value) return;
@@ -3101,6 +3182,7 @@
                 setMetaContent('meta[property="og:title"]', fullTitle);
                 setMetaContent('meta[property="og:description"]', description);
                 setMetaContent('meta[property="og:locale"]', lang === 'ar' ? 'ar_SA' : 'en_US');
+                setMetaContent('meta[property="og:locale:alternate"]', lang === 'ar' ? 'en_US' : 'ar_SA');
                 setMetaContent('meta[property="og:type"]', ogType);
                 setMetaContent('meta[property="og:url"]', canonicalUrl);
                 setMetaContent('meta[name="twitter:title"]', fullTitle);
@@ -3330,7 +3412,10 @@
                         // Normalize single-item grids after page is shown
                         transformSingleItemGrids(targetPage);
                         refreshPortfolioThumbnails();
-                        if (targetId === 'home-page') initHeroRotatingText();
+                        if (targetId === 'home-page') {
+                            initHeroCanvas3D();
+                            initHeroRotatingText();
+                        }
                         if (targetPage.querySelector('#rotating-subtext-container')) initRotatingSubtext();
                     }
                     updateDocumentTitle(targetId);
@@ -3999,12 +4084,20 @@
 
 
             // --- Hero Canvas 3D Animation (Refactored & Optimized) ---
-            const canvas = document.getElementById('hero-canvas-3d');
-            if (canvas) {
+            let heroSceneInitialized = false;
+            function initHeroCanvas3D() {
+                if (heroSceneInitialized) return;
+
+                const canvas = document.getElementById('hero-canvas-3d');
+                if (!canvas) return;
+
                 if (!isWebGLAvailable() || typeof THREE === 'undefined') {
                     show3DFallback();
                     if (DEBUG) console.warn('[3D] WebGL/Three.js not available, fallback shown.');
-                } else {
+                    return;
+                }
+
+                heroSceneInitialized = true;
                     const quality = {
                         low: { particles: 350, useBloom: false, bloomStrength: 0, bloomRadius: 0 },
                         medium: { particles: 1200, useBloom: true, bloomStrength: 0.35, bloomRadius: 0.4 },
@@ -4019,6 +4112,7 @@
                     let lastPerfLog = 0;
 
                     async function init() {
+                        await ensureHero3DDependencies();
                         scene = new THREE.Scene();
                         scene.background = new THREE.Color(0x000000); // Black background for high contrast
                         camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -4283,7 +4377,6 @@
                         show3DFallback();
                         if (DEBUG) console.error('[3D] Error initializing Three.js:', err);
                     }
-                }
             }
 
             // --- Initial Page Load Setup ---
@@ -4569,3 +4662,6 @@
         </script>
 </body>
 </html>
+
+
+
