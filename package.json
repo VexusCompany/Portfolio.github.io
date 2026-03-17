@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "figma:handoff": "node tools/generate-figma-handoff.mjs"
+    "figma:handoff": "node tools/generate-figma-handoff.mjs",
+    "routes:generate": "node tools/generate-static-routes.js"
   },
   "dependencies": {
     "axios": "^1.5.0",
