@@ -1,4 +1,4 @@
-# vEXUS — Project Overview & Local Dev
+# VEXUS — Project Overview & Local Dev
 
 This repository is a single-page website that has been split into modular files for easier editing and maintenance.
 
@@ -7,7 +7,7 @@ Structure
 - `css/style.css` — visual styles (extracted).
 - `js/translations.js` — i18n strings loaded before `main.js`.
 - `js/main.js` — main client logic (routing, chat, 3D, animations).
-- `pages/` — page templates (home, nexus-edge, about, contact, service-template).
+- `pages/` — page templates (home, vexus-edge, about, contact, service-template).
 - `server/` — example Express proxy to forward chat messages to Telegram securely.
 
 Telegram chat forwarding
@@ -32,4 +32,3 @@ Quick notes
 - `js/translations.js` contains `window.translations` used by `main.js`.
 - `pages/` templates are partials; `index (8).html` currently includes all page markup but you can switch to fetching these templates later.
 - Next recommended steps: run browser QA, verify chat via proxy, and finalize accessibility audits.
-

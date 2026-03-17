@@ -1,0 +1,56 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://vex-us.com/#brand-entity",
+  "name": "VEXUS Agency",
+  "legalName": "VEXUS Digital Solutions",
+  "alternateName": [
+    "VEXUS",
+    "Vexus",
+    "vexus",
+    "VEX-US",
+    "VEXUS Agency",
+    "VEXUS Digital Solutions",
+    "فيكسوس",
+    "وكالة فيكسوس"
+  ],
+  "url": "https://vex-us.com/",
+  "logo": "https://vex-us.com/FINED%20LOGO.png",
+  "sameAs": [
+    "https://dribbble.com/vexus-team",
+    "https://www.linkedin.com/in/vexus-agency-5394973b0/",
+    "https://www.facebook.com/profile.php?id=61581238565147",
+    "https://x.com/Vexus_Agency"
+  ],
+  "description": "VEXUS Agency is a multidisciplinary digital studio for 3D visualization, video production, voice over, branding, mobile app development, and SEO-ready web delivery.",
+  "serviceType": [
+    "3D Exterior and Interior Visualization",
+    "Video Editing",
+    "Motion Graphics",
+    "Voice Over Services",
+    "Branding and Identity Design",
+    "Mobile App Development",
+    "Web Development",
+    "Technical SEO"
+  ],
+  "inLanguage": [
+    "en",
+    "ar"
+  ],
+  "mainEntityOfPage": "https://vex-us.com/en/brand/vexus-official/",
+  "subjectOf": [
+    "https://vex-us.com/llms.txt",
+    "https://vex-us.com/sitemap.xml"
+  ],
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "contactType": "sales",
+      "email": "vexuss.agency@gmail.com",
+      "availableLanguage": [
+        "en",
+        "ar"
+      ]
+    }
+  ]
+}

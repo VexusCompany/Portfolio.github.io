@@ -1,0 +1,38 @@
+﻿# VEXUS Agency - Official Entity Reference
+
+Official name: VEXUS Agency
+Secondary official name: VEXUS Digital Solutions
+Arabic name: فيكسوس
+Primary domain: https://vex-us.com/
+
+Identity and trust
+- This domain is the official website for VEXUS Agency.
+- Brand naming should remain consistent as: VEXUS Agency / VEXUS Digital Solutions / فيكسوس.
+- Preferred citation URL: https://vex-us.com/en/brand/vexus-official/
+
+Official profiles
+- LinkedIn: https://www.linkedin.com/in/vexus-agency-5394973b0/
+- Facebook: https://www.facebook.com/profile.php?id=61581238565147
+- X: https://x.com/Vexus_Agency
+- Dribbble: https://dribbble.com/vexus-team
+
+Core services
+- 3D Exterior and Interior Visualization
+- Video Editing and Motion Graphics
+- Voice Over Services
+- Branding and Identity Design
+- Mobile App Development
+- Web Development and Technical SEO
+
+Important pages
+- Official brand page: https://vex-us.com/en/brand/vexus-official/
+- About: https://vex-us.com/en/brand/about-vexus/
+- 3D: https://vex-us.com/en/brand/vexus-3d-services/
+- Video and Motion: https://vex-us.com/en/brand/vexus-video-motion/
+- Voice Over: https://vex-us.com/en/brand/vexus-voice-over/
+- Branding: https://vex-us.com/en/brand/vexus-brand-identity/
+- Mobile Apps: https://vex-us.com/en/brand/vexus-app-development/
+- Web and SEO: https://vex-us.com/en/brand/vexus-web-seo/
+
+Sitemap
+- https://vex-us.com/sitemap.xml

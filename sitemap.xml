@@ -1,8 +1,8 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://vex-us.com/en/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/'/>
@@ -11,7 +11,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/ar/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/'/>
@@ -20,7 +20,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/en/about/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/about/'/>
@@ -29,7 +29,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/ar/about/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/about/'/>
@@ -38,7 +38,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/en/contact/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/contact/'/>
@@ -47,7 +47,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/ar/contact/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/contact/'/>
@@ -56,7 +56,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/en/services/ai-software-solutions/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/services/ai-software-solutions/'/>
@@ -65,7 +65,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/ar/services/ai-software-solutions/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/services/ai-software-solutions/'/>
@@ -74,7 +74,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/en/services/3d-visualization/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/services/3d-visualization/'/>
@@ -83,7 +83,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/ar/services/3d-visualization/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/services/3d-visualization/'/>
@@ -92,7 +92,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/en/services/2d-plans/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/services/2d-plans/'/>
@@ -101,7 +101,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/ar/services/2d-plans/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/services/2d-plans/'/>
@@ -110,7 +110,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/en/services/graphic-social-design/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/services/graphic-social-design/'/>
@@ -119,7 +119,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/ar/services/graphic-social-design/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/services/graphic-social-design/'/>
@@ -128,7 +128,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/en/services/logo-identity/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/services/logo-identity/'/>
@@ -137,7 +137,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/ar/services/logo-identity/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/services/logo-identity/'/>
@@ -146,7 +146,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/en/services/video-editing/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/services/video-editing/'/>
@@ -155,7 +155,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/ar/services/video-editing/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/services/video-editing/'/>
@@ -164,7 +164,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/en/services/motion-graphics/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/services/motion-graphics/'/>
@@ -173,7 +173,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/ar/services/motion-graphics/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/services/motion-graphics/'/>
@@ -182,7 +182,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/en/services/short-video-production/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/services/short-video-production/'/>
@@ -191,7 +191,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/ar/services/short-video-production/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/services/short-video-production/'/>
@@ -200,7 +200,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/en/services/voice-over/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/services/voice-over/'/>
@@ -209,7 +209,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/ar/services/voice-over/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/services/voice-over/'/>
@@ -218,7 +218,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/en/services/software-development-agency/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/services/software-development-agency/'/>
@@ -227,7 +227,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/ar/services/software-development-agency/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/services/software-development-agency/'/>
@@ -236,7 +236,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/en/brand/vexus-official/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.72</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/brand/vexus-official/'/>
@@ -245,7 +245,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/ar/brand/vexus-official/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.72</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/brand/vexus-official/'/>
@@ -254,7 +254,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/en/brand/about-vexus/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.72</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/brand/about-vexus/'/>
@@ -263,7 +263,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/ar/brand/about-vexus/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.72</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/brand/about-vexus/'/>
@@ -272,7 +272,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/en/brand/vexus-3d-services/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.72</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/brand/vexus-3d-services/'/>
@@ -281,7 +281,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/ar/brand/vexus-3d-services/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.72</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/brand/vexus-3d-services/'/>
@@ -290,7 +290,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/en/brand/vexus-video-motion/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.72</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/brand/vexus-video-motion/'/>
@@ -299,7 +299,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/ar/brand/vexus-video-motion/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.72</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/brand/vexus-video-motion/'/>
@@ -308,7 +308,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/en/brand/vexus-voice-over/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.72</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/brand/vexus-voice-over/'/>
@@ -317,7 +317,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/ar/brand/vexus-voice-over/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.72</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/brand/vexus-voice-over/'/>
@@ -326,7 +326,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/en/brand/vexus-brand-identity/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.72</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/brand/vexus-brand-identity/'/>
@@ -335,7 +335,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/ar/brand/vexus-brand-identity/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.72</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/brand/vexus-brand-identity/'/>
@@ -344,7 +344,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/en/brand/vexus-app-development/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.72</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/brand/vexus-app-development/'/>
@@ -353,7 +353,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/ar/brand/vexus-app-development/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.72</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/brand/vexus-app-development/'/>
@@ -362,7 +362,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/en/brand/vexus-web-seo/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.72</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/brand/vexus-web-seo/'/>
@@ -371,7 +371,7 @@
   </url>
   <url>
     <loc>https://vex-us.com/ar/brand/vexus-web-seo/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.72</priority>
     <xhtml:link rel='alternate' hreflang='en' href='https://vex-us.com/en/brand/vexus-web-seo/'/>
